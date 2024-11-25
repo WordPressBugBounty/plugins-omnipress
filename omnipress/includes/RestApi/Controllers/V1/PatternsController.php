@@ -28,7 +28,7 @@ class PatternsController extends RestControllersBase {
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_items' ),
-					'permission_callback' => array( $this, 'get_items_permissions_check' )
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				),
 			)
 		);
@@ -38,17 +38,17 @@ class PatternsController extends RestControllersBase {
 				array(
 					'methods'             => \WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'update_favorites' ),
-					'permission_callback' => array( $this, 'update_item_permissions_check' )
+					'permission_callback' => array( $this, 'update_item_permissions_check' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::READABLE,
 					'callback'            => array( $this, 'get_favorites' ),
-					'permission_callback' => array( $this, 'get_items_permissions_check' )
+					'permission_callback' => array( $this, 'get_items_permissions_check' ),
 				),
 				array(
 					'methods'             => \WP_REST_Server::DELETABLE,
 					'callback'            => array( $this, 'remove_favorites' ),
-					'permission_callback' => array( $this, 'delete_item_permissions_check' )
+					'permission_callback' => array( $this, 'delete_item_permissions_check' ),
 				),
 			),
 			'favorites'
@@ -89,7 +89,7 @@ class PatternsController extends RestControllersBase {
 	 */
 	public function update_favorites( $request ) {
 
-		$key = $request->get_param('key');
+		$key = $request->get_param( 'key' );
 
 		if ( ! $key ) {
 			return;
@@ -109,7 +109,7 @@ class PatternsController extends RestControllersBase {
 	 */
 	public function remove_favorites( $request ) {
 
-		$key = $request->get_param('key');
+		$key = $request->get_param( 'key' );
 
 		if ( ! $key ) {
 			return;
@@ -121,5 +121,4 @@ class PatternsController extends RestControllersBase {
 
 		return $patterns_model->get_favorites();
 	}
-
 }

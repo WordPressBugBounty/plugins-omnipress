@@ -3,6 +3,7 @@
 namespace Omnipress\RestApi\Controllers\V1;
 
 use Omnipress\Abstracts\RestControllersBase;
+use Omnipress\Blocks\BlockGeneralSettings;
 use Omnipress\Models\BlocksSettingsModel;
 
 class BlockSettingsController extends RestControllersBase {
@@ -38,12 +39,86 @@ class BlockSettingsController extends RestControllersBase {
 		return BlocksSettingsModel::get_blocks_lists();
 	}
 
+	public function update_container_settings( \WP_REST_Request $req ) {
+		$container_settings = $req->get_params();
+
+		return BlockGeneralSettings::init()->update_container_default_styles( $container_settings['container'] );
+	}
+
+	public function toggle_library_button() {
+		return BlockGeneralSettings::init()->toggle_library_button();
+	}
+
+	public function update_breakpoints( \WP_REST_Request $req ) {
+		$params = $req->get_params();
+
+		global $wp_roles;
+
+		return BlockGeneralSettings::init()->update_breakpoints( $params['breakpoints'] );
+	}
+
+	public function update_disabled_blocks( \WP_REST_Request $req ) {
+		$block_name = $req->get_param( 'blockName' );
+
+		return BlockGeneralSettings::init()->update_disabled_blocks( $block_name );
+	}
 	/**
 	 * Register the routes for the objects of the controller.
 	 *
 	 * @return void
 	 */
 	public function register_routes() {
+
+		// block enable and disable endpoint.
+		$this->register_rest_route(
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( BlockGeneralSettings::class, 'toggle_library_button' ),
+				'permission_callback' => array( $this, 'update_item_permissions_check' ),
+			),
+			'blocks'
+		);
+
+		// container block settings endpoint.
+		$this->register_rest_route(
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'update_container_settings' ),
+				'permission_callback' => array( $this, 'update_item_permissions_check' ),
+			),
+			'blocks/container'
+		);
+
+		// Media query breakpoint  settings endpoint.
+		$this->register_rest_route(
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'update_breakpoints' ),
+				'permission_callback' => array( $this, 'update_item_permissions_check' ),
+			),
+			'blocks/breakpoints'
+		);
+
+		// toggle library button settings endpoint.
+		$this->register_rest_route(
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'toggle_library_button' ),
+				'permission_callback' => array( $this, 'update_item_permissions_check' ),
+			),
+			'blocks/library-button'
+		);
+
+		// Update Disabled blocks.
+		$this->register_rest_route(
+			array(
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'update_disabled_blocks' ),
+				'permission_callback' => array( $this, 'update_item_permissions_check' ),
+			),
+			'blocks/disabled'
+		);
+
 		$this->register_rest_route(
 			array(
 				'methods'             => \WP_REST_Server::CREATABLE,
@@ -113,6 +188,7 @@ class BlockSettingsController extends RestControllersBase {
 			),
 			'blocks/disabled'
 		);
+
 		$this->register_rest_route(
 			array(
 				'methods'             => \WP_REST_Server::DELETABLE,

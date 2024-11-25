@@ -1,5 +1,4 @@
 <?php
-
 namespace Omnipress\Models;
 
 use Omnipress\Abstracts\ModelsBase;

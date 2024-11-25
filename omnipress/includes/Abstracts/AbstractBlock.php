@@ -40,7 +40,7 @@ abstract class AbstractBlock {
 	 * @param \WP_Block $block Block instance.
 	 * @return string
 	 */
-	abstract public function render( $attributes, $content, $block );
+	abstract public function render( $attributes, $content, WP_Blok $block );
 
 	/**
 	 * Block Attributes,

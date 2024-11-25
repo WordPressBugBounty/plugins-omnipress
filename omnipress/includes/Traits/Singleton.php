@@ -12,6 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * A trait to implement the singleton pattern in classes.
  *
  * @package Omnipress\Includes\Traits
+ *
+ * @since 1.4.4
  */
 trait Singleton {
 	private static $instance;

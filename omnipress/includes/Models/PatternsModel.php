@@ -24,5 +24,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 class PatternsModel extends ModelsBase {
 
 	protected $model_type = 'patterns';
-
 }

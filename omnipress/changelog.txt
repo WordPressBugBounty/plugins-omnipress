@@ -1,3 +1,24 @@
+
+== Version 1.5.0 ==
+  New: Added the ability to copy and paste block styles.
+  New: Introduced a global reusable component for each block.
+  New: Introduced the Advanced Query block. [Premium]
+  New: Added the Content Switcher block.
+  NEW: Introduce block's global component for each block. [Beta]
+  NEW: Added WooCommerce category and product category with more settings.
+
+  * Enhancements:
+      - Enhance tabs block make more easy and stable inside editor
+      - Added more settings and enhance it's settings for slide block.
+
+  * Breaking Changes:
+    - [Icon]: We add
+
+  Fix: Resolved various minor issues.
+
+== Version 1.4.3 ==
+    *Fix: Resolve minor issues.
+
 == Version 1.4.2 ==
     *Fix: the undefined blockId warning in the Post Grid block.
     *Fix: Premium notice now hides after activating the license.

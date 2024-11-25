@@ -8,6 +8,7 @@
 namespace Omnipress\Models;
 
 use Omnipress\Abstracts\ModelsBase;
+use Omnipress\Helpers\GeneralHelpers;
 
 /**
  * Exit if accessed directly.
@@ -263,6 +264,7 @@ class DemosModel extends ModelsBase {
 			}
 		}
 	}
+
 
 	/**
 	 * It will create and update template parts.

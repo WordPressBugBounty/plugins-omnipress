@@ -4,8 +4,8 @@ Donate link: https://omnipressteam.com/pricing/
 Tags: block, blocks, patterns, demos
 Requires at least: 5.8
 Requires PHP: 7.4
-Tested up to: 6.6
-Stable tag: 1.4.3
+Tested up to: 6.7
+Stable tag: 1.5.0
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 

@@ -2,7 +2,9 @@
 
 namespace Omnipress\Models;
 
-use Omnipress\BlockRegistrar;
+use Omnipress\Blocks\BlockRegistrar;
+require_once OMNIPRESS_PATH . 'includes/Blocks/BlockAssetsManager.php';
+
 
 /**
  * Main entry point for blocks.
@@ -18,12 +20,11 @@ class BlocksModel {
 	 */
 	public function __construct() {
 		$this->define_block_constants();
-		require_once OMNIPRESS_PATH . 'classes/class-blocks-styles.php';
+		require_once OMNIPRESS_PATH . 'includes/Blocks/BlockStyles.php';
 
 		// Requires all files which required for omnipress blocks.
 		do_action( 'omnipress_before_blocks_register' );
-		require_once OMNIPRESS_PATH . 'classes/class-block-assets-manager.php';
-		require_once OMNIPRESS_PATH . 'classes/class-block-registrar.php';
+		require_once OMNIPRESS_PATH . 'includes/Blocks/BlockRegistrar.php';
 		$blocks_registrar = BlockRegistrar::init();
 	}
 
@@ -36,10 +37,10 @@ class BlocksModel {
 	 */
 	public function define_block_constants() {
 		if ( ! defined( 'OMNIPRESS_BLOCKS_PATH' ) ) {
-			define( 'OMNIPRESS_BLOCKS_PATH', trailingslashit( OMNIPRESS_PATH . 'assets/build/js/blocks/blocks' ) );
+			define( 'OMNIPRESS_BLOCKS_PATH', trailingslashit( OMNIPRESS_PATH . 'assets/build/js/blocks/block-library/block-types' ) );
 		}
 		if ( ! defined( 'OMNIPRESS_BLOCKS_URL' ) ) {
-			define( 'OMNIPRESS_BLOCKS_URL', trailingslashit( OMNIPRESS_URL . 'assets/build/js/blocks/blocks' ) );
+			define( 'OMNIPRESS_BLOCKS_URL', trailingslashit( OMNIPRESS_URL . 'assets/build/js/block-library/block-types' ) );
 		}
 
 		if ( ! defined( 'OMNIPRESS_BLOCKS_STYLES_PATH' ) ) {

@@ -8,8 +8,8 @@
 namespace Omnipress\RestApi\Controllers\V1;
 
 use Omnipress\Abstracts\RestControllersBase;
-use Omnipress\Models\DemosModel;
 use Omnipress\Helpers;
+use Omnipress\Models\DemosModel;
 
 /**
  * Exit if accessed directly.
@@ -42,7 +42,7 @@ class DemosController extends RestControllersBase {
 					'permission_callback' => array( $this, 'update_item_permissions_check' ),
 				),
 			),
-			'prepare/(?P<key>[\w-]+)'
+			'prepare/(?P<key>[\w-]+)',
 		);
 
 		$this->register_rest_route(
@@ -107,7 +107,7 @@ class DemosController extends RestControllersBase {
 	}
 
 	/**
-	 * Enqueue woocommerce styles.
+	 * Enqueue wooCommerce styles.
 	 *
 	 * @return void
 	 */
@@ -232,7 +232,7 @@ class DemosController extends RestControllersBase {
 					return new WP_Error( 'theme_download_link_missing', 'Download link not found for the specified theme' );
 				}
 
-				// Step 2: Download and install the theme
+				// Step 2: Download and install the theme.
 				include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 				include_once ABSPATH . 'wp-admin/includes/file.php';
 				include_once ABSPATH . 'wp-admin/includes/misc.php';
@@ -253,8 +253,8 @@ class DemosController extends RestControllersBase {
 			}
 		} catch ( Exception $exception ) {
 			return array(
-				'error' => $exception->getMessage(),
-				'status' => 'activate'
+				'error'  => $exception->getMessage(),
+				'status' => 'activate',
 			);
 
 		}
@@ -352,6 +352,9 @@ class DemosController extends RestControllersBase {
 
 		$has_page = isset( $demo->pages[ $next ] );
 
+		// Removed all previously generated Blocks Css.
+		$this->deleted_all_previous_block_styles();
+
 		/**
 		 * This?
 		 * I mean what else can I do?
@@ -371,6 +374,53 @@ class DemosController extends RestControllersBase {
 			'previous'  => $current,
 			'next'      => $has_page ? $next : null,
 		);
+	}
+
+	public function deleted_all_previous_block_styles() {
+		if ( ! is_dir( OMNIPRESS_BLOCK_STYLES_PATH ) ) {
+			return false;
+		}
+
+		$files = scandir( OMNIPRESS_BLOCK_STYLES_PATH );
+
+		foreach ( $files as $file ) {
+			if ( '.' === $file || '..' === $file ) {
+				continue;
+			}
+
+			$file_path = OMNIPRESS_BLOCK_STYLES_PATH . DIRECTORY_SEPARATOR . $file;
+
+			if ( is_file( $file_path ) ) {
+				wp_delete_file( $file_path );
+			}
+		}
+
+		return true;
+	}
+
+	function delete_all_posts_and_pages() {
+		// Set up arguments to fetch all posts and pages
+		$args = array(
+			'post_type'      => array( 'post', 'page' ),  // Target posts and pages
+			'posts_per_page' => -1,  // Get all posts and pages
+			'post_status'    => 'any',  // Include published, drafts, etc.
+		);
+
+		// Query for all posts and pages.
+		$all_posts = new \WP_Query( $args );
+
+		// Loop through the posts and delete each one
+		if ( $all_posts->have_posts() ) {
+			while ( $all_posts->have_posts() ) {
+				$all_posts->the_post();
+
+				// Delete the post
+				wp_delete_post( get_the_ID(), true );  // Set second param to true for force delete (skip trash)
+			}
+		}
+
+		// Reset post data
+		wp_reset_postdata();
 	}
 
 	/**

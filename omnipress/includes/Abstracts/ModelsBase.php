@@ -222,11 +222,18 @@ class ModelsBase {
 	 * @return void
 	 */
 	protected function fetch() {
+		// 'https://api.omnipressteam.com/wp-json/omnipress-api'.
 
 		$url_base = defined( 'OMNIPRESS_API_TEST_URL' ) ? OMNIPRESS_API_TEST_URL : 'https://api.omnipressteam.com/wp-json/omnipress-api';
 
-		$args = apply_filters( 'omnipress_modelbase_remote_args', array(), $this->model_type );
+		$args = array(
+			'timeout'   => 30,
+			'sslverify' => false,
+		);
+		$args = apply_filters( 'omnipress_modelbase_remote_args', $args, $this->model_type );
+
 		$body = wp_remote_retrieve_body( wp_remote_post( "{$url_base}/{$this->model_type}", $args ) );
+
 		$data = json_decode( $body );
 
 		if ( $data ) {
@@ -301,6 +308,7 @@ class ModelsBase {
 	 * @return object[]|object Returns array of objects or single object if $key is passed.
 	 */
 	public function get_by_keys( $key = null ) {
+
 		$data = array_combine( array_keys( wp_list_pluck( $this->data->{$this->model_type}, 'key', 'key' ) ), array_values( $this->data->{$this->model_type} ) );
 
 		if ( is_null( $key ) ) {

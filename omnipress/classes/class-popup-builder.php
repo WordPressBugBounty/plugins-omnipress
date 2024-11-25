@@ -434,9 +434,9 @@ class PopupBuilder {
 	 */
 	public function popup_admin_scripts() {
 		global $post;
-		wp_enqueue_style( 'op-popup-admin', OMNIPRESS_URL . 'assets/build/css/admin.css', array(), OMNIPRESS_VERSION );
 
 		if ( isset( $post->post_type ) && 'omnipress-popup' === $post->post_type ) {
+			wp_enqueue_style( 'op-popup-admin', OMNIPRESS_URL . 'assets/build/css/admin.css', array(), OMNIPRESS_VERSION );
 			wp_enqueue_script( 'op_popup_toggle_status_script', OMNIPRESS_URL . 'assets/build/js/admin/popup-admin.js', array(), OMNIPRESS_VERSION, true );
 
 			wp_localize_script(

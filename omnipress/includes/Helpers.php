@@ -7,7 +7,6 @@
 
 namespace Omnipress;
 
-use Automattic\WooCommerce\Caching\ObjectCache;
 use OmnipressPro\Woocommerce_Utils;
 use WP_Block;
 
@@ -24,7 +23,7 @@ class Helpers {
 	 * @return boolean
 	 * @since 1.1.5
 	 */
-	public static function is_test_site() {
+	public static function is_test_site(): bool {
 
 		$homeurl = home_url();
 
@@ -314,6 +313,24 @@ class Helpers {
 		return is_plugin_active( $slug );
 	}
 
+	/**
+	 * Convert kebab case to pascal case.
+	 *
+	 * @param string $string Kebab case string.
+	 *
+	 * @since 1.4.2
+	 * @return string
+	 */
+	public static function convert_kebab_to_pascal_case( string $string ) {
+		$words = explode( '-', $string );
+
+		$capitalized_words = array_map( 'ucfirst', $words );
+
+		$pascal_case_string = implode( '', $capitalized_words );
+
+		return $pascal_case_string;
+	}
+
 
 	/**
 	 * Returns the query args to query WordPress post type's posts.
@@ -325,7 +342,7 @@ class Helpers {
 		$wp_query_args = array();
 
 		// Query for WooCommerce products if query have extra query related wooCommerce.
-		if ( 'product' === $custom_args['postType'] ) {
+		if ( 'product' === $custom_args['postType'] && version_compare( OMNIPRESS_VERSION, '1.4.3', '>' ) ) {
 			$wc_utils      = WooCommerce_Utils::init();
 			$wp_query_args = $wc_utils->generate_query_args( $block, $page );
 		}
@@ -421,23 +438,5 @@ class Helpers {
 		}
 
 		return $wp_query_args;
-	}
-
-	/**
-	 * Convert kebab case to pascal case.
-	 *
-	 * @param string $string Kebab case string.
-	 *
-	 * @since 1.4.2
-	 * @return string
-	 */
-	public static function convert_kebab_to_pascal_case( string $string ) {
-		$words = explode( '-', $string );
-
-		$capitalized_words = array_map( 'ucfirst', $words );
-
-		$pascal_case_string = implode( '', $capitalized_words );
-
-		return $pascal_case_string;
 	}
 }

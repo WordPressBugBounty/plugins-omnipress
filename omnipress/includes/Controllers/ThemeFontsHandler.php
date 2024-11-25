@@ -1,11 +1,9 @@
 <?php
 namespace Omnipress\Controllers;
 
-
-
 class ThemeFontsHandler {
 
-	final public function init( ) {
+	final public function init() {
 		add_filter( 'template_include', array( $this, 'handle_template_include' ) );
 		add_filter( 'wp_theme_json_data_theme', array( $this, 'experimental_filter_theme_json_theme' ) );
 	}

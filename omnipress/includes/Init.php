@@ -7,10 +7,11 @@
 
 namespace Omnipress;
 
-require_once OMNIPRESS_PATH . 'classes/class-blocks-assets-helper.php';
-require_once OMNIPRESS_PATH . 'classes/class-block-settings.php';
-require_once OMNIPRESS_PATH . 'classes/class-filesystem-util.php';
+require_once OMNIPRESS_PATH . 'includes/Helpers/BlockAssetsHelper.php';
+require_once OMNIPRESS_PATH . 'includes/Core/FileSystemUtil.php';
 require_once OMNIPRESS_PATH . 'includes/Block.php';
+
+require_once OMNIPRESS_PATH . 'includes/Blocks/BlockGeneralSettings.php';
 
 use Omnipress\Abstracts\BlockTemplateBase;
 use Omnipress\Admin\Init as AdminInit;
@@ -34,22 +35,57 @@ class Init {
 	/**
 	 * This object instance.
 	 *
-	 * @var \Omnipress\Init
+	 * @var ?static
 	 */
-	protected static $instance = null;
+	protected static ?Init $instance = null;
 
 	/**
 	 * Returns this object instance.
 	 *
-	 * @return \Omnipress\Init
+	 * @return static
 	 */
-	public static function instance() {
+	public static function instance(): ?Init {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 		}
 
+		$prev_version = get_option( 'omnipress_prev_version', false );
+
+		if ( false === $prev_version || version_compare( $prev_version, OMNIPRESS_VERSION, '<' ) ) {
+			static::on_update_plugin( $prev_version, OMNIPRESS_VERSION );
+
+			update_option( 'omnipress_prev_version', OMNIPRESS_VERSION );
+
+			update_option( OMNIPRESS_POST_EDIT_TIME, time() );
+
+			do_action( 'omnipress_update', $prev_version, OMNIPRESS_VERSION );
+		}
+
 		return self::$instance;
 	}
+
+	public static function on_update_plugin( $prev_version, $new_version ) {
+		if ( is_dir( OMNIPRESS_BLOCK_STYLES_PATH ) ) {
+
+			$files = scandir( OMNIPRESS_BLOCK_STYLES_PATH );
+
+			foreach ( $files as $file ) {
+				if ( '.' === $file || '..' === $file ) {
+					continue;
+				}
+
+				$file_path = OMNIPRESS_BLOCK_STYLES_PATH . DIRECTORY_SEPARATOR . $file;
+
+				if ( is_file( $file_path ) ) {
+					wp_delete_file( $file_path );
+				}
+			}
+		}
+	}
+
+	/**
+	 * @return mixed
+	 */
 	public function update_search_template_hierarchy( $templates ) {
 		if ( ( is_search() && is_post_type_archive( 'product' ) ) && wc_current_theme_is_fse_theme() ) {
 			array_unshift( $templates, self::SLUG );
@@ -58,26 +94,24 @@ class Init {
 	}
 
 	/**
-	 * Enqueue animation library.
+	 * Summary of __construct
 	 */
-	public static function enqueue_animation_library() {
-	}
-	/**
-	 * Class construct.
-	 */
-	function log_enqueued_scripts() {
-		global $wp_scripts;
-	}
 	public function __construct() {
-		require_once OMNIPRESS_PATH . 'includes/Blocks/WpFormsExtender.php';
+		require_once OMNIPRESS_PATH . 'includes/Blocks/BlockTypes/WpFormsExtender.php';
 		require OMNIPRESS_PATH . 'includes/Models/BlocksModel.php';
 		require_once OMNIPRESS_PATH . 'classes/class-popup-builder.php';
-		new BlockSettings();
+		add_action( 'admin_footer', array( $this, 'add_editor_markup' ) );
+
 		AdminInit::init();
 		PublicsInit::init();
 		RestApi::init();
-		add_action( 'enqueue_block_assets', array( $this, 'enqueue_animation_library' ) );
 
 		BlockTemplateBase::init();
+	}
+
+	public function add_editor_markup() {
+		?>
+		<div class="omnipress-editor-area omnipress-editor-slots"></div>
+		<?php
 	}
 }

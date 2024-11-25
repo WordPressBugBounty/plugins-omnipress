@@ -4,7 +4,7 @@
  * Description: Omnipress is a ready-made WordPress Design Blocks, similar to the Gutenberg WordPress block editor, that takes a holistic approach to changing your complete site.
  * Author: omnipressteam
  * Author URI: https://omnipressteam.com/
- * Version: 1.4.3
+ * Version: 1.5.0
  * Text Domain: omnipress
  * License: GPLv3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,7 +21,7 @@ class Omnipress {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '1.4.3';
+	const VERSION = '1.5.0';
 
 	/**
 	 * Singleton instance.
@@ -51,8 +51,21 @@ class Omnipress {
 		define( 'OMNIPRESS_VERSION', self::VERSION );
 		define( 'OMNIPRESS_FILE', __FILE__ );
 		define( 'OMNIPRESS_PATH', trailingslashit( plugin_dir_path( OMNIPRESS_FILE ) ) );
+
 		define( 'OMNIPRESS_TEMPLATES_PATH', trailingslashit( OMNIPRESS_PATH . 'templates' ) );
+
+		define( 'OMNIPRESS_BLOCK_STYLES_PATH', trailingslashit( wp_upload_dir()['basedir'] . '/omnipress/css/' ) );
+		define( 'OMNIPRESS_BLOCK_STYLES_URL', trailingslashit( wp_upload_dir()['baseurl'] . '/omnipress/css/' ) );
+
 		define( 'OMNIPRESS_URL', trailingslashit( plugin_dir_url( OMNIPRESS_FILE ) ) );
+
+		define( 'OMNIPRESS_POST_EDIT_TIME', 'op_post_edit_time' );
+
+		define( 'OMNIPRESS_PREFIX', 'op_' );
+		define( 'OMNIPRESS_I18', 'omnipress' );
+		define( 'OMNIPRESS_BLOCK_PREFIX', 'omnipress' );
+
+		define( 'OMNIPRESS_BLOCK_EDIT_CAPABILITY', 'omnipress_edit_block' );
 	}
 
 	/**
@@ -68,6 +81,7 @@ class Omnipress {
 	private function init_hooks() {
 		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
 		add_action( 'admin_init', array( $this, 'redirect_to_settings_page' ) );
+		// add_action( 'init', array( $this, 'load_textdomain' ) );
 		register_activation_hook( __FILE__, array( $this, 'on_activation' ) );
 	}
 
@@ -75,7 +89,6 @@ class Omnipress {
 	 * Plugins loaded hook.
 	 */
 	public function on_plugins_loaded() {
-		$this->load_textdomain();
 		do_action( 'omnipress_init' );
 		Omnipress\Init::instance();
 		do_action( 'omnipress_loaded', self::$instance );
@@ -88,10 +101,31 @@ class Omnipress {
 		load_plugin_textdomain( 'omnipress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
+	public function create_database() {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'op_block_settings';
+
+		$charset_collate = $wpdb->get_charset_collate();
+
+		$sql = "CREATE TABLE $table_name (
+            id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+            block_name VARCHAR(255) NOT NULL,
+            styles_attributes LONGTEXT NULL,
+            styles_variations LONGTEXT NULL,
+            selectors VARCHAR(255)  NULL,
+            PRIMARY KEY (id),
+            UNIQUE KEY block_name (block_name)
+        ) $charset_collate;";
+
+		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+		dbDelta( $sql );
+	}
+
 	/**
 	 * Activation hook.
 	 */
 	public function on_activation() {
+		$this->create_database(); // create databse for existing block's details and setting.
 		set_transient( 'omnipress_activation_redirect', true, 30 );
 		set_transient( 'omnipress_recommended_plugins_notice', true, 30 );
 	}

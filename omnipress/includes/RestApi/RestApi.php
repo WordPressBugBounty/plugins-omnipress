@@ -86,6 +86,7 @@ class RestApi {
 			'users'          => __NAMESPACE__ . '\\Controllers\\V1\\UsersController',
 			'changelogs'     => __NAMESPACE__ . '\\Controllers\\V1\\ChangelogController',
 			'wc'             => __NAMESPACE__ . '\\Controllers\\V1\\WoocommerceController',
+			'global-styles'  => __NAMESPACE__ . '\\Controllers\\V1\\GlobalStylesController',
 		);
 	}
 

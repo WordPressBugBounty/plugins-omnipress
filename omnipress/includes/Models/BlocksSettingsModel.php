@@ -185,7 +185,7 @@ class BlocksSettingsModel extends ModelsBase {
 					'position'   => 30,
 				),
 				array(
-					'page_title' => 	__( 'Templates', 'omnipress' ),
+					'page_title' => __( 'Templates', 'omnipress' ),
 					'page_slug'  => 'omnipress-templates',
 					'capability' => 'manage_options',
 					'callback'   => array( $this, 'register_template_page' ),

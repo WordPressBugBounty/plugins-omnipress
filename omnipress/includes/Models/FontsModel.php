@@ -39,7 +39,7 @@ class FontsModel extends ModelsBase {
 			'italic' => array(),
 		);
 
-		if ( ! empty( $font->variants ) && is_array( $font->variants )) {
+		if ( ! empty( $font->variants ) && is_array( $font->variants ) ) {
 			foreach ( $font->variants as $variant ) {
 				if ( false !== strpos( $variant, 'italic' ) ) {
 					$font_styles[] = 'italic';
@@ -64,7 +64,7 @@ class FontsModel extends ModelsBase {
 			'family'  => $font->family,
 			'weights' => $font_weights,
 			'styles'  => array_values( array_unique( $font_styles ) ),
-			'files'    => $font_files
+			'files'   => $font_files,
 		);
 	}
 
@@ -116,6 +116,5 @@ class FontsModel extends ModelsBase {
 		$font_style  = strtolower( $font_style );
 
 		return ! empty( $font_attrs['files'][ $font_style ][ $font_weight ] ) ? $font_attrs['files'][ $font_style ][ $font_weight ] : '';
-
 	}
 }

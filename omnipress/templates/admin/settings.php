@@ -118,6 +118,3 @@ $form               = new \Omnipress\Models\FormModel();
 		</div>
 	</div>
 </div>
-
-
-
