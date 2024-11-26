@@ -4,7 +4,7 @@
  * Description: Omnipress is a ready-made WordPress Design Blocks, similar to the Gutenberg WordPress block editor, that takes a holistic approach to changing your complete site.
  * Author: omnipressteam
  * Author URI: https://omnipressteam.com/
- * Version: 1.5.0
+ * Version: 1.5.1
  * Text Domain: omnipress
  * License: GPLv3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,7 +21,7 @@ class Omnipress {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '1.5.0';
+	const VERSION = '1.5.1';
 
 	/**
 	 * Singleton instance.
@@ -81,7 +81,7 @@ class Omnipress {
 	private function init_hooks() {
 		add_action( 'plugins_loaded', array( $this, 'on_plugins_loaded' ) );
 		add_action( 'admin_init', array( $this, 'redirect_to_settings_page' ) );
-		// add_action( 'init', array( $this, 'load_textdomain' ) );
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 		register_activation_hook( __FILE__, array( $this, 'on_activation' ) );
 	}
 
@@ -91,13 +91,17 @@ class Omnipress {
 	public function on_plugins_loaded() {
 		do_action( 'omnipress_init' );
 		Omnipress\Init::instance();
-		do_action( 'omnipress_loaded', self::$instance );
 	}
 
 	/**
 	 * Load plugin textdomain.
 	 */
 	public function load_textdomain() {
+		do_action( 'omnipress_loaded', self::$instance );
+
+		load_plugin_textdomain( 'omnipress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
+
 		load_plugin_textdomain( 'omnipress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 

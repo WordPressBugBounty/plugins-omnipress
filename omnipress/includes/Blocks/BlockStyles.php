@@ -250,6 +250,8 @@ class BlockStyles {
 		} catch ( \Exception $exception ) {
 			throw $exception;
 		}
+
+		echo '<style>' . $blocks_generated_css . '</style>';
 	}
 }
 

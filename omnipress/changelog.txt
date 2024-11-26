@@ -1,5 +1,12 @@
+= Version 1.5.1 =
+  Enhancements & Fixes:
+    Resolved an issue where global components did not function as expected in the editor.
+    Fixed a problem causing blocks to appear unstyled on the initial page render after demo imports.
+    Added a warning prompt before major plugin updates to ensure a smoother update process.
+    Fixed: Compatibility notice for WordPress 6.7 regarding the incorrect usage of _load_textdomain_just_in_time.
 
-== Version 1.5.0 ==
+
+= Version 1.5.0 =
   New: Added the ability to copy and paste block styles.
   New: Introduced a global reusable component for each block.
   New: Introduced the Advanced Query block. [Premium]

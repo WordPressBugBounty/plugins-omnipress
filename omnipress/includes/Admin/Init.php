@@ -126,6 +126,14 @@ class Init {
 	 * @return void
 	 */
 	public function __construct() {
+
+		add_action(
+			'in_plugin_update_message-' . plugin_basename( OMNIPRESS_FILE ),
+			function ( $plugin_data ) {
+				$this->version_update_warning( OMNIPRESS_VERSION, $plugin_data['new_version'] );
+			}
+		);
+
 		$this->define_admin_constants();// Define Admin related constants.
 		$this->block_setting_model = new BlocksSettingsModel();
 		$this->settings_controller = new SettingsController( $this->block_setting_model );
@@ -487,5 +495,38 @@ class Init {
 		);
 
 		return $dismissal_link;
+	}
+
+	public function version_update_message( $plugin_data ) {
+
+		// version update notice hook. `[in_plugin_update_message]`.
+	}
+
+	public function version_update_warning( string $current_version, string $new_version ) {
+		$current_version_minor_part = explode( '.', $current_version )[1];
+		$new_version_minor_part     = explode( '.', $new_version )[1];
+		if ( $current_version_minor_part === $new_version_minor_part ) {
+			return;
+		}
+		?>
+	<div class="op-update-warning-wrapper">
+			<hr />
+		<h3>Important: Take a Backup Before Updating!</h3>
+		<p>
+		We strongly recommend taking a complete backup of your website before proceeding with the plugin update.<br>
+		This ensures you can restore your site if anything goes wrong during the update process.
+		<hr>
+		</p>
+		<em>
+		For a quick and reliable backup solution,
+		you can use the
+		<a href="https://wordpress.org/plugins/everest-backup/" target="_blank" rel="noopener noreferrer">
+		<b>Everest Backup plugin</b>
+		</a>.
+		( It’s easy to use and offers robust backup and restore features.)
+		</em>
+	</div>
+
+		<?php
 	}
 }
