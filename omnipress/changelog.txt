@@ -1,3 +1,7 @@
+= Version 1.5.3 =
+  Fixes:
+    - Fixes crash site after updating version 1.5.2
+
 = Version 1.5.2 =
   NEW:
     Block Quick access sidebar
