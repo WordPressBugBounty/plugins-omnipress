@@ -1,0 +1,1 @@
+var c=document.querySelectorAll(".accordion");c.forEach((e,r)=>{e.addEventListener("click",t=>{t.stopPropagation(),c.forEach((o,a)=>{if(a===r){o.querySelector(".accordion-body").classList.toggle("active");return}o.querySelector(".accordion-body").classList.remove("active")})})});

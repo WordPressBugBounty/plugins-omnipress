@@ -54,6 +54,8 @@ class Init {
 		if ( false === $prev_version || version_compare( $prev_version, OMNIPRESS_VERSION, '<' ) ) {
 			static::on_update_plugin( $prev_version, OMNIPRESS_VERSION );
 
+			delete_transient( 'omnipress_blocks_details' );
+
 			update_option( 'omnipress_prev_version', OMNIPRESS_VERSION );
 
 			update_option( OMNIPRESS_POST_EDIT_TIME, time() );

@@ -162,3 +162,5 @@ if ( ! class_exists( 'OMNIPRESS\FileSystemUtil' ) ) {
 		}
 	}
 }
+
+// write sum function

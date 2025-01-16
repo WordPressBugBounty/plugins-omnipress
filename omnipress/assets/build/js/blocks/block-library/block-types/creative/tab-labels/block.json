@@ -45,7 +45,7 @@
     },
     "activeButton": {
       "group": "design",
-      "selector": ".op-block__tab-labels--button.[aria-hidden='false']",
+      "selector": ".op-block__tab-labels--button[aria-hidden='false']",
       "label": "Button Active",
       "fields": {
         "color": {

@@ -2,20 +2,20 @@
 
 namespace Omnipress\Blocks\BlockTypes;
 
+use Omnipress\Abstracts\AbstractBlock;
+
 /**
  * Block product categories.
  */
-class WoocategoryList extends DynamicAbstract {
+class WoocategoryList extends AbstractBlock {
 
-	protected string $block_name     = 'product-categories';
-	protected string $block_category = 'woocommerce';
 
 	/**
 	 * Default attribute values, should match what's set in JS `registerBlockType`.
 	 *
 	 * @var array
 	 */
-	protected $defaults = array(
+	protected array $default_attributes = array(
 		'hasCount'         => true,
 		'hasImage'         => false,
 		'hasEmpty'         => false,
@@ -24,30 +24,13 @@ class WoocategoryList extends DynamicAbstract {
 		'showChildrenOnly' => false,
 	);
 
-	/**
-	 * Get block attributes.
-	 *
-	 * @return array
-	 */
-	protected function get_block_attributes() {
-		return array_merge(
-			parent::get_block_attributes(),
-			array(
-				'hasCount'         => $this->get_schema_boolean( true ),
-				'hasImage'         => $this->get_schema_boolean( false ),
-				'hasEmpty'         => $this->get_schema_boolean( false ),
-				'isDropdown'       => $this->get_schema_boolean( false ),
-				'isHierarchical'   => $this->get_schema_boolean( true ),
-				'showChildrenOnly' => $this->get_schema_boolean( false ),
-			)
-		);
-	}
 
 	/**
 	 * @param array $attributes
 	 * @return int[]|string|string[]|\WP_Error|\WP_Term[]
 	 */
 	private function get_all_woocommerce_categories( array $attributes ) {
+
 		$children_only = $attributes['showChildOnly'] && is_product_category();
 
 		if ( $children_only ) {
@@ -201,7 +184,11 @@ class WoocategoryList extends DynamicAbstract {
 	 * @param \WP_Block $blocks block instance.
 	 * @return string
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
+		$this->block_attributes = $attributes;
+		$this->block_name       = $block->name;
+		$this->block_category   = 'omnipress-woo';
+
 		$categories = $this->get_categories( $attributes );
 		$content   .= $this->render_list_items( $categories, $attributes );
 		return $content;
@@ -365,7 +352,7 @@ class WoocategoryList extends DynamicAbstract {
 
 		return sprintf(
 			'<figure> <a href="#" class="op-woo-catlist__item-title-imglink" target="_self">%s</a></figure>',
-			wp_get_attachment_image( $image_id, 'thumbnail', array( 'class' => 'op-woo-catlist__item-image' ) )
+			wp_get_attachment_image( $image_id, 'thumbnail', false, array( 'class' => 'op-woo-catlist__item-image' ) )
 		);
 	}
 }

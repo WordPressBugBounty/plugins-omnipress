@@ -162,6 +162,13 @@ class StyleGenerator {
 				}
 				break;
 
+			case 'box-shadow':
+			case 'boxShadow':
+				if ( StyleGeneratorHelper::generate_shadow_styles( $value ) ) {
+					$css .= 'box-shadow:' . StyleGeneratorHelper::generate_shadow_styles( $value ) . ';';
+				}
+				break;
+
 			case 'text-shadow':
 			case 'textShadow':
 				if ( StyleGeneratorHelper::generateTextShadowCSS( $value ) ) {

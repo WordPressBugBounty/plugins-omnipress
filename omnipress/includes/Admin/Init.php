@@ -312,9 +312,9 @@ class Init {
 		$editor_assets['dependencies'][] = 'omnipress-admin-script';
 
 		// Enqueue block editor config for the block editor.
-		$editor_assets = include OMNIPRESS_PATH . 'assets/build/js/admin/block-editor.asset.php';
+		// $editor_assets = include OMNIPRESS_PATH . 'assets/build/js/admin/block-editor.asset.php';
 
-		wp_enqueue_script( 'omnipress-block-editor-config', OMNIPRESS_URL . 'assets/build/js/admin/block-editor.js', $editor_assets['dependencies'], $editor_assets['version'], true );
+		// wp_enqueue_script( 'omnipress-block-editor-config', OMNIPRESS_URL . 'assets/build/js/admin/block-editor.js', $editor_assets['dependencies'], $editor_assets['version'], true );
 
 		if (
 		'post-new.php' !== $hook_prefix &&

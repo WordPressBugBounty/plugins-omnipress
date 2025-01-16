@@ -17,7 +17,7 @@ class Accordion extends AbstractBlock {
 	/**
 	 * @inheritDoc
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$accordion_lists = $attributes['lists'];
 
 		if ( ! empty( $accordion_lists ) ) {

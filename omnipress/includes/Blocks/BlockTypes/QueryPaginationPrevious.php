@@ -35,7 +35,7 @@ class QueryPaginationPrevious extends AbstractBlock {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$arrow_map = array(
 			'none'    => '',
 			'arrow'   => 'fa-arrow-left',
@@ -46,7 +46,8 @@ class QueryPaginationPrevious extends AbstractBlock {
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
-				'class' => 'op-block__query-pagination-previous op-' . $attributes['blockId'],
+				'class'     => 'op-block__query-pagination-previous op-' . $attributes['blockId'],
+				'data-type' => 'omnipress/query-pagination-previous',
 			)
 		);
 
@@ -56,7 +57,7 @@ class QueryPaginationPrevious extends AbstractBlock {
 		$default_label          = __( 'Previous', 'omnipress' );
 		$label_text             = isset( $attributes['label'] ) && ! empty( $attributes['label'] ) ? esc_html( $attributes['label'] ) : $default_label;
 		$label                  = $show_label ? $label_text : '';
-		$custom_query           = new \WP_Query( Helpers::build_query_vars_from_omnipresss_query_block( $block, $page ) );
+		$custom_query           = new \WP_Query( Helpers::build_query_vars_from_omnipress_query_block( $block, $page ) );
 		$custom_query_max_pages = (int) $custom_query->max_num_pages;
 		$arrow                  = isset( $block->context['paginationArrow'] ) ? $arrow_map[ $block->context['paginationArrow'] ] : '';
 
@@ -78,16 +79,17 @@ class QueryPaginationPrevious extends AbstractBlock {
 
 		$p = new \WP_HTML_Tag_Processor( $content );
 
-		// Navigate to page without page reload.
-		if ( isset( $block->context['enhancedPagination'] ) && $block->context['enhancedPagination'] ) {
-			if ( $p->next_tag( array( 'tag_name' => 'a' ) ) ) {
-				$p->set_attribute( 'data-wp-key', 'omnipress-query-previous' );
-				$p->set_attribute( 'data-wp-on--click', 'omnipress/query::actions.navigate' );
-				$p->set_attribute( 'data-wp-on-async--mouseenter', 'omnipress/query::actions.prefetch' );
-				$p->set_attribute( 'data-wp-watch', 'omnipress/query::callbacks.prefetch' );
-				$content = $p->get_updated_html();
-			}
-		}
+		// Interactivity router not works properly some times so disabled for now.
+
+		// if ( isset( $block->context['enhancedPagination'] ) && $block->context['enhancedPagination'] ) {
+		// if ( $p->next_tag( array( 'tag_name' => 'a' ) ) ) {
+		// $p->set_attribute( 'data-wp-key', 'omnipress-query-previous' );
+		// $p->set_attribute( 'data-wp-on--click', 'actions.navigate' );
+		// $p->set_attribute( 'data-wp-on-async--mouseenter', 'actions.prefetch' );
+		// $p->set_attribute( 'data-wp-watch', 'callbacks.prefetch' );
+		// $content = $p->get_updated_html();
+		// }
+		// }
 		return $content;
 	}
 

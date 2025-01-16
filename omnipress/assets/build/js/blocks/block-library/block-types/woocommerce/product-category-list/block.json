@@ -126,6 +126,9 @@
       "selector": ".op-woo-catlist__item-product-count",
       "label": "Count",
       "fields": {
+        "color": {
+          "background": true
+        },
         "spacing": {
           "padding": true
         },

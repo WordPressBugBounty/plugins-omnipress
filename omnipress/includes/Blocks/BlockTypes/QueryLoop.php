@@ -1,12 +1,14 @@
 <?php
+
 namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
+use Omnipress\Helpers\GeneralHelpers;
 
 /**
  * Query Template block.
  *
- * @since 1.4.1
+ * @since   1.4.1
  * @package Omnipress
  */
 class QueryLoop extends AbstractBlock {
@@ -20,39 +22,54 @@ class QueryLoop extends AbstractBlock {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
+		wp_enqueue_script_module( 'omnipress/module-query' );
+		wp_enqueue_script( 'wp-api-fetch' );
 
-		// Enqueue modules js to use interactivity apis.
-		if ( isset( $attributes['enhancedPagination'] ) && $attributes['enhancedPagination'] ) {
-			wp_register_script_module(
-				'omnipress/assets/client/view/query',
-				OMNIPRESS_PRO_URL . 'interactivity-modules/query-view-module.js',
-				array(
-					array(
-						'id'     => '@wordpress/interactivity',
-						'import' => 'dynamic',
-					),
-					array(
-						'id'     => '@wordpress/interactivity-router',
-						'import' => 'dynamic',
-					),
-				),
-				OMNIPRESS_PRO_VERSION
-			);
+		$current_query = json_decode( wp_unslash( $_GET[ 'query_' . $attributes['blockId'] ] ?? '' ), true );
 
-			wp_enqueue_script_module( 'omnipress/assets/client/view/query' );
+		$filters = array(
+			'queryId'   => 'query_' . $attributes['blockId'],
+			'min_price' => 0,
+			'max_price' => 'max',
+		);
+
+		if ( GeneralHelpers::is_valid_array( $current_query ) ) {
+			foreach ( $current_query as $key => $value ) {
+				if ( strpos( $key, 'pa_' ) !== false ) {
+					$filters['attributes'][ $key ] = explode( ',', $value );
+					continue;
+				}
+
+				$filters[ $key ] = $value;
+			}
 		}
 
-		$p = new \WP_HTML_Tag_Processor( $content );
+		$context = wp_interactivity_data_wp_context(
+			array(
+				'view_layout' => 'grid',
+				'filters'     => $filters,
+			),
+		);
 
-		if ( $p->next_tag() ) {
-			// Add the necessary directives.
-			$p->set_attribute( 'data-wp-interactive', 'omnipress/query' );
-			$p->set_attribute( 'data-wp-router-region', 'query-' . $attributes['queryId'] );
-			$p->set_attribute( 'data-wp-context', '{}' );
-			$p->set_attribute( 'data-wp-key', esc_attr( $attributes['queryId'] ) );
-			$content = $p->get_updated_html();
-		}
+		$wrapper_attributes = get_block_wrapper_attributes(
+			array(
+				'data-wp-interactive'         => 'omnipress/query',
+				'data-wp-router-region'       => 'query-' . $attributes['blockId'],
+				'data-wp-bind--aria-controls' => 'context.view_layout',
+				'data-wp-key'                 => esc_attr( $attributes['blockId'] ),
+			)
+		);
+
+		$tag = $attributes['tagName'] ?? 'div';
+
+		$content = sprintf(
+			'<%1$s %2$s %3$s> %4$s</%1$s>',
+			$tag,
+			$context,
+			$wrapper_attributes,
+			$content
+		);
 
 		return $content;
 	}

@@ -108,6 +108,7 @@ class BlockRegistrar {
 				'product-category-list',
 				'product-grid',
 				'product-list',
+				'single-product',
 			),
 			'premium'     => array(
 				'advanced-query-loop',
@@ -121,6 +122,9 @@ class BlockRegistrar {
 				'content-switcher',
 				'content-switcher-contents',
 				'content-switcher-switch',
+				'product-filter',
+				'product-search',
+				'product-grid-2',
 			),
 		);
 
@@ -274,7 +278,9 @@ class BlockRegistrar {
 	 * @return void
 	 */
 	public function register_omnipress_block( $block_path, $args = array() ) {
+
 		if ( file_exists( $block_path . '/block.json' ) ) {
+
 			$metadata = json_decode( FileSystemUtil::read_file( $block_path . '/block.json' ), true );
 
 			if ( isset( $metadata['opSettings'] ) ) {
@@ -288,12 +294,14 @@ class BlockRegistrar {
 				$args['viewScript'] = $view_script['handle'];
 			}
 
-			$args['render_callback']    = array( $this, 'render_block' );
-			$args['supports']['anchor'] = true;
+			$args['render_callback'] = array( $this, 'render_block' );
+
+			$args['supports']['anchor']        = true;
+			$args['supports']['interactivity'] = true;
 
 			if ( GeneralHelpers::is_valid_array( $args ) ) {
 				if ( ! \WP_Block_Type_Registry::get_instance()->is_registered( $metadata['name'] ?? '' ) ) {
-					register_block_type( $block_path, $args );
+					register_block_type_from_metadata( $block_path, $args );
 				}
 			}
 		}
@@ -306,15 +314,14 @@ class BlockRegistrar {
 	 */
 	private function get_frontend_script( string $block_name ) {
 		$file_name      = explode( '/', $block_name )[1] . '-view';
-		$view_file_path = OMNIPRESS_PATH . 'assets/build/js/view-scripts/' . $file_name . '.js';
+		$view_file_path = OMNIPRESS_PATH . 'assets/build/js/client/view-scripts/' . $file_name . '.js';
 
 		if ( file_exists( $view_file_path ) ) {
-			$assets = include_once OMNIPRESS_PATH . 'assets/build/js/view-scripts/' . $file_name . '.asset.php';
 			return array(
 				'handle'  => $file_name,
-				'src'     => OMNIPRESS_URL . 'assets/build/js/view-scripts/' . $file_name . '.js',
-				'deps'    => $assets['dependencies'],
-				'version' => $assets['version'],
+				'src'     => OMNIPRESS_URL . 'assets/build/js/client/view-scripts/' . $file_name . '.js',
+				'deps'    => array(),
+				'version' => filemtime( $view_file_path ),
 			);
 		}
 
@@ -328,20 +335,30 @@ class BlockRegistrar {
 				const observer = new IntersectionObserver(
 				(entries) => {
 					entries.forEach((entry) => {
-					if (entry.isIntersecting) {
 						let animationClasses = (entry.target.dataset?.opAnimation || "").split(" ");
 
-						animationClasses.forEach(    (animationClass) => {
-							entry.target.classList.add(animationClass);
-						});
+						if (entry.isIntersecting) {
+							animationClasses.forEach( (animationClass) => {
+								entry.target.classList.add(animationClass);
+							});
 
-						observer.unobserve(entry.target);
-					}
+							// observer.unobserve(entry.target);
+						}else {
+							let timeout;
+
+							if (timeout) {
+								clearTimeout(timeout);
+							}
+
+							timeout = setTimeout(() => {
+								entry.target.classList.remove(...animationClasses);
+							}, 1000);
+						}
 					});
 				},
 				{
 					rootMargin: "0px 0px 0px 0px",
-					threshold: 0.01,
+					threshold: 0.5,
 				}
 				);
 
@@ -349,6 +366,7 @@ class BlockRegistrar {
 					if( !element){
 						return
 					}
+
 					observer.observe(element);
 				});
 			});
@@ -363,8 +381,7 @@ class BlockRegistrar {
 	 * @param \WP_Block $block Block Instance.
 	 * @return mixed
 	 */
-	public function render_block( $attributes, $content, \WP_Block $block ) {
-
+	public function render_block( array $attributes, string $content, \WP_Block $block ) {
 		if ( isset( $attributes['opAnimation'] ) && $attributes['opAnimation'] && ! wp_script_is( 'omnipress-animations' ) ) {
 			$scripts = $this->add_animation_scripts();
 

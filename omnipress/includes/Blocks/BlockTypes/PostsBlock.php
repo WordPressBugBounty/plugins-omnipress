@@ -78,15 +78,26 @@ abstract class PostsBlock extends AbstractBlock {
 	 */
 	public function get_query_args() {
 		if ( ! empty( $this->attributes ) ) {
-			return array(
+			$args = array(
 				'post_type'      => 'post',
 				'post_status'    => 'publish',
 				'posts_per_page' => $this->attributes['postPerPage'] ?? 6,
-				'category'       => (int) ( $this->attributes['selectedCategoryId'] ?? '' ),
 				'orderby'        => $this->attributes['orderby'] ?? 'desc',
 				'order'          => $this->attributes['order'] ?? 'date',
-				'search'         => $this->attributes['search'] ?? '',
+				's'              => $this->attributes['search'] ?? '',
 			);
+
+			if ( $this->attributes['selectedCategoryId'] ) {
+				$args['tax_query'] = array(
+					array(
+						'taxonomy' => 'category',
+						'field'    => 'term_id',
+						'terms'    => (int) ( $this->attributes['selectedCategoryId'] ?? '' ),
+					),
+				);
+			}
+
+			return $args;
 		}
 	}
 

@@ -36,7 +36,8 @@ class QueryPaginationNumbers extends AbstractBlock {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
+
 		if ( empty( $block->context['postId'] ) ) {
 			return '';
 		}
@@ -63,8 +64,13 @@ class QueryPaginationNumbers extends AbstractBlock {
 			$content = paginate_links( $paginate_args );
 		} else {
 			$prev_query = $wp_query;
+			$query_args = Helpers::build_query_vars_from_omnipress_query_block( $block, $page );
 
-			$query_vars = new \WP_Query( Helpers::build_query_vars_from_omnipresss_query_block( $block, $page ) );
+			if ( 'product' === $query_args['post_type'] ) {
+				$query_args = Helpers\GeneralHelpers::validate_wc_query_args( $query_args, $block );
+			}
+
+			$query_vars = new \WP_Query( $query_args );
 
 			$paginate_args['add_args'] = array( 'cst' => '' );
 
@@ -77,7 +83,7 @@ class QueryPaginationNumbers extends AbstractBlock {
 			$content = paginate_links(
 				array(
 					'base'      => '%_%',
-					'format'    => "?$page_key=%#%",
+					'format'    => "?{$page_key}=%#%",
 					'current'   => max( 1, $page ),
 					'total'     => $query_vars->max_num_pages,
 					'prev_next' => false,
@@ -87,7 +93,12 @@ class QueryPaginationNumbers extends AbstractBlock {
 			wp_reset_postdata(); // Restore original Post Data.
 			$wp_query = $prev_query; // phpcs:ignore
 
-			$wrapper_attributes = get_block_wrapper_attributes( array( 'class' => 'op-block__query-pagination-numbers--wrapper op-' . $attributes['blockId'] ) );
+			$wrapper_attributes = get_block_wrapper_attributes(
+				array(
+					'class'     => 'op-block__query-pagination-numbers--wrapper op-' . $attributes['blockId'],
+					'data-type' => 'omnipress/query-pagination-numbers',
+				)
+			);
 
 			$content = sprintf(
 				'<div %1$s>%2$s</div>',
@@ -95,7 +106,6 @@ class QueryPaginationNumbers extends AbstractBlock {
 				$content
 			);
 
-			// TODO: Implement force reload page or fetch without reload page.
 			$p = new WP_HTML_Tag_Processor( $content );
 
 			if ( $enhanced_pagination ) {
@@ -109,7 +119,7 @@ class QueryPaginationNumbers extends AbstractBlock {
 					}
 
 					if ( 'A' === $p->get_tag() ) {
-						$p->set_attribute( 'data-wp-on--click', 'omnipress/query::actions.navigate' );
+						$p->set_attribute( 'data-wp-on--click', 'actions.navigate' );
 					}
 				}
 			} else {
@@ -125,7 +135,7 @@ class QueryPaginationNumbers extends AbstractBlock {
 			$content = $p->get_updated_html();
 		}
 
-		return $content;
+		return $content ?? '';
 	}
 
 	public function getAttributes(): array {

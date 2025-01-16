@@ -273,4 +273,142 @@ class GeneralHelpers {
 		// Return null if block type not found or has no default values.
 		return null;
 	}
+
+	public static function validate_wc_query_args( array $default_query_args, \WP_Block $block, $params = null ): array {
+		if ( is_null( $params ) ) {
+			$params = $_GET;
+		}
+
+		// phpcs:disable
+		$category           = sanitize_text_field(wp_unslash($params['category'] ?? $block->context['query']['product_cat'] ?? ''));
+		$product_attributes = sanitize_text_field( wp_unslash( $params['attributes'] ?? '' ) );
+		$min_price          = sanitize_text_field( wp_unslash( $params['min_price'] ?? '' ) );
+		$max_price          = sanitize_text_field( wp_unslash( $params['max_price'] ?? '' ) );
+		$order_by           = sanitize_text_field( wp_unslash( $params['orderby'] ?? '' ) );
+		$order              = sanitize_text_field( wp_unslash( $params['order'] ?? '' ) );
+		$min_ratings        = sanitize_text_field( wp_unslash( $params['ratings'] ?? '' ) );
+
+		$search = sanitize_text_field( wp_unslash( $params['search'] ?? '' ) );
+
+		if ( ! empty( $search ) ) {
+			$default_query_args['s'] = $search;
+		}
+
+		foreach ( $params as $key => $val ) {
+			$val = sanitize_text_field( wp_unslash( $val ) );
+
+			switch ( $key ) {
+				case '_stock_status':
+					$default_query_args['meta_query'][] = array(
+						'key'     => '_stock_status',
+						'value'   => $val,
+						'compare' => '=',
+					);
+					break;
+
+				case '_wc_average_rating':
+					$default_query_args['meta_query'][] = array(
+						'key'     => '_wc_average_rating',
+						'value'   => $val,
+						'compare' => '>=',                // Filter products with rating >= 4
+						'type'    => 'NUMERIC',
+					);
+					break;
+
+				case 'sort':
+					if ( false !== strpos( $val, 'date' ) ) {
+						$default_query_args['orderby'] = 'date';
+						$default_query_args['order']   = 'DESC';
+					} else {
+						$sort_val = explode( '&', $val );
+						if ( 2 == count( $sort_val ) ) {
+							$default_query_args['meta_key'] = explode( '=', $sort_val[1] )[1] ?? 'total_sales';
+							$default_query_args['order']    = explode( '=', $sort_val[0] )[1] ?? 'DESC';
+							$default_query_args['orderby']  = 'meta_value_num';
+
+						}
+					}
+
+					break;
+				case '_sale_price':
+					$default_query_args['meta_query']['relation'] = 'AND';
+
+					$default_query_args['meta_query'][] = array(
+						'key'     => '_sale_price',
+						'value'   => '',
+						'compare' => '!=', // Sale price is not empty
+					);
+					$default_query_args['meta_query'][] = array(
+						'key'     => '_price',
+						'value'   => 0,
+						'compare' => '>',  // Price is greater than 0
+						'type'    => 'NUMERIC',
+					);
+					break;
+
+				default:
+					break;
+			}
+
+			if ( strpos( $key, 'pa_' ) === 0 ) {
+					$default_query_args['tax_query'][] = array(
+						'taxonomy' => $key,
+						'field'    => 'slug',
+						'terms'    => explode( ',', $val ),
+						'operator' => 'IN',
+					);
+			}
+		}
+
+		//phpcs:enable
+		if ( ! empty( $category ) ) {
+			$default_query_args['tax_query'][] = array(
+				array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'slug',
+					'terms'    => $category,
+				),
+			);
+		}
+
+		if ( ! empty( $min_price ) || ! empty( $max_price ) ) {
+			$default_query_args['meta_query']['relation'] = 'AND';
+
+			if ( ! empty( $min_price ) ) {
+				$default_query_args['meta_query'][] = array(
+					'key'     => '_price',
+					'value'   => ! empty( $min_price ) ? intval( $min_price ) : '',
+					'compare' => '>=',
+					'type'    => 'NUMERIC',
+				);
+			}
+			if ( ! empty( $max_price ) ) {
+				$default_query_args['meta_query'][] = array(
+					'key'     => '_price',
+					'value'   => ! empty( $max_price ) ? intval( $max_price ) : '',
+					'compare' => '<=',
+					'type'    => 'NUMERIC',
+				);
+			}
+		}
+
+		if ( ! empty( $order_by ) ) {
+			$default_query_args['orderby'] = $order_by;
+		}
+
+		if ( ! empty( $order ) ) {
+			$default_query_args['order'] = $order;
+		}
+
+		if ( ! empty( $min_ratings ) ) {
+			$default_query_args['meta_query'][] = array(
+				'key'     => '_wc_average_rating',
+				'value'   => intval( $min_ratings ),
+				'compare' => '>=',
+				'type'    => 'NUMERIC',
+			);
+		}
+
+		return $default_query_args;
+	}
 }

@@ -337,7 +337,7 @@ class Helpers {
 	 *
 	 * @return array
 	 */
-	public static function build_query_vars_from_omnipresss_query_block( WP_Block $block, $page = null ) {
+	public static function build_query_vars_from_omnipress_query_block( WP_Block $block, $page = null ) {
 		$custom_args   = $block->context['query'];
 		$wp_query_args = array();
 

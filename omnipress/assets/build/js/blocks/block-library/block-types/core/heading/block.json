@@ -68,8 +68,7 @@
     "content": {
       "type": "string",
       "source": "html",
-      "selector": ".op-block__heading-content, [data-type='omnipress/heading'] > h1, [data-type='omnipress/heading'] > h2,[data-type='omnipress/heading'] > h3,[data-type='omnipress/heading'] > h4,[data-type='omnipress/heading'] > h5,[data-type='omnipress/heading'] > h6,[data-type='omnipress/heading'] > a,[data-type='omnipress/heading'] > p",
-      "default": "Surround yourself with greatness."
+      "selector": ".op-block__heading-content, [data-type='omnipress/heading'] > h1, [data-type='omnipress/heading'] > h2,[data-type='omnipress/heading'] > h3,[data-type='omnipress/heading'] > h4,[data-type='omnipress/heading'] > h5,[data-type='omnipress/heading'] > h6,[data-type='omnipress/heading'] > a,[data-type='omnipress/heading'] > p"
     },
     "blockId": {
       "type": "string"

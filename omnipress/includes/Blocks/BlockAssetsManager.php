@@ -7,9 +7,8 @@ namespace Omnipress\Blocks;
  *
  * All frontend and editor assets are registered and enqueued here.
  *
- * @since 1.0.0
- *
  * @return void
+ * @since 1.0.0
  */
 class BlockAssetsManager {
 	/**
@@ -43,6 +42,45 @@ class BlockAssetsManager {
 	 */
 	public function enqueue_frontend_assets() {
 		call_user_func( 'Omnipress\Block\enqueue_frontend_assets' );
+
+		// Regsiter all module scripts within assets/build/js/client/interactivity-modules/ folder.
+		$module_scripts = glob( OMNIPRESS_PATH . 'assets/build/js/client/interactivity-modules/*.js' );
+
+		foreach ( $module_scripts as $module_script ) {
+			if ( strpos( $module_script, 'chunk' ) == false ) {
+				$module_script_path_arr = explode( '/', $module_script );
+				$module_id              = str_replace( '.js', '', end( $module_script_path_arr ) );
+
+				wp_register_script_module(
+					'omnipress/' . $module_id,
+					OMNIPRESS_URL . 'assets/build/js/client/interactivity-modules/' . $module_id . '.js',
+					array(
+						array(
+							'id'     => '@wordpress/interactivity',
+							'import' => 'dynamic',
+						),
+						array(
+							'id'     => '@wordpress/interactivity-router',
+							'import' => 'dynamic',
+						),
+					),
+					filemtime( $module_script )
+				);
+			}
+		}
+
+		// localize scripts for frontend .
+		wp_print_inline_script_tag(
+			sprintf(
+				'window._omnipress = %s;',
+				wp_json_encode(
+					array(
+						'wc_nonce' => wp_create_nonce( 'wc_store_api' ),
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+					)
+				)
+			)
+		);
 	}
 
 	/**

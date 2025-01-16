@@ -8,7 +8,7 @@ use Omnipress\Helpers;
 /**
  * Query Template block.
  *
- * @since 1.4.1
+ * @since   1.4.1
  * @package Omnipress
  */
 class QueryPaginationNext extends AbstractBlock {
@@ -26,7 +26,7 @@ class QueryPaginationNext extends AbstractBlock {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		// Bail out early if the post ID is not set for some reason.
 		if ( ! $block->context['showLabel'] && 'none' === $block->context['paginationArrow'] ) {
 			return '';
@@ -42,7 +42,8 @@ class QueryPaginationNext extends AbstractBlock {
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
-				'class' => 'op-block__query-pagination-next op-' . $attributes['blockId'],
+				'class'     => 'op-block__query-pagination-next op-' . $attributes['blockId'],
+				'data-type' => 'omnipress/query-pagination-next',
 			)
 		);
 
@@ -53,7 +54,7 @@ class QueryPaginationNext extends AbstractBlock {
 		$default_label          = __( 'Next', 'omnipress' );
 		$label_text             = isset( $attributes['label'] ) && ! empty( $attributes['label'] ) ? esc_html( $attributes['label'] ) : $default_label;
 		$label                  = $show_label ? $label_text : '';
-		$custom_query           = new \WP_Query( Helpers::build_query_vars_from_omnipresss_query_block( $block, $page ) );
+		$custom_query           = new \WP_Query( Helpers::build_query_vars_from_omnipress_query_block( $block, $page ) );
 		$custom_query_max_pages = (int) $custom_query->max_num_pages;
 		$content                = '';
 
@@ -82,19 +83,7 @@ class QueryPaginationNext extends AbstractBlock {
 
 		wp_reset_postdata();
 
-		if ( isset( $block->context['enhancedPagination'] ) && $block->context['enhancedPagination'] ) {
-			$p = new \WP_HTML_Tag_Processor( $content );
-
-			if ( $p->next_tag( array( 'tag_name' => 'a' ) ) ) {
-				$p->set_attribute( 'data-wp-key', 'omnipress-query-next' );
-				$p->set_attribute( 'data-wp-on--click', 'omnipress/query::actions.navigate' );
-				$p->set_attribute( 'data-wp-on-async--mouseenter', 'omnipress/query::actions.prefetch' );
-				$p->set_attribute( 'data-wp-watch', 'omnipress/query::callbacks.prefetch' );
-				$content = $p->get_updated_html();
-			}
-		}
-
-		return $content;
+		return $content ?? '';
 	}
 
 

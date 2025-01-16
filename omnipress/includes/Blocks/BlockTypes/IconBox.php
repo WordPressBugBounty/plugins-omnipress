@@ -5,7 +5,7 @@ namespace Omnipress\Blocks\BlockTypes;
 use Omnipress\Abstracts\AbstractBlock;
 
 class IconBox extends AbstractBlock {
-	private array $block_attributes = array(
+	protected array $default_attributes = array(
 		'iconPosition' => 'top',
 		'title'        => 'User-Friendly Interface',
 		'desc'         => 'Navigate with ease using our intuitive and user-friendly interface. Designed for simplicity and efficiency.',
@@ -34,8 +34,9 @@ class IconBox extends AbstractBlock {
 		return $this->block_attributes;
 	}
 
-	public function render( $attributes, $content, $block ) {
-		$block->parsed_block['attrs'] = array_merge( $this->get_block_attributes(), $attributes );
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
+		$this->block_attributes = $block->attributes;
+		$this->block_name       = $block->name;
 
 		return $content;
 	}

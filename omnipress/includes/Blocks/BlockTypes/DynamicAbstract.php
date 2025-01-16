@@ -8,36 +8,22 @@ use Omnipress\Abstracts\AbstractBlock;
  * Class DynamicAbstract
  */
 abstract class DynamicAbstract extends AbstractBlock {
-	/**
-	 *
-	 * @param $default
-	 * @return array
-	 */
-	protected function get_schema_boolean( $default = true ) {
+	protected function get_schema_boolean( mixed $default = true ): array {
 		return array(
 			'type'    => 'boolean',
 			'default' => $default,
 		);
 	}
 
-	/**
-	 *
-	 * @param $default
-	 * @return array
-	 */
-	protected function get_schema_string( $default = '' ) {
+	protected function get_schema_string( mixed $default = '' ): array {
 		return array(
 			'type'    => 'string',
 			'default' => $default,
 		);
 	}
 
-	/**
-	 *
-	 * @param $default
-	 * @return array
-	 */
-	protected function get_schema_number( $default ) {
+
+	protected function get_schema_number( mixed $default = 0 ): array {
 		return array(
 			'type'    => 'number',
 			'default' => $default,

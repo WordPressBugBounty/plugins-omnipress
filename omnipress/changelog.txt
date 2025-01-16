@@ -1,3 +1,19 @@
+= Version 1.5.2 =
+  NEW:
+    Block Quick access sidebar
+    New block - Advanced Product Search
+    New block - Related Product ( Single product related products show case )
+    New block - Product Grid 2
+    New block - Product Filter
+    New block - Product Filter
+
+  Enhancements & Fixes:
+    Enhancement:
+      - Advanced Query Block: compatibility with single product block and product filter block.
+
+    Fixes
+      - Various minor issues related to the advanced query block and post grid block.
+
 = Version 1.5.1 =
   Enhancements & Fixes:
     Resolved an issue where global components did not function as expected in the editor.

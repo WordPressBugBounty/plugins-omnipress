@@ -10,8 +10,7 @@ use Omnipress\Abstracts\AbstractBlock;
  * Heading class.
  */
 class Heading extends AbstractBlock {
-	public function render( $attributes, $content, $block ) {
-
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		return $content;
 	}
 }

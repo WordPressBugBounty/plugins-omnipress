@@ -1,6 +1,8 @@
 <?php
 namespace Omnipress\Blocks\BlockTypes;
 
+use Omnipress\Abstracts\AbstractBlock;
+
 /**
  * Posts Grid Block.
  *
@@ -9,7 +11,7 @@ namespace Omnipress\Blocks\BlockTypes;
  * @package Omnipress\Blocks
  * @since 1.2.3
  */
-class PostGrid extends PostsBlock {
+class PostGrid extends AbstractBlock {
 	/**
 	 * Block Default attributes.
 	 *
@@ -19,7 +21,7 @@ class PostGrid extends PostsBlock {
 		'categoriesWrapper' => array(
 			'borderRadius'    => '7px',
 			'backgroundColor' => '#175fff',
-			'color'           => '#ffff;ff',
+			'color'           => '#ffffff',
 			'padding'         => '0 12px;',
 		),
 	);
@@ -59,18 +61,53 @@ class PostGrid extends PostsBlock {
 	 * @param \WP_Block $block Block instance.
 	 * @return string HTML content of the rendered block.
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$block->parsed_block['attrs'] = $attributes;
 		$this->set_attributes( $attributes );
 		$this->set_block_name( 'post-grid' );
 
-		$this->columns = (string) ( $attributes['columns'] ?? '3' );
-		$posts         = $this->fetch_posts();
+		$wp_query           = new \WP_Query( $this->get_query_args() );
+		$wrapper_attributes = get_block_wrapper_attributes(
+			array(
+				'class'     => 'op-' . $attributes['blockId'] . ' op-block__post-grid op-grid-col-3',
+				'data-type' => 'omnipress/post-grid',
+			)
+		);
+		$content            = '<div ' . $wrapper_attributes . '>';
 
-		if ( is_array( $posts ) && ! empty( $posts ) ) {
-			return $content .= $this->render_posts( $posts );
+		if ( $wp_query->have_posts() ) {
+			while ( $wp_query->have_posts() ) {
+				$wp_query->the_post();
+				$content .= $this->get_block_template( 'posts/single-post/layout-one', 'free', array( 'hidden_fields' => $attributes['hiddenFields'] ?? array() ) );
+			}
 		}
+		$content .= '</div>';
 
 		return $content;
+	}
+
+	public function get_query_args() {
+		if ( ! empty( $this->attributes ) ) {
+			$args = array(
+				'post_type'      => 'post',
+				'post_status'    => 'publish',
+				'posts_per_page' => $this->attributes['postPerPage'] ?? 6,
+				'orderby'        => $this->attributes['orderby'] ?? 'desc',
+				'order'          => $this->attributes['order'] ?? 'date',
+				's'              => $this->attributes['search'] ?? '',
+			);
+
+			if ( $this->attributes['selectedCategoryId'] ) {
+				$args['tax_query'] = array(
+					array(
+						'taxonomy' => 'category',
+						'field'    => 'term_id',
+						'terms'    => (int) ( $this->attributes['selectedCategoryId'] ?? '' ),
+					),
+				);
+			}
+
+			return $args;
+		}
 	}
 }

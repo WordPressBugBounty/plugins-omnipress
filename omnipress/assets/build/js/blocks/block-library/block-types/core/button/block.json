@@ -129,10 +129,7 @@
     },
     "button": {
       "type": "object",
-      "default": {
-        "fontWeight": "500",
-        "fontSize": "16px"
-      }
+      "default": {}
     },
     "iconPosition": {
       "type": "string"

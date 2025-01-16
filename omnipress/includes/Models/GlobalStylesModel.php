@@ -128,7 +128,7 @@ final class GlobalStylesModel {
 	 * Replace whole block component styles with new one.
 	 */
 	public function update_styles( array $styles ): bool {
-		if ( ! empty( $styles ) && is_array( value: $styles ) ) {
+		if ( ! empty( $styles ) && is_array(  $styles ) ) {
 			update_option( $this->global_styles_option_name, $styles );
 
 			if ( update_option( self::GLOBAL_STYLES_COMPONENT_MODIFIED_TIME_KEY, time() ) ) {

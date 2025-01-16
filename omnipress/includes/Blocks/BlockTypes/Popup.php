@@ -7,7 +7,7 @@ use Omnipress\Core\FileSystemUtil;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Popup blocks main class.
+ * Popup Block class.
  *
  * @author omnipressteam
  *
@@ -48,7 +48,7 @@ class Popup extends AbstractBlock {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$attributes             = array_merge( $this->default_attributes, $attributes );
 		$post_id                = (int) $attributes['instanceId'];
 		$popup_max_repeat_count = (int) $attributes['maxPopupRepetitions'];

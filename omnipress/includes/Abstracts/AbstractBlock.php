@@ -4,6 +4,14 @@ namespace Omnipress\Abstracts;
 
 abstract class AbstractBlock {
 	const BLOCK_DIR = OMNIPRESS_PATH . 'assets/scripts/';
+
+	/**
+	 * Current Block instance.
+	 *
+	 * @var \WP_Block|null $block
+	 */
+	public $block;
+
 	/**
 	 * Block namespace.
 	 *
@@ -13,16 +21,21 @@ abstract class AbstractBlock {
 	/**
 	 * Block Type.
 	 *
-	 * @var string
+	 * @var string|null
 	 */
-	protected string $block_name = '';
+	protected $block_name;
+
+
+	protected array $default_attributes; // phpcs:ignore
+
+	protected array $block_attributes;  // phpcs:ignore
 
 	/**
-	 * Block's cateogyr type.
+	 * Block's category type.
 	 *
 	 * @var string Block Category.
 	 */
-	protected string $block_category = '';
+	protected string $block_category = 'omnipress';
 
 	/**
 	 * Track current block enqueued scripts or not.
@@ -31,99 +44,137 @@ abstract class AbstractBlock {
 	 */
 	protected bool $enqueued_scripts = false;
 
-
 	/**
-	 * That will be called when block is render.
+	 * Render the block.
 	 *
-	 * @param array     $attributes block attributes.
-	 * @param string    $content block content.
-	 * @param \WP_Block $block Block instance.
-	 * @return string
+	 * @param array     $attributes The block attributes.
+	 * @param string    $content The block content.
+	 * @param \WP_Block $block The block object.
+	 * @return string The block content.
 	 */
-	abstract public function render( $attributes, $content, WP_Blok $block );
+	abstract public function render( array $attributes, string $content, \WP_Block $block ): string;
 
 	/**
-	 * Block Attributes,
+	 * Get the block attributes.
 	 *
-	 * @return array
+	 * @return array The block attributes.
 	 */
 	protected function get_block_attributes() {
+		return $this->block_attributes;
+	}
+
+	/**
+	 * Get the block type context.
+	 *
+	 * @return array The block type context.
+	 */
+	public function get_block_type_context(): array {
 		return array();
 	}
 
+
 	/**
-	 * Get Block type context.
+	 * Get the block name.
 	 *
-	 * @return array
+	 * @return string The block name.
 	 */
-	public function get_block_type_context() {
-		return array();
+	public function get_block_name(): string {
+		return $this->block_name;
 	}
 
 	/**
-	 * Get current Block type name.
+	 * Get the block template.
 	 *
-	 * @return string
+	 * @param string $template_name The template name.
+	 * @param string $block_type The block type.
+	 * @param array  $args The block arguments.
+	 * @return string The block template.
 	 */
-	public function get_block_name() {
-		return $this->namespace . '/' . $this->block_name;
+	public function get_block_template( string $template_name, $block_type = 'free', $args = array() ) {
+		$template_path = OMNIPRESS_PATH . "templates/$template_name.php";
+
+		if ( 'pro' === $block_type ) {
+			$template_path = OMNIPRESS_PRO_PATH . "templates/$template_name.php";
+		}
+
+		if ( ! file_exists( $template_path ) ) {
+			return '';
+		}
+
+		ob_start();
+		// We are extract post fields from the args so we can use post fields directly in the template.
+		foreach ( $args as $key => $value ) {
+			$$key = $value;
+		}
+
+		include $template_path;
+		return ob_get_clean();
 	}
 
 	/**
-	 * Get the frontend script handle for this block type.
+	 * Get the frontend scripts.
 	 *
-	 * @see $this->register_block_type()
-	 * @param string $key Data to get, or default to everything.
-	 * @return array|string|null
+	 * @param string $block_name The block name.
+	 * @return void
 	 */
-	protected function get_block_type_script( $key = null ) {
-		$script = array(
-			'handle'       => 'op-' . $this->block_name . '-frontend',
-			'path'         => $this->get_frontend_scripts_path() . '/frontend.js',
-			'dependencies' => array(),
-		);
-		return $key ? $script[ $key ] : $script;
-	}
-
-	/**
-	 * Block Frontend script path.
-	 *
-	 * @return string
-	 */
-	protected function get_frontend_scripts( $block_name ) {
+	protected function get_frontend_scripts( string $block_name ) {
 		if ( file_exists( self::BLOCK_DIR . '/' . $block_name . '-view.js' ) ) {
-			$script = file_get_contents( self::BLOCK_DIR . '/' . $block_name . '-view.js' ); //phpcs:ignore
+			$script = file_get_contents(self::BLOCK_DIR . '/' . $block_name . '-view.js'); //phpcs:ignore
 
 			wp_add_inline_script( $block_name . '-script', $script );
 		}
 	}
 
 	/**
-	 * Parse Block attributes.
+	 * Parse the block attributes.
 	 *
-	 * @param array|\WP_Block $attributes is an array or instance of WP_BLOCK.
-	 * @return array
+	 * @param array|\WP_Block $attributes The block attributes or a block instatce.
+	 * @return array The parsed block attributes.
 	 */
-	public function parses_block_attributes( array $attributes ) {
+	public function parses_block_attributes( $attributes ) {
 		return is_a( $attributes, 'WP_BLOCK' ) ? $attributes->attributes : $attributes;
 	}
 
 	/**
-	 * Block type render callback.
+	 * Get the block wrapper attributes.
 	 *
-	 * @param array     $attributes Block attributes .
-	 * @param  string    $content block content.
-	 * @param \WP_Block $block Block instance.
+	 * @param string $classes The block classes.
+	 * @param array  $extra_attributes Block's extra attributes for block wrapper element.
+	 *
 	 * @return string
 	 */
-	public function render_callback( $attributes = array(), $content = '', $block = null ) {
-		return $this->render( $attributes, $content, $block );
+	protected function get_block_wrapper_attributes( string $classes = '', array $extra_attributes = array() ): string {
+		return get_block_wrapper_attributes(
+			array_merge(
+				array(
+					'class'     => 'op-' . esc_attr( $this->get_block_attributes()['blockId'] ??= '' ) . ' ' . $classes,
+					'data-type' => $this->block_name,
+				),
+				$extra_attributes
+			)
+		);
 	}
 
-	/**
-	 * @return array
-	 */
-	public function get_block_type_render() {
-		return array( $this, 'render_callback' );
+	public function is_hidden_field( string $field_name ) {
+		$attributes = $this->get_block_attributes();
+
+		if ( ! isset( $attributes['hiddenFields'] ) ) {
+			return false;
+		}
+
+		$attributes = $this->get_block_attributes();
+
+		if ( in_array( $field_name, $attributes['hiddenFields'], true ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public function cleanup() {
+		$this->block            = null;
+		$this->block_attributes = array();
+		$this->block_name       = null;
+		$this->enqueued_scripts = false;
 	}
 }

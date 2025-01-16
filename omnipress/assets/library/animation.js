@@ -1,24 +1,38 @@
-window.addEventListener( 'load', () => {
-    const observer = new IntersectionObserver( ( entries ) => {
-        entries.forEach( ( entry ) => {
-            const { opAnimation } = entry.target.dataset;
-            if ( entry.isIntersecting && opAnimation !== 'undefined' ) {
-                if ( ! opAnimation ) {
-                    return;
-                }
-                const sanitizedOpAnimation = opAnimation.split( ' ' );
-                entry.target.classList.add( ...sanitizedOpAnimation );
-                // removed data set after added classlist
-                // entry.target.removeAttribute( 'data-op-animation' );
-            }
-        } );
-    }, {
-        threshold: 0.3,
-    } );
+window.addEventListener("load", () => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const { opAnimation } = entry.target.dataset;
 
-    const animatedEl = document.querySelectorAll( '.op_has_animation' );
+        if (entry.isIntersecting && opAnimation !== "undefined") {
+          if (!opAnimation) {
+            return;
+          }
+          const sanitizedOpAnimation = opAnimation.split(" ");
+          entry.target.classList.add(...sanitizedOpAnimation);
+          // removed data set after added classlist
+          // entry.target.removeAttribute( 'data-op-animation' );
+        } else {
+          let timeout;
 
-    animatedEl.forEach( ( el ) => {
-        observer.observe( el );
-    } );
-} );
+          if (timeout) {
+            clearTimeout(timeout);
+          }
+
+          timeout = setTimeout(() => {
+            entry.target.classList.remove(...sanitizedOpAnimation);
+          }, 1000);
+        }
+      });
+    },
+    {
+      threshold: 0.3,
+    }
+  );
+
+  const animatedEl = document.querySelectorAll(".op_has_animation");
+
+  animatedEl.forEach((el) => {
+    observer.observe(el);
+  });
+});

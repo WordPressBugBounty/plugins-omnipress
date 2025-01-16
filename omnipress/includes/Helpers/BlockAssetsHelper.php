@@ -29,9 +29,18 @@ if ( ! class_exists( 'BlocksAssetsHelper' ) ) {
 
 			$block_name = Helpers::convert_kebab_to_pascal_case( $block_name_parts[1] );
 
-			// Dynamically include the class file if it exists.
+			/*
+			 * Dynamically include the class file if it exists.
+			 * Check first for free blocks, then fallback to premium blocks
+			 */
 			$class_file = OMNIPRESS_PATH . "includes/Blocks/BlockTypes/$block_name.php";
 			$class_name = "Omnipress\\Blocks\\BlockTypes\\$block_name";
+
+			if ( file_exists( OMNIPRESS_PRO_PATH . "includes/Blocks/BlockTypes/$block_name.php" ) ) {
+				$block_type = 'premium';
+				$class_file = OMNIPRESS_PRO_PATH . "includes/Blocks/BlockTypes/$block_name.php";
+				$class_name = "OmnipressPro\\Blocks\\BlockTypes\\$block_name";
+			}
 
 			$block_instance = null;
 

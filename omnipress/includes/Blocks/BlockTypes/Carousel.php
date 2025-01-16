@@ -20,7 +20,7 @@ class Carousel extends AbstractBlock {
 	 *
 	 * @return string Rendered block content.
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$block_id           = $attributes['blockId'];
 		$default_attributes = $this->get_default_attributes();
 		$attributes         = array_merge( $default_attributes, $attributes );

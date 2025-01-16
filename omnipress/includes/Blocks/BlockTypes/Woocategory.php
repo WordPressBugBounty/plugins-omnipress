@@ -49,7 +49,7 @@ class Woocategory extends AbstractBlock {
 	/**
 	 * @inheritDoc
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$attributes = array_merge( $this->attributes, $attributes );
 
 		if ( isset( $block->context['classNames'] ) && 'swiper-slide' === $block->context['classNames'] ) {

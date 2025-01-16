@@ -40,7 +40,7 @@ class WpFormsExtender {
 	 * @param WP_REST_Request $request The REST request object.
 	 * @return int[]|\WP_Post[] An array of WP_Post objects representing the WPForms posts.
 	 */
-	public function get_all_wpforms_by_id( WP_REST_Request $request ) {
+	public function get_all_wpforms_by_id( \WP_REST_Request $request ) {
 		$id = $request->get_param( 'id' );
 
 		return get_posts(

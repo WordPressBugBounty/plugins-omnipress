@@ -12,13 +12,54 @@ use Omnipress\Transient;
 class WoocommerceModel {
 
 	private static $instance = null;
-	private array $query_params;
 
 	public static function get_instance() {
 		if ( null === self::$instance ) {
 			self::$instance = new static();
 		}
 		return self::$instance;
+	}
+
+
+	/**
+	 * Get the product details.
+	 *
+	 * @param \WC_Product|int $product The product object or product ID.
+	 * @return array The product details.
+	 */
+	public function get_product_details( $product ) {
+		if ( is_int( $product ) ) {
+			$product = wc_get_product( $product );
+		}
+
+		return array(
+			'categories'                    => get_the_term_list( get_the_ID(), 'product_cat', '', ', ', '' ),
+			'currency_symbol'               => get_woocommerce_currency_symbol(),
+			'permalink'                     => get_the_permalink(),
+			'thumbnail_url'                 => get_the_post_thumbnail_url(),
+			'post_title'                    => get_the_title(),
+			'product_rating'                => $product->get_average_rating(),
+			'product_stock'                 => $product->get_stock_quantity(),
+			'product_price'                 => $product->get_price(),
+			'product_sale_price'            => $product->get_sale_price(),
+			'product_regular_price'         => $product->get_regular_price(),
+			'product_add_to_cart_text'      => $product->add_to_cart_text(),
+			'product_max_purchase_quantity' => $product->get_max_purchase_quantity(),
+			'product_add_to_cart_url'       => $product->add_to_cart_url(),
+			'product_id'                    => is_int( $product ) ? $product : $product->get_id(),
+			'product_images'                => $this->get_product_images( $product ),
+		);
+	}
+
+	public function get_product_images( $product ): string {
+		$gallery_ids = $product->get_gallery_image_ids();
+		$images      = array();
+
+		foreach ( $gallery_ids as $image_id ) {
+			$images[] = '<img src="' . wp_get_attachment_url( $image_id ) . '" alt="' . get_the_title( $image_id ) . '">';
+		}
+
+		return implode( '', $images );
 	}
 
 	private function __construct() {
@@ -114,19 +155,62 @@ class WoocommerceModel {
 	/**
 	 * Retrieve all products.
 	 *
-	 * @since 1.4.0
+	 * @since 1.5.1
 	 * @param array $args Arguments for the query.
 	 * @return array|mixed
 	 */
 	public function get_all_products( $args ) {
-		// $args = array(
-		// 'limit'   => $args['posts_per_page'] ?? 6,
-		// 'orderby' => $args['orderby'] ?? 'date',
-		// 'order'   => $args['order'] ?? 'DESC',
-		// 'page'    => $args['page'] ?? 1,
-		// 'offset'  => $args['offset'] ?? 0,
-		// 'status'  => 'publish',
-		// );
+		/*
+			$args = array(
+				'limit'   => $args['posts_per_page'] ?? 6,
+				'orderby' => $args['orderby'] ?? 'date',
+				'order'   => $args['order'] ?? 'DESC',
+				'page'    => $args['page'] ?? 1,
+				'offset'  => $args['offset'] ?? 0,
+				'status'  => 'publish',
+			);
+		*/
+
+		global $wpdb;
+
+		$query_script = "
+			SELECT
+				p.ID as id,
+				p.post_title as title,
+				pm_price.meta_value as price,
+				pm_regular_price.meta_value as regular_price,
+				pm_sale_price.meta_value as sale_price,
+				pm_excerpt.meta_value as excerpt,
+				pm_stock_status.meta_value as stock_status,
+				(
+					(pm_regular_price.meta_value - pm_sale_price.meta_value) / pm_regular_price.meta_value * 100
+				) AS discount_percentage,
+				GROUP_CONCAT(t.name SEPARATOR ', ') as categories
+			FROM
+				{$wpdb->posts} AS p
+			LEFT JOIN
+				{$wpdb->postmeta} AS pm_price ON p.ID = pm_price.post_id AND pm_price.meta_key = '_price'
+			LEFT JOIN
+				{$wpdb->postmeta} AS pm_regular_price ON p.ID = pm_regular_price.post_id AND pm_regular_price.meta_key = '_regular_price'
+			LEFT JOIN
+				{$wpdb->postmeta} AS pm_sale_price ON p.ID = pm_sale_price.post_id AND pm_sale_price.meta_key = '_sale_price'
+			LEFT JOIN
+				{$wpdb->postmeta} AS pm_excerpt ON p.ID = pm_excerpt.post_id AND pm_excerpt.meta_key = '_short_description'
+			LEFT JOIN
+				{$wpdb->postmeta} AS pm_stock_status ON p.ID = pm_stock_status.post_id AND pm_stock_status.meta_key = '_stock_status'
+			LEFT JOIN
+				{$wpdb->term_relationships} AS tr ON p.ID = tr.object_id
+			LEFT JOIN
+				{$wpdb->term_taxonomy} AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id AND tt.taxonomy = 'product_cat'
+			LEFT JOIN
+				{$wpdb->terms} AS t ON tt.term_id = t.term_id
+			WHERE
+				p.post_type = 'product' AND
+				p.post_status = 'publish'
+			GROUP BY
+				p.ID
+			LIMIT 20;
+		";
 
 		$products = wc_get_products( $args );
 

@@ -21,12 +21,11 @@ class BlockStylesHelper {
 	 *
 	 * @since 1.4.4
 	 *
-	 * @param mixed $parsed_block Parsed block content which get before rendering.
+	 * @param array $parsed_block Parsed block content which get before rendering.
 	 *
 	 * @return void
 	 */
 	public static function generate_block_styles( array $parsed_block, object $metadata, string &$generated_css, $is_synced ) {
-
 		// generate styles for each block.
 		$block_name = $parsed_block['blockName'];
 		$block_id   = $is_synced ? 'synced-' . $parsed_block['attrs']['componentId'] ?? ' ' : $parsed_block['attrs']['blockId'] ?? '';
@@ -72,7 +71,15 @@ class BlockStylesHelper {
 		}
 	}
 
-	public static function prefix_selectors( $selectors, $common_selector ) {
+	/**
+	 *
+	 * Add prefix to selectors.
+	 *
+	 * @param array|string $selectors List of selectors.
+	 * @param string       $common_selector Block's parent selector.
+	 * @return string
+	 */
+	public static function prefix_selectors( $selectors, string $common_selector ): string {
 
 		if ( ! isset( $selectors ) && ! empty( $selectors ) ) {
 			return (string) $common_selector;
@@ -86,7 +93,13 @@ class BlockStylesHelper {
 	}
 
 
-	public static function generate_parsed_block_styles( array $blocks ) {
+	/**
+	 * Generate parsed block styles.
+	 *
+	 * @param array $blocks List of parsed blocks.
+	 * @return string
+	 */
+	public static function generate_parsed_block_styles( array $blocks ): string {
 		$all_blocks_metadata = wp_json_file_decode( OMNIPRESS_PATH . 'assets/all-blocks-json.json' );
 
 		$generated_css = '';
@@ -120,11 +133,18 @@ class BlockStylesHelper {
 
 			do_action( 'omnipress_blocks_style_generation', $generated_css, $synced_component_components );
 
-			return $generated_css;
 		}
+		return $generated_css;
 	}
 
-	public static function update_synced_block_attributes( $block ) {
+	/**
+	 *
+	 * Add Global component instead of block attributes.
+	 *
+	 * @param array $block Block's properties.
+	 * @return array
+	 */
+	public static function update_synced_block_attributes( $block ): array {
 		$model             = new GlobalStylesModel();
 		$global_components = $model->get_global_styles();
 
@@ -176,7 +196,6 @@ class BlockStylesHelper {
 	}
 
 	public static function are_block_styles_generated( $file_path ) {
-    error_log( 'style path => ' .$file_path);
 
 		if ( ! file_exists( $file_path ) ) {
 			return false;
@@ -185,7 +204,6 @@ class BlockStylesHelper {
 		$global_styles_modified_time = (int) get_option( GlobalStylesModel::GLOBAL_STYLES_COMPONENT_MODIFIED_TIME_KEY, false );
 		$latest_post_edit_time       = (int) get_option( OMNIPRESS_POST_EDIT_TIME, false );
 		$last_generated_time         = (int) filemtime( $file_path );
-
 
 		return max( $global_styles_modified_time, $latest_post_edit_time ) < $last_generated_time;
 	}

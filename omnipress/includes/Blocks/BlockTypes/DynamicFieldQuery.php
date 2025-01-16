@@ -23,7 +23,7 @@ class DynamicFieldQuery extends AbstractBlock {
 	/**
 	 * @inheritDoc
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$post_id          = isset( $block->context['postId'] ) ? $block->context['postId'] : '';
 		$field_tye        = isset( $attributes['fieldType'] ) ? $attributes['fieldType'] : '';
 		$query_field_name = isset( $attributes['queryFieldName'] ) ? $attributes['queryFieldName'] : '';

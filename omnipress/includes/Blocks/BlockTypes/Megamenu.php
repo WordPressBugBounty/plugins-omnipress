@@ -7,7 +7,13 @@ use Omnipress\Abstracts\AbstractBlock;
 ( defined( 'ABSPATH' ) ) || exit;
 
 /**
- * Megamenu class.
+ * Megamenu Block class.
+ *
+ * @author omnipressteam
+ *
+ * @since 1.4.2
+ *
+ * @package Omnipress\Blocks
  */
 class Megamenu extends AbstractBlock {
 
@@ -178,7 +184,7 @@ class Megamenu extends AbstractBlock {
 	/**
 	 * @inheritDoc
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		wp_register_script_module(
 			'omnipress/block-library/query',
 			OMNIPRESS_URL . 'assets/block-interactivity/menu-module.js',

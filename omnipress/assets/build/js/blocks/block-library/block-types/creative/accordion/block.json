@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../assets/block.schema.json",
+  "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 3,
   "name": "omnipress/accordion",
   "version": "1.0.0",

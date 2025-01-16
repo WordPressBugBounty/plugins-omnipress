@@ -4,8 +4,17 @@ namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
 
+/**
+ * Image Block class.
+ *
+ * @author omnipressteam
+ *
+ * @since 1.4.2
+ *
+ * @package Omnipress\Blocks
+ */
 class Image extends AbstractBlock {
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 
 		if ( isset( $attributes['href'] ) ) {
 			$content = sprintf(
@@ -22,42 +31,62 @@ class Image extends AbstractBlock {
 
 		if ( $p->next_tag( 'figure' ) ) {
 			$p->set_bookmark( 'figure' );
+			$p->set_attribute( 'data-wp-interactive', 'omnipress/image' );
 		}
 
 		if ( $p->next_tag( 'img' ) ) {
 			$alt = $p->get_attribute( 'alt' );
 			$src = $p->get_attribute( 'src' );
+
+			$p->set_attribute( 'src', '' );
 			$p->set_attribute( 'decoding', 'async' );
-			$p->set_attribute( 'srcset', wp_get_attachment_image_srcset( $attributes['id'] ) );
-			$size = $p->get_attribute( 'data-size' );
-			$p->set_attribute( 'sizes', wp_get_attachment_image_sizes( $attributes['id'], $size ) );
+			$image_height = $p->get_attribute( 'height' );
+			$image_width  = $p->get_attribute( 'width' );
 
 			if ( isset( $attributes['id'] ) ) {
+				$p->set_attribute( 'srcset', wp_get_attachment_image_srcset( $attributes['id'] ) );
+
+				$size = $p->get_attribute( 'data-size' );
+				$p->set_attribute( 'sizes', wp_get_attachment_image_sizes( $attributes['id'], $size ) );
 				$src          = wp_get_attachment_url( $attributes['id'] );
 				$metadata     = wp_get_attachment_metadata( $attributes['id'] );
 				$image_width  = $metadata['width'] ?? 'none';
 				$image_height = $metadata['height'] ?? 'none';
 			}
 
-			if ( $attributes['enabledLightbox'] ) {
+			if ( $attributes['enabledLightbox'] || $attributes['isLoadLazily'] ) {
 				$p->set_attribute(
 					'data-wp-context',
 					wp_json_encode(
 						array(
-							'alt'         => $alt,
-							'src'         => $src,
+							'alt'         => $alt ?? '',
+							'src'         => empty( $src ) ? $attributes['src'] : $src,
 							'imageHeight' => $image_height,
 							'imageWidth'  => $image_width,
 						)
 					)
 				);
 
-				$p->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
+				wp_register_script_module(
+					'~omnipress/block-interactivity/image',
+					OMNIPRESS_URL . 'assets/block-interactivity/image-view.js',
+					array( '@wordpress/interactivity' ),
+					OMNIPRESS_VERSION
+				);
+
+				wp_enqueue_script_module( '~omnipress/block-interactivity/image' );
+
+				add_action( 'wp_footer', array( $this, 'render_lightbox_container' ) );
 				$p->set_attribute( 'data-wp-init', 'callbacks.setImageStyles' );
+			}
+
+			if ( $attributes['enabledLightbox'] ) {
+				$p->set_attribute( 'data-wp-on-async--click', 'actions.showLightbox' );
 			}
 		}
 
 		if ( ! $attributes['enabledLightbox'] ) {
+
 			return $p->get_updated_html();
 		}
 
@@ -67,22 +96,10 @@ class Image extends AbstractBlock {
 
 		// seek figure.
 		$p->seek( 'figure' );
-		$p->set_attribute( 'data-wp-interactive', 'omnipress/image' );
 
 		$updated_content = $p->get_updated_html();
 
 		$content = $updated_content;
-
-		wp_register_script_module(
-			'~omnipress/block-interactivity/image',
-			OMNIPRESS_URL . 'assets/block-interactivity/image-view.js',
-			array( '@wordpress/interactivity' ),
-			OMNIPRESS_VERSION
-		);
-
-		wp_enqueue_script_module( '~omnipress/block-interactivity/image' );
-
-		add_action( 'wp_footer', array( $this, 'render_lightbox_container' ) );
 
 		return $content;
 	}

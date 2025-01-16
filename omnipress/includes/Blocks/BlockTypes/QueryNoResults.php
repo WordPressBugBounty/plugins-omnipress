@@ -15,7 +15,7 @@ class QueryNoResults extends AbstractBlock {
 	/**
 	 * {@inheritDoc}
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		if ( empty( trim( $content ) ) ) {
 			return '';
 		}
@@ -29,7 +29,7 @@ class QueryNoResults extends AbstractBlock {
 			global $wp_query;
 			$query = $wp_query;
 		} else {
-			$query_args = Helpers::build_query_vars_from_omnipresss_query_block( $block, $page );
+			$query_args = Helpers::build_query_vars_from_omnipress_query_block( $block, $page );
 			$query      = new \WP_Query( $query_args );
 		}
 

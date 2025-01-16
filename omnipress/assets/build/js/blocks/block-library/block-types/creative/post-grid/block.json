@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../assets/block.schema.json",
+  "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
   "name": "omnipress/post-grid",
   "version": "1.0.0",
@@ -33,7 +33,7 @@
         }
       }
     },
-    "image": {
+    "thumbnail": {
       "group": "design",
       "selector": ".op-block__post-grid-card .op-block__post-grid-card-image img",
       "label": "Image",
@@ -62,14 +62,11 @@
         }
       }
     },
-    "Title": {
+    "title": {
       "group": "design",
       "selector": " .op-block__post-grid-card-title",
       "label": "Title",
       "fields": {
-        "color": {
-          "text": true
-        },
         "spacing": {
           "padding": true,
           "margin": true
@@ -77,14 +74,13 @@
         "typography": true
       }
     },
-    "description": {
+    "excerpt": {
       "group": "design",
       "selector": ".op-block__post-grid-card .op-block__post-grid-card-description",
-      "label": "Description",
+      "label": "Excerpt",
       "fields": {
         "color": {
-          "background": true,
-          "text": true
+          "background": true
         },
         "spacing": {
           "padding": true,
@@ -99,7 +95,6 @@
       "label": "Categories",
       "fields": {
         "color": {
-          "text": true,
           "background": true
         },
         "spacing": {
@@ -128,8 +123,7 @@
       "label": "Date",
       "fields": {
         "color": {
-          "background": true,
-          "text": true
+          "background": true
         },
         "spacing": {
           "margin": true
@@ -142,9 +136,6 @@
       "selector": ".op-block__post-grid-card .op-block__post-grid-card-author a",
       "label": "Author",
       "fields": {
-        "color": {
-          "text": true
-        },
         "spacing": {
           "margin": true
         },
@@ -204,22 +195,6 @@
       "type": "boolean",
       "default": false
     },
-    "disableCategory": {
-      "type": "boolean",
-      "default": false
-    },
-    "disableDescription": {
-      "type": "boolean",
-      "default": false
-    },
-    "disableFeaturedImage": {
-      "type": "boolean",
-      "default": false
-    },
-    "disableDate": {
-      "type": "boolean",
-      "default": false
-    },
     "card": {
       "type": "object",
       "default": {
@@ -233,7 +208,7 @@
         "padding": "12px"
       }
     },
-    "image": {
+    "thumbnail": {
       "type": "object",
       "default": {
         "borderRadius": "8px 8px 0 0",

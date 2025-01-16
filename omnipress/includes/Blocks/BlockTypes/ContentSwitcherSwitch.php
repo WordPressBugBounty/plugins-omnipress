@@ -19,10 +19,10 @@ class ContentSwitcherSwitch extends AbstractBlock {
 	 *
 	 * @return array
 	 */
-	public function layouts( $left_text, $right_text ): array {
+	public function layouts( $left_text, $right_text, $variation ): array {
 		return array(
 			'layout_1' => sprintf(
-				'<label data-wp-init="callbacks.initSwitcherSwitch" data-wp-watch="callbacks.watchStyles" class="switch-tab  switch-track" for="switch">
+				'<label data-wp-init="callbacks.initSwitcherSwitch" data-wp-watch="callbacks.watchStyles" class="switch-track content-switcher__switch" for="switch">
 				<div data-wp-init="callbacks.initSwitcher" class="toggle slide-indicator switch-indicator"></div>
 				<div class="switch-label-wrapper">
 					<p class="op-switcher__text switch-label" data-wp-on--click="callbacks.activateLeftContent">' . $left_text . '</p>
@@ -36,7 +36,7 @@ class ContentSwitcherSwitch extends AbstractBlock {
 			'layout_2' => sprintf(
 				'<div data-wp-init="callbacks.initSwitcherSwitch" data-wp-watch="callbacks.watchStyles" class="op-block__switcher--layout-two switch-wrapper">
 				<p class="op-switcher__text switch-label">' . $left_text . '</p>
-				<input data-wp-on--change="callbacks.onToggleSwitch" class="switch content-switcher__switch switch-track switch-indicator switch-input" type="checkbox"/>
+				<input data-wp-on--change="callbacks.onToggleSwitch" class="switch content-switcher__switch switch-track indicator-' . $variation . '" type="checkbox"/>
 				%s
 			</div>',
 				! empty( $left_text ) ? '<p class="op-switcher__text switch-label">' . $right_text . '</p>' : '',
@@ -47,7 +47,7 @@ class ContentSwitcherSwitch extends AbstractBlock {
 				'<div data-wp-init="callbacks.initSwitcherSwitch" data-wp-watch="callbacks.watchStyles" class="op-switch-wrapper">
 				<p class="op-switcher__text switch-label">' . $left_text . '</p>
 				<label class="switch-track">
-					<span data-wp-on--click="callbacks.onToggleSwitch" class="content-switcher__switch switch-indicator"></span>
+					<span data-wp-on--click="callbacks.onToggleSwitch" class="content-switcher__switch switch-indicator indicator-' . $variation . '"></span>
 				</label>
 				<p class="op-switcher__text switch-label">' . $right_text . '</p>
     		</div>',
@@ -58,9 +58,9 @@ class ContentSwitcherSwitch extends AbstractBlock {
 			'layout_4' => sprintf(
 				'<div data-wp-init="callbacks.initSwitcherSwitch" data-wp-watch="callbacks.watchStyles" class="switch-wrapper"><p class="op-switcher__text switch-label">' . $left_text . '</p>
 					<label class="switch-track">
-						<span  data-wp-on--click="callbacks.onToggleSwitch" class="slider content-switcher__switch switch-indicator"></span>
+						<span  data-wp-on--click="callbacks.onToggleSwitch" class="slider content-switcher__switch switch-indicator indicator-' . $variation . '"></span>
 					</label>
-				<p class="op-switcher__text switch-label">,' . $right_text . '</p></div>',
+				<p class="op-switcher__text switch-label">' . $right_text . '</p></div>',
 				! empty( $left_text ) ? '<p class="op-switcher__text switch-label">' . $right_text . '</p>' : '',
 				! empty( $right_text ) ? '<p class="op-switcher__text switch-label">' . $right_text . '</p>' : ''
 			),
@@ -80,17 +80,17 @@ class ContentSwitcherSwitch extends AbstractBlock {
 
 			'layout_3' => '.switcher-layout_3 .op-switch-wrapper{display:flex;align-items:center;gap:12px}.switcher-layout_3 .switch-track{font-size:17px;position:relative;display:inline-block;width:3.5em;height:2em}.switcher-layout_3 .switch-track input{opacity:0;width:0;height:0}.switcher-layout_3 .switch-indicator{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;transition:.4s;border-radius:10px}.switcher-layout_3 .switch-indicator::before{position:absolute;content:"";height:1.4em;width:1.4em;border-radius:8px;left:.3em;bottom:.3em;transform:rotate(270deg);transition:.4s}.switcher-layout_3 .switch-track:active .switch-indicator{box-shadow:0 0 1px #2196f3}.switcher-layout_3 .switch-track .active.switch-indicator::before{transform:translateX(1.5em)}',
 
-			'layout_4' => '.switch-tab{position:relative;display:inline-block;width:5em;height:1em}.switch-indicator{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:30px}.switch-indicator::before{position:absolute;content:"";height:3.4em;width:1.4em;border-radius:20px;left:.3em;bottom:-1.3em;background-color:#fff;box-shadow:0 0 5px rgba(0,0,0,.6);transition:1s cubic-bezier(.49,-1.3,.45,2.44)}.switch-indicator.active{background-color:#2196f3}.switch-indicator.active::before{transform:translateX(2.5em) rotateZ(-180deg)!important}',
+			'layout_4' => '.switch-tab{position:relative;display:inline-block;width:5em;height:1em}.switch-indicator{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background-color:#ccc;transition:.4s;border-radius:30px}.switch-indicator::before{position:absolute;content:"";height:3.4em;width:1.4em;border-radius:20px;z-index:999;left:.3em;bottom:-1.3em;background-color:#fff;box-shadow:0 0 5px rgba(0,0,0,.6);transition:1s cubic-bezier(.49,-1.3,.45,2.44)}.switch-indicator.active{background-color:#2196f3}.switch-indicator.active::before{transform:translateX(2.5em) rotateZ(-180deg)!important}',
 		);
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 
 		$block->parsed_block['attrs'] = $attributes;
-		$layouts                      = $this->layouts( esc_html( $attributes['tabs'][0] ), esc_html( $attributes['tabs'] [1] ) );
+		$layouts                      = $this->layouts( esc_html( $attributes['tabs'][0] ), esc_html( $attributes['tabs'] [1] ), esc_html( $attributes['variation'] ) );
 		$current_style                = $this->get_styles();
 
 		$switch_classes = array(

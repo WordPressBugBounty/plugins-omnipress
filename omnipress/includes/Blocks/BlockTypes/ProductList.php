@@ -103,7 +103,7 @@ class ProductList extends WoocommerceProducts {
                         <div class="op-product-labels">
                             %s
                         </div>
-                        %s
+						<figure>%s</figure>
                     </a>
                 </div>
                 <div class="product-item-details">
@@ -201,7 +201,7 @@ class ProductList extends WoocommerceProducts {
 	 * @return string Rendered block markup.
 	 * @throws \Exception // Throws exception if there is an error rendering the block markup.
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$category       = (int) ( $attributes['category'] ?? '' );
 		$category       = get_term_by( 'id', $category, 'product_cat' );
 		$is_hand_picked = (bool) ( $attributes['isHandPicked'] ?? false );
@@ -215,6 +215,7 @@ class ProductList extends WoocommerceProducts {
 				'showempty' => true,
 				'offset'    => (int) ( $attributes['offset'] ?? 0 ),
 			);
+
 			$this->set_query_args( $args );
 			$this->set_products();
 			$products = $this->get_products();

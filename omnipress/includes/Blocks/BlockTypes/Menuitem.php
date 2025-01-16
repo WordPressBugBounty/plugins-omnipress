@@ -7,13 +7,19 @@ use Omnipress\Abstracts\AbstractBlock;
 ( defined( 'ABSPATH' ) ) || exit;
 
 /**
- * Menuitem class.
+ * Menuitem Block class.
+ *
+ * @author omnipressteam
+ *
+ * @since 1.4.2
+ *
+ * @package Omnipress\Blocks
  */
 class Menuitem extends AbstractBlock {
 	/**
 	 * @inheritDoc
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		if ( ! isset( $attributes['submenuId'] ) ) {
 			return $content;
 		}

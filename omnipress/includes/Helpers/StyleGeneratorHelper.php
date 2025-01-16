@@ -71,9 +71,9 @@ class StyleGeneratorHelper {
 
 		// Handle translate.
 		if ( isset( $value['translate'] ) ) {
-			$x = isset( $value['translate']['x'] ) ? $value['translate']['x'] . 'px' : '0px';
-			$y = isset( $value['translate']['y'] ) ? $value['translate']['y'] . 'px' : '0px';
-			$z = isset( $value['translate']['z'] ) ? $value['translate']['z'] . 'px' : null;
+			$x = isset( $value['translate']['x'] ) ? $value['translate']['x'] : '0px';
+			$y = isset( $value['translate']['y'] ) ? $value['translate']['y'] : '0px';
+			$z = isset( $value['translate']['z'] ) ? $value['translate']['z'] : null;
 
 			$transforms[] = "translate({$x}, {$y})";
 			if ( ! empty( $z ) ) {
@@ -167,5 +167,33 @@ class StyleGeneratorHelper {
 		$str = lcfirst( $str );
 		$str = preg_replace( '/([A-Z])/', '-$1', $str );
 		return strtolower( $str );
+	}
+
+	public static function generate_shadow_styles( array $shadows = null ): string {
+
+		if ( empty( $shadows ) ) {
+			return '';
+		}
+
+		if ( is_array( $shadows ) ) {
+			$shadow_strings = array_map(
+				function ( $shadow ) {
+					return sprintf(
+						'%s %spx %spx %spx %spx %s',
+						! empty( $shadow['inset'] ) && $shadow['inset'] ? 'inset' : '',
+						$shadow['x'] ?? 0,
+						$shadow['y'] ?? 0,
+						$shadow['blur'] ?? 0,
+						$shadow['spread'] ?? 0,
+						$shadow['color'] ?? '#000'
+					);
+				},
+				$shadows
+			);
+
+			return implode( ', ', $shadow_strings );
+		}
+
+		return '';
 	}
 }

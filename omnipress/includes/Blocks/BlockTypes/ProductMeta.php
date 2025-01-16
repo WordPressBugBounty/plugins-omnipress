@@ -16,7 +16,7 @@ class ProductMeta {
 	 * @param string $content    Block Content.
 	 * @return string
 	 */
-	public static function render_view( $attributes, $content ) {
+	public static function render_view( array $attributes, string $content ): string {
 		do_action( "omnipress_product_{$attributes['metaType']}_before_render" );
 
 		if ( 'category' === $attributes['metaType'] ) {

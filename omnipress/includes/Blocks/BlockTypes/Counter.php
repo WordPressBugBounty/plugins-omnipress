@@ -19,7 +19,7 @@ class Counter extends AbstractBlock {
 	/**
 	 * @inheritDoc
 	 */
-	public function render( $attributes, $content, $block ) {
+	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$block->parsed_block['attrs'] = $attributes;
 		return $content;
 	}
