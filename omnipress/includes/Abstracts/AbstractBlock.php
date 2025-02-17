@@ -93,7 +93,7 @@ abstract class AbstractBlock {
 	public function get_block_template( string $template_name, $block_type = 'free', $args = array() ) {
 		$template_path = OMNIPRESS_PATH . "templates/$template_name.php";
 
-		if ( 'pro' === $block_type && defined( 'MNIPRESS_PRO_PATH' ) ) {
+		if ( 'pro' === $block_type && defined( 'OMNIPRESS_PRO_PATH' ) ) {
 			$template_path = OMNIPRESS_PRO_PATH . "templates/$template_name.php";
 		}
 

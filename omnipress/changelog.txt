@@ -1,3 +1,14 @@
+= Version 1.5.4 =
+  Fixes:
+    - Fixes: Heading Block crashes some times
+
+  Enhancement:
+    - Added keyboard shortcuts to Copy and Paste Blocks styles
+    - Added keyboard shortcuts to insert blocks inside container block
+    - Enhancement setting's ui
+    - Added reset settings for spacing, border and more setting
+
+
 = Version 1.5.3 =
   Fixes:
     - Fixes crash site after updating version 1.5.2

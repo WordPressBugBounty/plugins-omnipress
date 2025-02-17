@@ -24,6 +24,7 @@ class ProductFilter extends AbstractBlock {
 	 * {@inheritDoc}
 	 */
 	public function render( array $attributes, string $content, \WP_Block $block ): string {
+
 		$product_attribute = array();
 
 		foreach ( $_GET as $key => $val ) {
