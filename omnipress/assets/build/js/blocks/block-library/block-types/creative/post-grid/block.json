@@ -33,9 +33,15 @@
         }
       }
     },
+    "grid": {
+      "group": "design",
+      "selector": ".is-layout-grid",
+      "label": "",
+      "fields": {}
+    },
     "thumbnail": {
       "group": "design",
-      "selector": ".op-block__post-grid-card .op-block__post-grid-card-image img",
+      "selector": ".op-block__post-grid-card figure",
       "label": "Image",
       "fields": {
         "dimension": {
@@ -144,6 +150,14 @@
     }
   },
   "attributes": {
+    "linkedAttributes": {
+      "type": "array",
+      "default": [
+        "title",
+        "categories",
+        "author"
+      ]
+    },
     "blockId": {
       "type": "string",
       "default": ""
@@ -156,7 +170,7 @@
       "type": "object",
       "default": {
         "borderRadius": "7px",
-        "backgroundColor": "#175fff",
+        "backgroundColor": "var(--op-clr-block-primary)",
         "color": "#ffffff",
         "padding": "0 12px"
       }

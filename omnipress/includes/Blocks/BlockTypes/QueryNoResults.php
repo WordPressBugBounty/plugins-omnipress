@@ -4,6 +4,7 @@ namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
 use Omnipress\Helpers;
+use Omnipress\Utils;
 
 /**
  * Query Template block.

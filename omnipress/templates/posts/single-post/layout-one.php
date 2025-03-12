@@ -2,7 +2,10 @@
 
 use Omnipress\Core\BasePostFields;
 
-$post_fields = new BasePostFields( get_the_ID(), $hidden_fields );
+
+
+$post_fields = new BasePostFields( get_the_ID(), $hidden_fields, $linked_attributes ?? array( 'title', 'author', 'date' ) );
+
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
 <div class="op-block__post-grid-card">

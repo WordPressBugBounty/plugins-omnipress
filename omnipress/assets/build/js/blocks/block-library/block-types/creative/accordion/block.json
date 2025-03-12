@@ -20,12 +20,7 @@
       "default": [
         {
           "header": "FAQ item 1?",
-          "key": "Key 1",
-          "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-        },
-        {
-          "header": "FAQ item 2?",
-          "key": "Key 2",
+          "key": "Key-1",
           "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
         }
       ]
@@ -54,10 +49,6 @@
         },
         "color": {
           "background": true
-        },
-        "dimension": {
-          "height": true,
-          "width": true
         },
         "border": {
           "border": true,

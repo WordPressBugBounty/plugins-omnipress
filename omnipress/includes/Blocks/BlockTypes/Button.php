@@ -36,7 +36,9 @@ class Button extends AbstractBlock {
 
 
 	public function render( array $attributes, string $content, \WP_Block $block ): string {
-		$attributes = array_merge( $this->attributes, $attributes );
+		$this->block            = $block;
+		$attributes             = array_merge( $this->attributes, $attributes );
+		$this->block_attributes = $attributes;
 
 		$block->parsed_block['attrs'] = $attributes;
 
@@ -49,7 +51,16 @@ class Button extends AbstractBlock {
 		$text       = esc_html( $attributes['content'] );
 		$unique_id  = esc_attr( $attributes['blockId'] );
 
-		$markup = "<div data-id='$data_id' data-title='$data_title' data-type='$data_type' class='op-block-button__link op-block__button-content op-$unique_id'>";
+		$wrapper_attributes = $this->get_block_wrapper_attributes(
+			'op-block-button__link op-block__button-content op-' . $unique_id,
+			array(
+				'data-id'    => $data_id,
+				'data-title' => $data_title,
+				'data-type'  => $data_type,
+			)
+		);
+
+		$markup = "<div $wrapper_attributes >";
 
 		if ( $link ) {
 			$markup .= Utils::generate_output_link( $link, $target, $rel, $text );

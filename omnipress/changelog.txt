@@ -1,4 +1,24 @@
-= Version 1.5.4 =
+== Version 1.5.5 ==
+  **Release Date:** March 12, 2025
+
+  ### Fixes
+  - **Mega Menu Block:** Resolved an issue where the Mega Menu block was accessing protected posts on the frontend, ensuring proper content visibility and security.
+  - **Block Issues:** Addressed various minor bugs and inconsistencies across multiple blocks for improved stability and performance.
+
+  ### New Features
+  - **Scroll Trigger Setting:** Added a new scroll-based trigger option to enhance interactivity and dynamic content display within blocks.
+  - **Glassmorphism Effect:** Introduced a modern Glassmorphism design effect, providing a sleek, translucent aesthetic to supported blocks.
+  - **Enhanced Conditional Display:** Improved the Conditional Display settings with more flexible and intuitive options for controlling block visibility based on user-defined conditions.
+
+  ### Improvements
+  - **Block Settings & UI:** Refined the settings panels and user interface of various blocks for a more seamless and user-friendly editing experience.
+
+  ### Other Notes
+  - Minor performance optimizations and code enhancements for better compatibility with the latest WordPress version.
+  - Updated documentation to reflect new features and improvements.
+
+
+== Version 1.5.4 ==
   Fixes:
     - Fixes: Heading Block crashes some times
 
@@ -9,11 +29,11 @@
     - Added reset settings for spacing, border and more setting
 
 
-= Version 1.5.3 =
+== Version 1.5.3 ==
   Fixes:
     - Fixes crash site after updating version 1.5.2
 
-= Version 1.5.2 =
+== Version 1.5.2 ==
   NEW:
     Block Quick access sidebar
     New block - Advanced Product Search
@@ -29,7 +49,7 @@
     Fixes
       - Various minor issues related to the advanced query block and post grid block.
 
-= Version 1.5.1 =
+== Version 1.5.1 ==
   Enhancements & Fixes:
     Resolved an issue where global components did not function as expected in the editor.
     Fixed a problem causing blocks to appear unstyled on the initial page render after demo imports.
@@ -37,7 +57,7 @@
     Fixed: Compatibility notice for WordPress 6.7 regarding the incorrect usage of _load_textdomain_just_in_time.
 
 
-= Version 1.5.0 =
+== Version 1.5.0 ==
   New: Added the ability to copy and paste block styles.
   New: Introduced a global reusable component for each block.
   New: Introduced the Advanced Query block. [Premium]
@@ -46,8 +66,8 @@
   NEW: Added WooCommerce category and product category with more settings.
 
   * Enhancements:
-      - Enhance tabs block make more easy and stable inside editor
-      - Added more settings and enhance it's settings for slide block.
+    - Enhance tabs block make more easy and stable inside editor
+    - Added more settings and enhance it's settings for slide block.
 
   * Breaking Changes:
     - [Icon]: We add

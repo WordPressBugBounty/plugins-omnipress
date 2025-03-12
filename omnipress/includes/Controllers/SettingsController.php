@@ -13,7 +13,7 @@ class SettingsController {
 	}
 
 	public function render_view() {
-		include_once OP_ADMIN_PATH . 'views/admin-base.php';
+		include_once OMNIPRESS_PATH . 'includes/views/admin-base.php';
 	}
 
 	/**

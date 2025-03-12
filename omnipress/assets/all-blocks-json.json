@@ -65,7 +65,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Google Maps",
     "block_name": "omnipress/maps",
@@ -79,6 +80,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "headingStyles",
       "subHeadingStyling",
       "seperator"
@@ -100,6 +102,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "image",
       "imageDimension",
       "ImageCaption"
@@ -134,6 +137,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "videoWrapper"
     ],
     "label": "Video",
@@ -151,6 +155,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "accordion",
       "title",
       "titleActive",
@@ -173,18 +178,23 @@
       "preview",
       "componentName",
       "componentId",
-      "container",
-      "digitStyles",
-      "labelStyles",
-      "divider"
+      "interactions",
+      "card",
+      "number",
+      "label",
+      "labelBottom",
+      "labelTop",
+      "separator"
     ],
     "label": "Countdown",
     "block_name": "omnipress/countdown",
     "selectors": {
-      "container": ".op-block-countdown__content-wrapper",
-      "digitStyles": ".op-block-countdown__digit",
-      "labelStyles": ".op-block__countdown-label",
-      "divider": ".op-block-countdown__divider-wrapper .op-block__divider"
+      "card": ".countdown-card",
+      "number": ".number",
+      "label": ".label",
+      "labelBottom": ".label-bottom",
+      "labelTop": ".label-top",
+      "separator": ".separator"
     },
     "icon": "<svg className='op-block-icons' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' > <path d='M19.25 14C19.25 18.0041 16.0041 21.25 12 21.25C7.99594 21.25 4.75 18.0041 4.75 14C4.75 9.99594 7.99594 6.75 12 6.75C16.0041 6.75 19.25 9.99594 19.25 14Z' fill='none' stroke='#175FFF' stroke-width='1.5' /> <path d='M6.75 2.5H18.25C18.3881 2.5 18.5 2.61193 18.5 2.75C18.5 2.88807 18.3881 3 18.25 3H6.75C6.61193 3 6.5 2.88807 6.5 2.75C6.5 2.61193 6.61193 2.5 6.75 2.5Z' fill='none' stroke='#175FFF' /> <path d='M20 6L17.5 8.5M12 9.5V13' fill='none' stroke='#175FFF' stroke-width='1.5' strokeLinecap='round' /> </svg> "
   },
@@ -195,6 +205,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "label",
       "icon",
       "number",
@@ -219,6 +230,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "iconStyle",
       "titleStyle",
       "descStyle"
@@ -239,6 +251,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "menuButton",
       "menuWrapper",
       "subMenuWrapper",
@@ -265,6 +278,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "card"
     ],
     "label": "Popup",
@@ -274,6 +288,30 @@
     },
     "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'> <path fill-rule='evenodd' clip-rule='evenodd' d='M20 3.5H16C15.7239 3.5 15.5 3.72386 15.5 4V8C15.5 8.27614 15.7239 8.5 16 8.5H20C20.2761 8.5 20.5 8.27614 20.5 8V4C20.5 3.72386 20.2761 3.5 20 3.5ZM16 2C14.8954 2 14 2.89543 14 4V8C14 9.10457 14.8954 10 16 10H20C21.1046 10 22 9.10457 22 8V4C22 2.89543 21.1046 2 20 2H16ZM5 4.8C4.33726 4.8 3.8 5.33726 3.8 6V19C3.8 19.6627 4.33726 20.2 5 20.2H19C19.6627 20.2 20.2 19.6627 20.2 19V12.5C20.2 12.0582 20.5582 11.7 21 11.7C21.4418 11.7 21.8 12.0582 21.8 12.5V19C21.8 20.5464 20.5464 21.8 19 21.8H5C3.4536 21.8 2.2 20.5464 2.2 19V6C2.2 4.4536 3.4536 3.2 5 3.2H12C12.4418 3.2 12.8 3.55817 12.8 4C12.8 4.44183 12.4418 4.8 12 4.8H5ZM13 10.25H6.25C5.83579 10.25 5.5 10.5858 5.5 11C5.5 11.4142 5.83579 11.75 6.25 11.75H11.1893L6.46967 16.4697C6.17678 16.7626 6.17678 17.2374 6.46967 17.5303C6.76256 17.8232 7.23744 17.8232 7.53033 17.5303L12.25 12.8107V17.75C12.25 18.1642 12.5858 18.5 13 18.5C13.4142 18.5 13.75 18.1642 13.75 17.75V11C13.75 10.5858 13.4142 10.25 13 10.25Z' fill='#175FFF' /> </svg> "
   },
+  "omnipress/post-category": {
+    "type": "free",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions",
+      "title",
+      "featureImage",
+      "description",
+      "count",
+      "content"
+    ],
+    "label": "Post Category",
+    "block_name": "omnipress/post-category",
+    "selectors": {
+      "title": ".category-title",
+      "featureImage": ".category-image",
+      "description": ".category-description",
+      "count": ".category-count",
+      "content": ".category-content"
+    }
+  },
   "omnipress/post-grid": {
     "type": "free",
     "styles_attributes": [
@@ -281,7 +319,9 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "card",
+      "grid",
       "thumbnail",
       "content",
       "title",
@@ -295,7 +335,8 @@
     "block_name": "omnipress/post-grid",
     "selectors": {
       "card": ".op-block__post-grid-card",
-      "thumbnail": ".op-block__post-grid-card .op-block__post-grid-card-image img",
+      "grid": ".is-layout-grid",
+      "thumbnail": ".op-block__post-grid-card figure",
       "content": ".op-block__post-grid-card-content",
       "title": " .op-block__post-grid-card-title",
       "excerpt": ".op-block__post-grid-card .op-block__post-grid-card-description",
@@ -312,7 +353,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Slide",
     "block_name": "omnipress/slide",
@@ -325,6 +367,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "navigation",
       "pagination",
       "paginationActive",
@@ -350,6 +393,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "button",
       "activeButton",
       "icon"
@@ -369,7 +413,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Tabs Content",
     "block_name": "omnipress/tabs-content",
@@ -382,7 +427,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Tabs",
     "block_name": "omnipress/tabs",
@@ -397,6 +443,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "form",
       "formHeader",
       "formLabel",
@@ -411,7 +458,7 @@
       "form": ".op-block__contact-form-wrapper form",
       "formHeader": ".op-block__contact-form-header",
       "formLabel": ".wpcf7-form label",
-      "formInput": ".wpcf7 .wpcf7-form-control-wrap textarea.wpcf7-form-control, .op-block__contact-form .wpcf7 form input:not([type=file]):not([type=radio]):not([type=checkbox]):not([type=submit])",
+      "formInput": ".wpcf7 .wpcf7-form-control-wrap textarea.wpcf7-form-control, .wpcf7 form input:not([type=file]):not([type=radio]):not([type=checkbox]):not([type=submit])",
       "submitButton": ".wpcf7 form input[type=submit]",
       "titleStyle": ".op-block__contact-form-header h4",
       "descriptionStyle": ".op-block__contact-form-header p"
@@ -424,7 +471,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Custom Css",
     "block_name": "omnipress/css",
@@ -467,6 +515,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "flex"
     ],
     "label": "Icons",
@@ -483,7 +532,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Team",
     "block_name": "omnipress/teams-block",
@@ -497,6 +547,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "navigation",
       "pagination"
     ],
@@ -515,6 +566,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "item",
       "image",
       "label",
@@ -537,6 +589,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "card",
       "grid",
       "image",
@@ -563,6 +616,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "content",
       "grid",
       "mediaWrapperImg",
@@ -595,6 +649,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "item",
       "mediaWrapperImg",
       "title",
@@ -631,6 +686,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "title",
       "image",
       "categories",
@@ -657,7 +713,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Advanced Query Loop",
     "block_name": "omnipress/query-loop",
@@ -670,7 +727,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Content Switcher Contents",
     "block_name": "omnipress/content-switcher-contents",
@@ -683,6 +741,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "switcherText",
       "switcherTextActiveState",
       "toggleButton",
@@ -707,7 +766,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Content Switcher",
     "block_name": "omnipress/content-switcher",
@@ -734,6 +794,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "header",
       "selectedFilters",
       "filterSearch",
@@ -771,6 +832,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "header",
       "title",
       "categoryItem",
@@ -792,6 +854,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "dropdown",
       "input",
       "searchButton"
@@ -810,7 +873,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Query No Results",
     "block_name": "omnipress/query-no-results",
@@ -837,6 +901,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "paginationStyles",
       "activePaginationStyles"
     ],
@@ -866,7 +931,8 @@
       "wrapper",
       "preview",
       "componentName",
-      "componentId"
+      "componentId",
+      "interactions"
     ],
     "label": "Query Pagination",
     "block_name": "omnipress/query-pagination",
@@ -880,6 +946,7 @@
       "preview",
       "componentName",
       "componentId",
+      "interactions",
       "grid",
       "header",
       "headerActive"
@@ -887,7 +954,7 @@
     "label": "Query Template",
     "block_name": "omnipress/query-template",
     "selectors": {
-      "grid": "[class*='op-grid-col']",
+      "grid": ".is-layout-grid",
       "header": ".op-block-product-catalog-header",
       "headerActive": ".op-block-product-catalog-header .active"
     },

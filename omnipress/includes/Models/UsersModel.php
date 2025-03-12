@@ -3,6 +3,7 @@
 namespace Omnipress\Models;
 
 defined( 'ABSPATH' ) || exit;
+
 use Omnipress\Abstracts\ModelsBase;
 use Omnipress\Helpers\GeneralHelpers;
 

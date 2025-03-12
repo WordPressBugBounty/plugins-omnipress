@@ -342,7 +342,7 @@ class Helpers {
 		$wp_query_args = array();
 
 		// Query for WooCommerce products if query have extra query related wooCommerce.
-		if ( 'product' === $custom_args['postType'] && version_compare( OMNIPRESS_VERSION, '1.4.3', '>' ) ) {
+		if ( 'product' === $custom_args['postType'] && class_exists(WooCommerce_Utils::class) && version_compare( OMNIPRESS_VERSION, '1.4.3', '>' ) ) {
 			$wc_utils      = WooCommerce_Utils::init();
 			$wp_query_args = $wc_utils->generate_query_args( $block, $page );
 		}

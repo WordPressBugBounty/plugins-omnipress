@@ -4,16 +4,41 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12
+class ComposerStaticInita17435f4be60b638183b85c8258e6e56
 {
     public static $prefixLengthsPsr4 = array (
         'O' => 
         array (
+            'Omnipress\\Utils\\' => 16,
+            'Omnipress\\Traits\\' => 17,
+            'Omnipress\\Helpers\\' => 18,
+            'Omnipress\\Core\\' => 15,
+            'Omnipress\\Abstracts\\' => 20,
             'Omnipress\\' => 10,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Omnipress\\Utils\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes/Utils',
+        ),
+        'Omnipress\\Traits\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes/Utils',
+        ),
+        'Omnipress\\Helpers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes/Utils',
+        ),
+        'Omnipress\\Core\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes/Core',
+        ),
+        'Omnipress\\Abstracts\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/includes/Core',
+        ),
         'Omnipress\\' => 
         array (
             0 => __DIR__ . '/../..' . '/includes',
@@ -25,13 +50,15 @@ class ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'OMNIPRESS\\Core\\FileSystemUtil' => __DIR__ . '/../..' . '/includes/Core/FileSystemUtil.php',
-        'OMNIPRESS\\Helpers\\WCHelpers' => __DIR__ . '/../..' . '/includes/Helpers/WCHelpers.php',
-        'Omnipress\\Abstracts\\AbstractBlock' => __DIR__ . '/../..' . '/includes/Abstracts/AbstractBlock.php',
-        'Omnipress\\Abstracts\\BlockTemplateBase' => __DIR__ . '/../..' . '/includes/Abstracts/BlockTemplateBase.php',
-        'Omnipress\\Abstracts\\ModelsBase' => __DIR__ . '/../..' . '/includes/Abstracts/ModelsBase.php',
-        'Omnipress\\Abstracts\\RestControllersBase' => __DIR__ . '/../..' . '/includes/Abstracts/RestControllersBase.php',
+        'OMNIPRESS\\Helpers\\WCHelpers' => __DIR__ . '/../..' . '/includes/Utils/WCHelpers.php',
+        'Omnipress\\Abstracts\\AbstractBlock' => __DIR__ . '/../..' . '/includes/Core/AbstractBlock.php',
+        'Omnipress\\Abstracts\\BlockTemplateBase' => __DIR__ . '/../..' . '/includes/Core/BlockTemplateBase.php',
+        'Omnipress\\Abstracts\\ModelsBase' => __DIR__ . '/../..' . '/includes/Core/ModelsBase.php',
+        'Omnipress\\Abstracts\\RestControllersBase' => __DIR__ . '/../..' . '/includes/Core/RestControllersBase.php',
+        'Omnipress\\Admin\\ComingSoonAdminSettings' => __DIR__ . '/../..' . '/includes/Admin/ComingSoonAdminSettings.php',
         'Omnipress\\Admin\\Init' => __DIR__ . '/../..' . '/includes/Admin/Init.php',
         'Omnipress\\BlockTemplates' => __DIR__ . '/../..' . '/includes/BlockTemplates.php',
+        'Omnipress\\Blocks\\AttributeValidator' => __DIR__ . '/../..' . '/includes/Blocks/AttributeValidator.php',
         'Omnipress\\Blocks\\BlockAssetsManager' => __DIR__ . '/../..' . '/includes/Blocks/BlockAssetsManager.php',
         'Omnipress\\Blocks\\BlockGeneralSettings' => __DIR__ . '/../..' . '/includes/Blocks/BlockGeneralSettings.php',
         'Omnipress\\Blocks\\BlockRegistrar' => __DIR__ . '/../..' . '/includes/Blocks/BlockRegistrar.php',
@@ -43,16 +70,17 @@ class ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12
         'Omnipress\\Blocks\\BlockTypes\\ContentSwitcher' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/ContentSwitcher.php',
         'Omnipress\\Blocks\\BlockTypes\\ContentSwitcherContents' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/ContentSwitcherContents.php',
         'Omnipress\\Blocks\\BlockTypes\\ContentSwitcherSwitch' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/ContentSwitcherSwitch.php',
+        'Omnipress\\Blocks\\BlockTypes\\Countdown' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Countdown.php',
         'Omnipress\\Blocks\\BlockTypes\\Counter' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Counter.php',
         'Omnipress\\Blocks\\BlockTypes\\Dualbutton' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Dualbutton.php',
         'Omnipress\\Blocks\\BlockTypes\\DynamicAbstract' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/DynamicAbstract.php',
         'Omnipress\\Blocks\\BlockTypes\\DynamicFieldQuery' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/DynamicFieldQuery.php',
-        'Omnipress\\Blocks\\BlockTypes\\Heading' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Heading.php',
         'Omnipress\\Blocks\\BlockTypes\\IconBox' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/IconBox.php',
         'Omnipress\\Blocks\\BlockTypes\\Image' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Image.php',
         'Omnipress\\Blocks\\BlockTypes\\Megamenu' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Megamenu.php',
         'Omnipress\\Blocks\\BlockTypes\\Menuitem' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Menuitem.php',
         'Omnipress\\Blocks\\BlockTypes\\Popup' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Popup.php',
+        'Omnipress\\Blocks\\BlockTypes\\PostCategory' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/PostCategory.php',
         'Omnipress\\Blocks\\BlockTypes\\PostGrid' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/PostGrid.php',
         'Omnipress\\Blocks\\BlockTypes\\PostsBlock' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/PostsBlock.php',
         'Omnipress\\Blocks\\BlockTypes\\ProductBlockAbstract' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/ProductBlockAbstract.php',
@@ -75,16 +103,16 @@ class ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12
         'Omnipress\\Blocks\\BlockTypes\\WoocommerceProducts' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/WoocommerceProducts.php',
         'Omnipress\\Blocks\\BlockTypes\\Woogrid' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/Woogrid.php',
         'Omnipress\\Blocks\\BlockTypes\\WpFormsExtender' => __DIR__ . '/../..' . '/includes/Blocks/BlockTypes/WpFormsExtender.php',
+        'Omnipress\\Blocks\\StyleGenerator' => __DIR__ . '/../..' . '/includes/Blocks/StyleGenerator.php',
+        'Omnipress\\Controllers\\ComingSoonController' => __DIR__ . '/../..' . '/includes/Controllers/ComingSoonController.php',
         'Omnipress\\Controllers\\SettingsController' => __DIR__ . '/../..' . '/includes/Controllers/SettingsController.php',
         'Omnipress\\Controllers\\ThemeFontsHandler' => __DIR__ . '/../..' . '/includes/Controllers/ThemeFontsHandler.php',
+        'Omnipress\\Controllers\\WoocommerceFields' => __DIR__ . '/../..' . '/includes/Controllers/WoocommerceFields.php',
+        'Omnipress\\Core\\AbstractAssetsHandler' => __DIR__ . '/../..' . '/includes/Core/AbstractAssetsHandler.php',
         'Omnipress\\Core\\BasePostFields' => __DIR__ . '/../..' . '/includes/Core/BasePostFields.php',
-        'Omnipress\\Core\\StyleGenerator' => __DIR__ . '/../..' . '/includes/Core/StyleGenerator.php',
-        'Omnipress\\Core\\Utils' => __DIR__ . '/../..' . '/includes/Core/Utils.php',
-        'Omnipress\\Core\\WoocommerceFields' => __DIR__ . '/../..' . '/includes/Core/WoocommerceFields.php',
         'Omnipress\\Helpers' => __DIR__ . '/../..' . '/includes/Helpers.php',
-        'Omnipress\\Helpers\\BlockStylesHelper' => __DIR__ . '/../..' . '/includes/Helpers/BlockStylesHelper.php',
-        'Omnipress\\Helpers\\GeneralHelpers' => __DIR__ . '/../..' . '/includes/Helpers/GeneralHelpers.php',
-        'Omnipress\\Helpers\\StyleGeneratorHelper' => __DIR__ . '/../..' . '/includes/Helpers/StyleGeneratorHelper.php',
+        'Omnipress\\Helpers\\BlockStylesHelper' => __DIR__ . '/../..' . '/includes/Utils/BlockStylesHelper.php',
+        'Omnipress\\Helpers\\GeneralHelpers' => __DIR__ . '/../..' . '/includes/Utils/GeneralHelpers.php',
         'Omnipress\\Init' => __DIR__ . '/../..' . '/includes/Init.php',
         'Omnipress\\Models\\BlocksModel' => __DIR__ . '/../..' . '/includes/Models/BlocksModel.php',
         'Omnipress\\Models\\BlocksSettingsModel' => __DIR__ . '/../..' . '/includes/Models/BlocksSettingsModel.php',
@@ -96,8 +124,6 @@ class ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12
         'Omnipress\\Models\\UsersModel' => __DIR__ . '/../..' . '/includes/Models/UsersModel.php',
         'Omnipress\\Models\\WoocommerceModel' => __DIR__ . '/../..' . '/includes/Models/WoocommerceModel.php',
         'Omnipress\\Models\\WpFormsModal' => __DIR__ . '/../..' . '/includes/Models/WpFormsModal.php',
-        'Omnipress\\Publics\\CSSUtils' => __DIR__ . '/../..' . '/includes/Publics/CSSUtils.php',
-        'Omnipress\\Publics\\Init' => __DIR__ . '/../..' . '/includes/Publics/Init.php',
         'Omnipress\\RestApi\\Controllers\\V1\\BlockSettingsController' => __DIR__ . '/../..' . '/includes/RestApi/Controllers/V1/BlockSettingsController.php',
         'Omnipress\\RestApi\\Controllers\\V1\\ChangelogController' => __DIR__ . '/../..' . '/includes/RestApi/Controllers/V1/ChangelogController.php',
         'Omnipress\\RestApi\\Controllers\\V1\\DemosController' => __DIR__ . '/../..' . '/includes/RestApi/Controllers/V1/DemosController.php',
@@ -108,17 +134,18 @@ class ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12
         'Omnipress\\RestApi\\Controllers\\V1\\WoocommerceController' => __DIR__ . '/../..' . '/includes/RestApi/Controllers/V1/WoocommerceController.php',
         'Omnipress\\RestApi\\Controllers\\V1\\WpFormsController' => __DIR__ . '/../..' . '/includes/RestApi/Controllers/V1/WpFormsController.php',
         'Omnipress\\RestApi\\RestApi' => __DIR__ . '/../..' . '/includes/RestApi/RestApi.php',
-        'Omnipress\\Traits\\Singleton' => __DIR__ . '/../..' . '/includes/Traits/Singleton.php',
+        'Omnipress\\Traits\\Singleton' => __DIR__ . '/../..' . '/includes/Utils/Singleton.php',
         'Omnipress\\Transient' => __DIR__ . '/../..' . '/includes/Transient.php',
+        'Omnipress\\Utils\\StyleGeneratorHelper' => __DIR__ . '/../..' . '/includes/Utils/StyleGeneratorHelper.php',
         'Omnipress\\WoocommerceBlocks' => __DIR__ . '/../..' . '/includes/WoocommerceBlocks.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit3a00ed8feb9adbf4ee71c71c6ddc5e12::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita17435f4be60b638183b85c8258e6e56::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita17435f4be60b638183b85c8258e6e56::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita17435f4be60b638183b85c8258e6e56::$classMap;
 
         }, null, ClassLoader::class);
     }

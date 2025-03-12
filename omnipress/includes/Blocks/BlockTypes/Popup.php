@@ -124,7 +124,7 @@ class Popup extends AbstractBlock {
 			$transform_styles = 'transform:translateY(-100%);';
 		}
 
-		$styles_string = 'max-height:0; opacity:0;z-index:-1;' . $transform_styles;
+		$styles_string = 'max-height:0; max-width:0; opacity:0;z-index:-1;' . $transform_styles;
 
 		$settings = array(
 			'popup_triggered'      => $popup_trigger,

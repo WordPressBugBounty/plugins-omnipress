@@ -47,14 +47,20 @@ const { state, actions, callbacks } = store(
         //     return;
         // }
 
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.src = entry.target.dataset.src;
-              observer.unobserve(entry.target);
-            }
-          });
-        });
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.src = entry.target.dataset.src;
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          {
+            threshold: 0.1,
+            rootMargin: "0px",
+          }
+        );
 
         observer.observe(ref.ref);
 

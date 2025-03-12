@@ -12,10 +12,10 @@
     "anchor": true
   },
   "opSettings": {
-    "container": {
+    "card": {
       "group": "design",
-      "selector": ".op-block-countdown__content-wrapper",
-      "label": "Wrapper",
+      "selector": ".countdown-card",
+      "label": "Card",
       "fields": {
         "spacing": {
           "padding": true,
@@ -24,20 +24,16 @@
         "color": {
           "background": true
         },
-        "dimension": {
-          "min-height": true
-        },
         "border": {
           "border": true,
           "borderRadius": true
         }
       }
     },
-    "digitStyles": {
+    "number": {
       "group": "design",
-      "selector": ".op-block-countdown__digit",
+      "selector": ".number",
       "label": "Digit",
-      "toggleAttribute": "isDigit",
       "fields": {
         "spacing": {
           "padding": true
@@ -58,17 +54,16 @@
         }
       }
     },
-    "labelStyles": {
+    "label": {
       "group": "design",
-      "toggleAttribute": "isLabel",
-      "selector": ".op-block__countdown-label",
+      "selector": ".label",
       "label": "Label",
       "fields": {
         "spacing": {
           "padding": true
         },
         "color": {
-          "text": true
+          "background": true
         },
         "typography": true,
         "dimension": {
@@ -82,11 +77,58 @@
         }
       }
     },
-    "divider": {
+    "labelBottom": {
       "group": "design",
-      "selector": ".op-block-countdown__divider-wrapper .op-block__divider",
-      "label": "Divider",
-      "toggleAttribute": "isSeparator",
+      "selector": ".label-bottom",
+      "label": "Bottom Label",
+      "fields": {
+        "spacing": {
+          "padding": true
+        },
+        "color": {
+          "text": true,
+          "background": true
+        },
+        "typography": true,
+        "dimension": {
+          "height": false,
+          "width": false,
+          "min-height": true
+        },
+        "border": {
+          "border": true,
+          "borderRadius": true
+        }
+      }
+    },
+    "labelTop": {
+      "group": "design",
+      "selector": ".label-top",
+      "label": "Top Label",
+      "fields": {
+        "spacing": {
+          "padding": true
+        },
+        "color": {
+          "text": true,
+          "background": true
+        },
+        "typography": true,
+        "dimension": {
+          "height": false,
+          "width": false,
+          "min-height": true
+        },
+        "border": {
+          "border": true,
+          "borderRadius": true
+        }
+      }
+    },
+    "separator": {
+      "group": "design",
+      "selector": ".separator",
+      "label": "Separator",
       "fields": {
         "spacing": {
           "padding": true
@@ -102,5 +144,100 @@
       }
     }
   },
+  "attributes": {
+    "isRecurring": {
+      "type": "boolean",
+      "default": false
+    },
+    "startDate": {
+      "type": "string",
+      "default": ""
+    },
+    "recurringInterval": {
+      "type": "number"
+    },
+    "separatorType": {
+      "type": "string",
+      "default": "colon"
+    },
+    "isShowingModal": {
+      "type": "boolean",
+      "default": false
+    },
+    "blockId": {
+      "type": "string",
+      "default": ""
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "styles": {
+      "type": "object",
+      "default": {
+        "wrapper": {
+          "padding": {
+            "top": "12px",
+            "right": "12px",
+            "bottom": "12px",
+            "left": "12px"
+          }
+        },
+        "card": {
+          "padding": {
+            "top": "12px",
+            "right": "12px",
+            "bottom": "12px",
+            "left": "12px"
+          }
+        },
+        "separator": {
+          "margin": {
+            "top": "0",
+            "right": "12px",
+            "bottom": "0",
+            "left": "12px"
+          }
+        },
+        "number": {
+          "fontSize": "32px"
+        }
+      }
+    },
+    "hiddenFields": {
+      "type": "array",
+      "default": [
+        "labelTop",
+        "labelBottom"
+      ]
+    },
+    "expiredDate": {
+      "type": "string"
+    },
+    "layoutType": {
+      "type": "string",
+      "default": "two"
+    },
+    "daysLabel": {
+      "type": "string",
+      "default": "DAYS"
+    },
+    "hoursLabel": {
+      "type": "string",
+      "default": "HOURS"
+    },
+    "minutesLabel": {
+      "type": "string",
+      "default": "MINUTES"
+    },
+    "secondsLabel": {
+      "type": "string",
+      "default": "SECONDS"
+    }
+  },
+  "keywords": [
+    "countdown",
+    "timer",
+    "timer"
+  ],
   "textdomain": "omnipress"
 }

@@ -9,6 +9,8 @@ namespace Omnipress\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
+require_once OMNIPRESS_PATH . 'includes/Admin/taxonomies-settings/TaxonomiesCustomFields.php';
+
 use Omnipress\Controllers\SettingsController;
 use Omnipress\Helpers;
 use Omnipress\Models\BlocksSettingsModel;
@@ -140,7 +142,7 @@ class Init {
 
 		$this->menu_icon = 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( OMNIPRESS_PATH . 'assets/images/omnipress-dashboard-menu-icon.svg' ) );
 
-		add_action( 'admin_menu', array( $this, 'setup_menu' ) ); // Register Menus.
+		add_action( 'admin_menu', array( $this, 'setup_menu' ) );
 
 		if ( ( ! Helpers::is_localhost() ) && ( ! Helpers::is_test_site() ) ) {
 			add_action( 'init', array( $this, 'handle_usage_stats' ) );
@@ -158,6 +160,8 @@ class Init {
 
 		// post handler.
 		add_action( 'admin_post_op_notice_dismissal', array( $this, 'notice_dismiss_handler' ) );
+		// todo: We are working on this feature but it's not ready yet.
+		// ComingSoonAdminSettings::init();
 	}
 
 

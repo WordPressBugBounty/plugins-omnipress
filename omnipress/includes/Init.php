@@ -7,15 +7,14 @@
 
 namespace Omnipress;
 
-require_once OMNIPRESS_PATH . 'includes/Helpers/BlockAssetsHelper.php';
+require_once OMNIPRESS_PATH . 'includes/Utils/BlockAssetsHelper.php';
 require_once OMNIPRESS_PATH . 'includes/Core/FileSystemUtil.php';
 require_once OMNIPRESS_PATH . 'includes/Block.php';
-
 require_once OMNIPRESS_PATH . 'includes/Blocks/BlockGeneralSettings.php';
+// require_once OMNIPRESS_PATH . 'includes/Controllers/ComingSoonController.php';
 
-use Omnipress\Abstracts\BlockTemplateBase;
 use Omnipress\Admin\Init as AdminInit;
-use Omnipress\Publics\Init as PublicsInit;
+use Omnipress\Abstracts\BlockTemplateBase;
 use Omnipress\RestApi\RestApi;
 
 /**
@@ -105,7 +104,6 @@ class Init {
 		add_action( 'admin_footer', array( $this, 'add_editor_markup' ) );
 
 		AdminInit::init();
-		PublicsInit::init();
 		RestApi::init();
 
 		BlockTemplateBase::init();

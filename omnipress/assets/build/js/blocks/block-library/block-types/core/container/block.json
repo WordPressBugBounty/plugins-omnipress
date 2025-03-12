@@ -110,42 +110,6 @@
       "type": "number",
       "default": 1
     },
-    "overlay": {
-      "type": "object",
-      "default": {}
-    },
-    "container": {
-      "type": "object",
-      "default": {}
-    },
-    "layout": {
-      "type": "object",
-      "default": {
-        "display": "flex"
-      }
-    },
-    "spacing": {
-      "type": "object",
-      "default": {}
-    },
-    "wrapper": {
-      "type": "object",
-      "default": {}
-    },
-    "link": {
-      "type": "object",
-      "default": {}
-    },
-    "flex": {
-      "type": "object",
-      "default": {
-        "alignItems": "flex-start"
-      }
-    },
-    "content": {
-      "type": "object",
-      "default": {}
-    },
     "blockLink": {
       "type": "string",
       "default": ""

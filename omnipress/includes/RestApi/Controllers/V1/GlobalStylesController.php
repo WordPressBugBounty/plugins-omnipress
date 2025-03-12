@@ -3,9 +3,6 @@
 namespace Omnipress\RestApi\Controllers\V1;
 
 use Omnipress\Abstracts\RestControllersBase;
-use OMNIPRESS\Core\FileSystemUtil;
-use Omnipress\Helpers\BlockStylesHelper;
-use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Models\GlobalStylesModel;
 
 defined( 'ABSPATH' ) || exit;

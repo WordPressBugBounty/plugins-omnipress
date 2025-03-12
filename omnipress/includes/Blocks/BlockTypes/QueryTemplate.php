@@ -4,6 +4,8 @@ namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
 use Omnipress\Helpers;
+use Omnipress\Utils;
+use Omnipress\Helpers\GeneralHelpers;
 
 /**
  * Query Template block.
@@ -80,10 +82,10 @@ class QueryTemplate extends AbstractBlock {
 					$custom_args = array();
 
 					if ( ! empty( $query_params ) ) {
-						$custom_args = Helpers\GeneralHelpers::validate_wc_query_args( array(), $block, $query->query_vars );
+						$custom_args = GeneralHelpers::validate_wc_query_args( array(), $block, $query->query_vars );
 					}
 
-					if ( Helpers\GeneralHelpers::is_valid_array( $custom_args ) ) {
+					if ( GeneralHelpers::is_valid_array( $custom_args ) ) {
 						$new_query = clone $wp_query;
 
 						$query_args = array_merge( $new_query->query_vars, $custom_args );
@@ -103,7 +105,7 @@ class QueryTemplate extends AbstractBlock {
 
 			if ( ( isset( $block->context['query']['product_cat'] ) && 'product' === $query_args['post_type'] ) || ! empty( $query_params ) ) {
 
-				$query_args = Helpers\GeneralHelpers::validate_wc_query_args( $query_args, $block, $query_params );
+				$query_args = GeneralHelpers::validate_wc_query_args( $query_args, $block, $query_params );
 			}
 
 			if ( isset( $block->context['query']['queryType'] ) && 'related-products' === $block->context['query']['queryType'] ) {
@@ -160,19 +162,7 @@ class QueryTemplate extends AbstractBlock {
 			remove_filter( 'render_block_context', $filter_block_context, 2 );
 
 			// Wrap the render inner blocks in a `li` element with the appropriate post classes.
-			$grid_layout_classes = '';
-
-			if ( isset( $layout['columnCount'] ) ) {
-				$grid_layout_classes .= " op-grid-col-{$layout['columnCount']}";
-			}
-
-			if ( isset( $layout['mdColumnCount'] ) ) {
-				$grid_layout_classes .= " op-grid-col-{$layout['mdColumnCount']}-md";
-			}
-
-			if ( isset( $layout['smColumnCount'] ) ) {
-				$grid_layout_classes .= " op-grid-col-{$layout['smColumnCount']}-sm";
-			}
+			$grid_layout_classes = 'is-layout-grid';
 
 			$inner_block_directives = ! $enhanced_pagination ? ' data-wp-key="query-template-item-' . $post_id . '"' : '';
 			$content               .= '<li' . $inner_block_directives . ' class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">' . $block_content . '</li>';
@@ -198,6 +188,9 @@ class QueryTemplate extends AbstractBlock {
 		global $post;
 
 		$product = wc_get_product( $post->ID );
+		if ( ! is_a( $product, 'WC_Product' ) ) {
+			return array();
+		}
 
 		$related_products = array_filter( array_map( 'wc_get_product', wc_get_related_products( $product->get_id(), $product_per_page, $product->get_upsell_ids() ) ), 'wc_products_array_filter_visible' );
 		$related_products = wc_products_array_orderby( $related_products, 'rand', 'desc' );

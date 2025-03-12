@@ -4,7 +4,7 @@
  * Description: Omnipress is a ready-made WordPress Design Blocks, similar to the Gutenberg WordPress block editor, that takes a holistic approach to changing your complete site.
  * Author: omnipressteam
  * Author URI: https://omnipressteam.com/
- * Version: 1.5.4
+ * Version: 1.5.5
  * Text Domain: omnipress
  * License: GPLv3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,7 +21,7 @@ class Omnipress {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '1.5.3';
+	const VERSION = '1.5.5';
 
 	/**
 	 * Singleton instance.
@@ -61,7 +61,7 @@ class Omnipress {
 
 		define( 'OMNIPRESS_POST_EDIT_TIME', 'op_post_edit_time' );
 
-		define( 'OMNIPRESS_PREFIX', 'op_' );
+		define( 'OMNIPRESS_PREFIX', 'opafg' ); // omnipress addons for gutenberg
 		define( 'OMNIPRESS_I18', 'omnipress' );
 		define( 'OMNIPRESS_BLOCK_PREFIX', 'omnipress' );
 

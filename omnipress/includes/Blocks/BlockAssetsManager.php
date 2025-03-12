@@ -2,6 +2,8 @@
 
 namespace Omnipress\Blocks;
 
+use Omnipress\Core\AbstractAssetsHandler;
+
 /**
  * Blocks assets handler.
  *
@@ -10,66 +12,19 @@ namespace Omnipress\Blocks;
  * @return void
  * @since 1.0.0
  */
-class BlockAssetsManager {
+class BlockAssetsManager extends AbstractAssetsHandler {
 	/**
-	 * Constructor
+	 * @inheritDoc
 	 */
-	public function __construct() {
-		call_user_func( array( $this, 'register_interactive_module_scripts' ) );
-
-		// Block's editor only assets.
-		add_action( 'enqueue_block_assets', 'Omnipress\Block\enqueue_block_editor_assets', 12 );
-
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_assets' ), 12 );
-
-		add_action( 'enqueue_block_assets', array( $this, 'block_assets' ) );
-	}
-
-
-	/**
-	 * Block assets which required frontend and also editor.
-	 *
-	 * @return void
-	 */
-	public function block_assets() {
-		call_user_func( 'Omnipress\Block\enqueue_block_assets' );
+	public function register_and_enqueue_block_editor_scripts(): void {
+		call_user_func( 'Omnipress\Block\enqueue_block_editor_assets' );
 	}
 
 	/**
-	 * Frontend only assets like module scripts, view scripts and other styles which required on frontend for blocks
-	 *
-	 * @return void
+	 * @inheritDoc
 	 */
-	public function enqueue_frontend_assets() {
+	public function enqueue_scripts(): void {
 		call_user_func( 'Omnipress\Block\enqueue_frontend_assets' );
-
-		// Regsiter all module scripts within assets/build/js/client/interactivity-modules/ folder.
-		$module_scripts = glob( OMNIPRESS_PATH . 'assets/build/js/client/interactivity-modules/*.js' );
-
-		foreach ( $module_scripts as $module_script ) {
-			if ( strpos( $module_script, 'chunk' ) == false ) {
-				$module_script_path_arr = explode( '/', $module_script );
-				$module_id              = str_replace( '.js', '', end( $module_script_path_arr ) );
-
-				wp_register_script_module(
-					'omnipress/' . $module_id,
-					OMNIPRESS_URL . 'assets/build/js/client/interactivity-modules/' . $module_id . '.js',
-					array(
-						array(
-							'id'     => '@wordpress/interactivity',
-							'import' => 'dynamic',
-						),
-						array(
-							'id'     => '@wordpress/interactivity-router',
-							'import' => 'dynamic',
-						),
-					),
-					filemtime( $module_script )
-				);
-			}
-		}
-
-		// localize scripts for frontend .
 		wp_print_inline_script_tag(
 			sprintf(
 				'window._omnipress = %s;',
@@ -77,6 +32,8 @@ class BlockAssetsManager {
 					array(
 						'wc_nonce' => wp_create_nonce( 'wc_store_api' ),
 						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'op_nonce' => wp_create_nonce( 'op_block' ),
+
 					)
 				)
 			)
@@ -84,21 +41,29 @@ class BlockAssetsManager {
 	}
 
 	/**
-	 * Register interactive module scripts
-	 *
-	 * @return void
+	 * @inheritDoc
 	 */
-	public function register_interactive_module_scripts() {
-		$dependencies = array(
-			'id'     => '@wordpress/interactivity',
-			'import' => 'dynamic',
-		);
+	public function register_scripts(): void {
+		$this->register_script_module( 'omnipress/woogrid', 'wc-block-module' );
+		$this->register_script_module( 'omnipress/content/switcher', 'content-switcher', array(), filemtime( OMNIPRESS_PATH . 'assets/block-interactivity/content-switcher.js' ) );
 
-		\wp_register_script_module( 'omnipress/woogrid', OMNIPRESS_URL . 'assets/block-interactivity/wc-block-module.js', $dependencies, OMNIPRESS_VERSION );
-		\wp_register_script_module( 'omnipress/content/switcher', OMNIPRESS_URL . 'assets/block-interactivity/content-switcher.js', $dependencies, filemtime( OMNIPRESS_PATH . 'assets/block-interactivity/content-switcher.js' ) );
+		$module_scripts = glob( OMNIPRESS_PATH . 'assets/build/js/client/interactivity-modules/*.js' );
 
-		\wp_register_script_module( 'omnipress/woogrid', OMNIPRESS_URL . 'assets/block-interactivity/wc-block-module.js', $dependencies, OMNIPRESS_VERSION );
+		foreach ( $module_scripts as $module_script ) {
+			if ( ! strpos( $module_script, 'chunk' ) ) {
+				$module_script_path_arr = explode( '/', $module_script );
+				$module_id              = str_replace( '.js', '', end( $module_script_path_arr ) );
+				$this->register_script_module( 'omnipress/' . $module_id, $module_id, array(), filemtime( $module_script ) );
+			}
+		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function enqueue_block_assets(): void {
+		call_user_func( 'Omnipress\Block\enqueue_block_assets' );
 	}
 }
 
-new BlockAssetsManager();
+new BlockAssetsManager( OMNIPRESS_URL . 'assets/', OMNIPRESS_VERSION );

@@ -59,9 +59,9 @@ class Megamenu extends AbstractBlock {
 		'buttonContent'     => 'All',
 		'lists'             => array(),
 	);
-		// ============
-		// Structure of menu attribute
-		/* phpcs:ignore
+	// ============
+	// Structure of menu attribute
+	/* phpcs:ignore
 			Example: array(
 				'id'       => '4',
 				'title'    => 'Example Menu With Dropdown',
@@ -87,9 +87,10 @@ class Megamenu extends AbstractBlock {
 				),
 			),
 		 */
-		// ============
+	// ============
 
 	private function render_menu_item( $menu ) {
+
 		$title            = $menu['title'] ?? '';
 		$url              = $menu['url'] ?? null;
 		$children         = isset( $menu['children'] ) ? $menu['children'] : null;
@@ -100,7 +101,7 @@ class Megamenu extends AbstractBlock {
 		if ( $template ) {
 			$post = get_post( $template );
 
-			if ( $post ) {
+			if ( $post && 'publish' === $post->post_status && 'op-menu-templates' === $post->post_type ) {
 				$template_content .= apply_filters( 'the_content', $post->post_content );
 				$title             = $title ?? $post->post_title;
 			}

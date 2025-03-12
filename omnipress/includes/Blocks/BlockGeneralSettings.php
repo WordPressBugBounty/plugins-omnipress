@@ -2,6 +2,7 @@
 
 namespace Omnipress\Blocks;
 
+
 use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Traits\Singleton;
 

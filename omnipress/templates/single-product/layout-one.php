@@ -1,5 +1,7 @@
 <?php
-use Omnipress\Core\WoocommerceFields;
+
+use Omnipress\Controllers\WoocommerceFields;
+
 $woo_fields = new WoocommerceFields( $product_id ? $product_id : get_the_ID(), $hidden_fields ?? array(), true );
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -19,7 +21,6 @@ $woo_fields = new WoocommerceFields( $product_id ? $product_id : get_the_ID(), $
 			<li><?php echo $woo_fields->render_compare_button( 'compare-button' ); ?></li>
 			<li><?php echo $woo_fields->render_quick_view_button( 'quick-view-button' ); ?></li>
 			<li><?php echo $woo_fields->render_wishlist_button( 'wishlist-button' ); ?></li>
-
 			<?php do_action( 'single_product_action_meta' ); ?>
 		</ul>
 	</div>

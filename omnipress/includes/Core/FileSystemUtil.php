@@ -5,7 +5,7 @@ if ( defined( 'ABSPATH' ) === false ) {
 	exit;
 }
 
-if ( ! class_exists( 'OMNIPRESS\FileSystemUtil' ) ) {
+if ( ! class_exists( FileSystemUtil::class ) ) {
 	/**
 	 * File System Utility class.
 	 *

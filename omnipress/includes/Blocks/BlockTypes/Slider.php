@@ -20,41 +20,75 @@ class Slider extends AbstractBlock {
 		$block->parsed_block['attrs'] = $attributes;
 		$block_id                     = $attributes['blockId'];
 
-		$swiper_settings = array(
-			'loop'         => 'true' === $attributes['loop'],
-			'autoplay'     => 'true' === $attributes['autoplay'],
-			'delay'        => $attributes['autoplayDelay'],
-			'speed'        => $attributes['speed'],
-			'effect'       => $attributes['effect'],
-			'slidePerView' => $attributes['slidePerView'],
-			'spaceBetween' => $attributes['spaceBetween'],
+		$swiper_settings = array();
 
-			'breakpoints'  => array(
-				'680'  => array(
-					'slidesPerView' => $attributes['mdSlidePerView'],
-					'spaceBetween'  => $attributes['mdSpaceBetween'],
-				),
-				'1024' => array(
-					'slidesPerView' => $attributes['slidePerView'],
-					'spaceBetween'  => $attributes['spaceBetween'],
-				),
-			),
-		);
+		/* Swiper Effect */
+		if ( isset( $attributes['configs']['effect'] ) ) {
+			$swiper_settings['effect'] = $attributes['configs']['effect'];
+		}
+
+		/*
+			Responsive Settings.
+			Mobile Settings OR Desktop Settings.
+		 */
+		if ( isset( $attributes['configs']['smSlidePerView'] ) ) {
+			$swiper_settings['slidePerView'] = $attributes['configs']['smSlidePerView'];
+		}
+		if ( isset( $attributes['configs']['smSpaceBetween'] ) ) {
+			$swiper_settings['spaceBetween'] = $attributes['configs']['smSpaceBetween'];
+		}
+
+		/* Tablet Settings. */
+		if ( isset( $attributes['configs']['mdSlidePerView'] ) ) {
+			$swiper_settings['breakpoints']['680']['slidesPerView'] = $attributes['configs']['mdSlidePerView'];
+		}
+		if ( isset( $attributes['configs']['mdSpaceBetween'] ) ) {
+			$swiper_settings['breakpoints']['680']['spaceBetween'] = $attributes['configs']['mdSpaceBetween'];
+		}
+
+		/* Desktop Settings. */
+		if ( isset( $attributes['configs']['slidePerView'] ) ) {
+			$swiper_settings['breakpoints']['1024']['slidesPerView'] = $attributes['configs']['slidePerView'];
+		}
+		if ( isset( $attributes['configs']['spaceBetween'] ) ) {
+			$swiper_settings['breakpoints']['1024']['spaceBetween'] = $attributes['configs']['spaceBetween'];
+		}
+
+		/* LOOP */
+		if ( isset( $attributes['configs']['loop'] ) ) {
+			$swiper_settings['loop'] = $attributes['configs']['loop'];
+		}
+
+		/* Autoplay */
+		if ( isset( $attributes['configs']['autoplay'] ) ) {
+			$swiper_settings['autoplay'] = $attributes['configs']['autoplay'];
+
+			if ( isset( $attributes['configs']['speed'] ) ) {
+				$swiper_settings['speed'] = $attributes['configs']['speed'];
+			}
+			if ( isset( $attributes['configs']['autoplayDelay'] ) ) {
+				$swiper_settings['delay'] = $attributes['configs']['autoplayDelay'];
+			}
+		}
+
+		/* Swiper Pagination */
 
 		if ( 'true' === $attributes['showPagination'] ) {
 			$swiper_settings['pagination'] = array(
 				'el'        => '.swiper-pagination-' . $block_id,
 				'clickable' => true,
-				'type'      => $attributes['paginationType'],
+				'type'      => $attributes['configs']['paginationType'] ?? 'bullets',
 			);
 		}
 
-		if ( 'true' === $attributes['showScrollbar'] ) {
+		/* Swiper Scrollbar */
+		if ( $attributes['configs']['showScrollbar'] ?? false ) {
 			$swiper_settings['scrollbar'] = array(
 				'el' => '.swiper-scrollbar-' . $block_id,
 			);
 		}
 
+		/* Swiper Navigation */
 		if ( $attributes['showNavigation'] ) {
 			$swiper_settings['navigation'] = array(
 				'nextEl' => '.swiper-button-next-' . $block_id,
@@ -97,9 +131,9 @@ class Slider extends AbstractBlock {
 			$content,
 			$block_id,
 			wp_interactivity_data_wp_context( $swiper_settings ),
-			$attributes['showNavigation'] ? $navigation : '',
-			'true' === $attributes['showPagination'] ? $pagination : '',
-			'true' === $attributes['showScrollbar'] ? $scrollbar : '',
+			! empty( $attributes['configs']['showNavigation'] ) ? $navigation : '',
+			! empty( $attributes['configs']['showPagination'] ) ? $pagination : '',
+			! empty( $attributes['configs']['showScrollbar'] ) ? $scrollbar : '',
 			$slider_wrapper_attributes
 		);
 
@@ -111,7 +145,7 @@ class Slider extends AbstractBlock {
 			return 'class="swiper-wrapper"';
 		}
 
-		$inner_block = $block->parsed_block['innerBlocks'][0];
-		return "class='swiper-wrapper op-{$inner_block['attrs'] ['blockId']}' data-type='{$inner_block['blockName']}'";
+		$inner_block = $block->parsed_block['innerBlocks'][0] ?? array();
+		return "class='swiper-wrapper op-{$inner_block['attrs'] ['blockId']}' data-type='{$inner_block['blockName'] }'";
 	}
 }

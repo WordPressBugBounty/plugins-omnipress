@@ -2,8 +2,8 @@
 
 namespace Omnipress\RestApi\Controllers\V1;
 
-use Omnipress\Abstracts\RestControllersBase;
 use Omnipress\Blocks\BlockGeneralSettings;
+use Omnipress\Abstracts\RestControllersBase;
 use Omnipress\Models\BlocksSettingsModel;
 
 class BlockSettingsController extends RestControllersBase {

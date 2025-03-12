@@ -1,4 +1,4 @@
-import { getContext, getElement, store } from "@wordpress/interactivity";
+import { getContext, getElement, store } from '@wordpress/interactivity';
 
 const apiFetch = window.wp.apiFetch;
 const { addQueryArgs } = wp.url;
@@ -6,18 +6,18 @@ const { addQueryArgs } = wp.url;
 const INITIAL_STATE = {
   filters: [
     {
-      post_type: "product",
-      post_status: "publish",
-      post_title: "Product",
+      post_type: 'product',
+      post_status: 'publish',
+      post_title: 'Product',
       per_page: 10,
-      orderby: "date",
-      order: "desc",
-      category: "1",
-      tag: "1",
-      price_from: "100",
-      price_to: "1000",
-      rating_from: "3",
-      rating_to: "5",
+      orderby: 'date',
+      order: 'desc',
+      category: '1',
+      tag: '1',
+      price_from: '100',
+      price_to: '1000',
+      rating_from: '3',
+      rating_to: '5',
     },
   ],
 };
@@ -26,7 +26,7 @@ const isValidLink = (ref) =>
   ref &&
   ref instanceof window.HTMLAnchorElement &&
   ref.href &&
-  (!ref.target || ref.target === "_self") &&
+  (!ref.target || ref.target === '_self') &&
   ref.origin === window.location.origin;
 
 const isValidEvent = (event) =>
@@ -46,7 +46,7 @@ const updateUrls = async (filters = {}, href) => {
     }
   }
 
-  const { actions } = await import("@wordpress/interactivity-router");
+  const { actions } = await import('@wordpress/interactivity-router');
 
   actions.navigate(href, {});
 };
@@ -70,7 +70,7 @@ const DEFAULT_STATE = {
  * @param {boolean} options.lock - Whether to lock the store or not.
  * @returns {Object} An object containing the state and actions of the store.
  */
-const { state } = store("omnipress/query", {
+const { state } = store('omnipress/query', {
   state: DEFAULT_STATE,
 
   actions: {
@@ -79,13 +79,13 @@ const { state } = store("omnipress/query", {
       const { ref } = getElement();
 
       const queryRef = ref.closest(
-        ".wp-block-omnipress-query-loop[data-wp-router-region]"
+        '.wp-block-omnipress-query-loop[data-wp-router-region]',
       );
 
       if (isValidLink(ref) && isValidEvent(event)) {
         event.preventDefault();
 
-        const { actions } = yield import("@wordpress/interactivity-router");
+        const { actions } = yield import('@wordpress/interactivity-router');
 
         yield actions.navigate(ref.href);
         ctx.url = ref.href;
@@ -108,27 +108,27 @@ const { state } = store("omnipress/query", {
       if (
         Boolean(ctx.filters[name]) &&
         ctx.filters[name] === value &&
-        name != "sort" &&
-        name !== "search"
+        name != 'sort' &&
+        name !== 'search'
       ) {
         const { [name]: removed, ...rest } = ctx.filters;
         ctx.filters = rest;
-      } else if (name.includes("pa_")) {
-        const attributes = ctx.filters["attributes"] ?? {};
+      } else if (name.includes('pa_')) {
+        const attributes = ctx.filters['attributes'] ?? {};
         const formattedAttribute = validateProductAttribute(
           attributes,
           name,
-          value
+          value,
         );
 
-        ctx.filters["attributes"] = formattedAttribute;
-      } else if ("sort" == name) {
+        ctx.filters['attributes'] = formattedAttribute;
+      } else if ('sort' == name) {
         ctx.filters[name] = event.target.value;
       } else {
         ctx.filters[name] = value;
       }
 
-      if (name === "_sale_price") {
+      if (name === '_sale_price') {
         ctx.filters[name] = event.target.checked;
       }
 
@@ -157,7 +157,7 @@ const { state } = store("omnipress/query", {
       const { ref } = getElement();
 
       if (isValidLink(ref)) {
-        const { actions } = yield import("@wordpress/interactivity-router");
+        const { actions } = yield import('@wordpress/interactivity-router');
         yield actions.prefetch(ref.href);
       }
     },
@@ -184,23 +184,23 @@ const { state } = store("omnipress/query", {
         id: parseInt(productId, 10),
       };
 
-      if ("variable" !== productType && "simple" !== productType) {
+      if ('variable' !== productType && 'simple' !== productType) {
         window.location.href = ref.href;
         return;
       }
 
-      if (productType === "variable" && context.selectedVariation) {
-        args["variation"] = [];
+      if (productType === 'variable' && context.selectedVariation) {
+        args['variation'] = [];
 
         for (const [key, value] of Object.entries(context.selectedVariation)) {
           args.variation.push({
-            attribute: key.replace("attribute_", ""),
+            attribute: key.replace('attribute_', ''),
             value,
           });
         }
       }
 
-      const innerHtml = ref.getAttribute("value") ?? ref.getHTML();
+      const innerHtml = ref.getAttribute('value') ?? ref.getHTML();
 
       addToCart(ref, args).then((response) => {
         setTimeout(() => {
@@ -215,12 +215,12 @@ const { state } = store("omnipress/query", {
 
       const { ref } = getElement();
 
-      ref.innerHTML = "Loading...";
+      ref.innerHTML = 'Loading...';
       const { page, isProcessing } = ref.dataset;
 
       ref.dataset.page = Number(page) + 1;
 
-      if (isProcessing === "true") {
+      if (isProcessing === 'true') {
         return;
       }
 
@@ -249,24 +249,24 @@ const { state } = store("omnipress/query", {
       }
 
       if (
-        name === "min_price" &&
-        Number.parseInt(value) < Number.parseInt(ctx.filters["max_price"])
+        name === 'min_price' &&
+        Number.parseInt(value) < Number.parseInt(ctx.filters['max_price'])
       ) {
-        ctx.filters["min_price"] = value;
+        ctx.filters['min_price'] = value;
       }
 
       if (
-        name === "max_price" &&
-        Number.parseInt(value) > Number.parseInt(ctx.filters["min_price"])
+        name === 'max_price' &&
+        Number.parseInt(value) > Number.parseInt(ctx.filters['min_price'])
       ) {
-        ctx.filters["max_price"] = value;
+        ctx.filters['max_price'] = value;
       }
 
       const sliderContent = ref.parentElement;
 
-      const rangeTrack = sliderContent.querySelector(".range-highlight");
-      const minPriceWidth = (ctx.filters["min_price"] / 10000) * 100;
-      const maxPriceWidth = (ctx.filters["max_price"] / 10000) * 100;
+      const rangeTrack = sliderContent.querySelector('.range-highlight');
+      const minPriceWidth = (ctx.filters['min_price'] / 10000) * 100;
+      const maxPriceWidth = (ctx.filters['max_price'] / 10000) * 100;
 
       const rangeTrackWidth = maxPriceWidth - minPriceWidth;
       rangeTrack.style = `width:${rangeTrackWidth}%; left:${minPriceWidth}%;`;
@@ -282,7 +282,7 @@ const { state } = store("omnipress/query", {
       const { ref } = getElement();
       const context = getContext();
 
-      if (ref.dataset.isProcessing === "true") {
+      if (ref.dataset.isProcessing === 'true') {
         return;
       }
 
@@ -290,7 +290,7 @@ const { state } = store("omnipress/query", {
 
       yield setTimeout(() => {
         const currentProductItem = ref.closest(
-          '[data-type="omnipress/single-product"]'
+          '[data-type="omnipress/single-product"]',
         );
 
         const { attributeName, attributeValue } = ref.dataset;
@@ -298,10 +298,10 @@ const { state } = store("omnipress/query", {
         // add class name to styling active attribute.
         const parentEl = ref.parentElement;
 
-        const siblings = parentEl.querySelectorAll(".attribute-option");
+        const siblings = parentEl.querySelectorAll('.attribute-option');
 
         siblings.forEach((sibling) => {
-          sibling.classList.remove("selected");
+          sibling.classList.remove('selected');
         });
 
         if (!context.selectedVariation) {
@@ -311,16 +311,16 @@ const { state } = store("omnipress/query", {
         if (context.selectedVariation[attributeName] === attributeValue) {
           const { [attributeName]: _, ...rest } = context.selectedVariation;
           context.selectedVariation = rest;
-          ref.classList.remove("selected");
+          ref.classList.remove('selected');
         } else {
           context.selectedVariation[attributeName] = attributeValue;
-          ref.classList.add("selected");
+          ref.classList.add('selected');
         }
 
         const matchedAttrs = context.attributes.find((attribute) => {
-          return Object.keys(attribute["attributes"]).every(
+          return Object.keys(attribute['attributes']).every(
             (key) =>
-              context.selectedVariation[key] === attribute["attributes"][key]
+              context.selectedVariation[key] === attribute['attributes'][key],
           );
         });
 
@@ -330,8 +330,8 @@ const { state } = store("omnipress/query", {
           context.isCartDisabled = false;
         }
 
-        currentProductItem.querySelector(".product-price-html").innerHTML =
-          matchedAttrs?.price_html ?? "";
+        currentProductItem.querySelector('.product-price-html').innerHTML =
+          matchedAttrs?.price_html ?? '';
 
         ref.dataset.isProcessing = false;
       }, 30);
@@ -359,22 +359,22 @@ const { state } = store("omnipress/query", {
     ontoggleViewLayout(event) {
       const context = getContext();
 
-      const queryRef = document.querySelector(".wp-block-omnipress-query-loop");
+      const queryRef = document.querySelector('.wp-block-omnipress-query-loop');
 
-      if (event.target.classList.contains("active")) {
+      if (event.target.classList.contains('active')) {
         return;
       }
       const layoutType = event.target.dataset.viewLayout;
 
       const sibling = `[data-view-layout="${
-        layoutType === "grid" ? "list" : "grid"
+        layoutType === 'grid' ? 'list' : 'grid'
       }"]`;
 
       event.target.parentElement
         .querySelector(sibling)
-        .classList.remove("active");
+        .classList.remove('active');
 
-      event.target.classList.add("active");
+      event.target.classList.add('active');
 
       context.view_layout = layoutType;
     },
@@ -384,7 +384,7 @@ const { state } = store("omnipress/query", {
       const { ref } = getElement();
 
       if (url && isValidLink(ref)) {
-        const { actions } = yield import("@wordpress/interactivity-router");
+        const { actions } = yield import('@wordpress/interactivity-router');
 
         yield actions.prefetch(ref.href);
       }
@@ -402,14 +402,14 @@ function recursivelyRemoveEmptyKey(obj = {}) {
   for (const key in obj) {
     if (
       !Boolean(obj[key]) ||
-      "queryId" === key ||
+      'queryId' === key ||
       (Array.isArray(obj[key]) && obj[key].length === 0)
     ) {
       continue;
     }
 
     if (
-      typeof obj[key] === "object" &&
+      typeof obj[key] === 'object' &&
       obj[key] !== null &&
       !Array.isArray(obj[key])
     ) {
@@ -418,20 +418,20 @@ function recursivelyRemoveEmptyKey(obj = {}) {
       if (Object.keys(nestedObj).length > 0) {
         newObj[key] = nestedObj;
       }
-    } else if ("max_price" === key && "max" === obj[key]) {
+    } else if ('max_price' === key && 'max' === obj[key]) {
       continue;
-    } else if ("min_price" === key || "max_price" === key) {
+    } else if ('min_price' === key || 'max_price' === key) {
       if (
-        Number.isNaN(parseInt(obj["min_price"])) ||
-        Number.isNaN(parseInt(obj["max_price"])) ||
-        Number.parseInt(obj["min_price"], 10) >
-          Number.parseInt(obj["max_price"], 10)
+        Number.isNaN(parseInt(obj['min_price'])) ||
+        Number.isNaN(parseInt(obj['max_price'])) ||
+        Number.parseInt(obj['min_price'], 10) >
+          Number.parseInt(obj['max_price'], 10)
       ) {
         continue;
       } else {
         newObj[key] = obj[key];
       }
-    } else if (obj[key] !== null && obj[key] !== undefined && obj[key] !== "") {
+    } else if (obj[key] !== null && obj[key] !== undefined && obj[key] !== '') {
       newObj[key] = obj[key];
     }
   }
@@ -460,7 +460,7 @@ function validateProductAttribute(existingAttributes, attrName, attrValue) {
       attributes[attrName] = [...attributes[attrName], attrValue];
     } else {
       attributes[attrName] = attributes[attrName].filter(
-        (item) => item !== attrValue
+        (item) => item !== attrValue,
       );
     }
   }
@@ -476,14 +476,14 @@ async function fetchFilteredProducts() {
 
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const s = urlParams.get("s");
-  const post_type = urlParams.get("post_type");
+  const s = urlParams.get('s');
+  const post_type = urlParams.get('post_type');
 
   attributes &&
     Object.keys(attributes).forEach((key, i) => {
       if (!attributes[key].length) return;
 
-      rest[key] = Array.isArray(attributes[key]) && attributes[key].join(",");
+      rest[key] = Array.isArray(attributes[key]) && attributes[key].join(',');
     });
 
   const queryStringObject = JSON.stringify(rest);
@@ -496,23 +496,23 @@ async function fetchFilteredProducts() {
     Object.assign(rest, { post_type });
   }
 
-  const { actions } = await import("@wordpress/interactivity-router");
+  const { actions } = await import('@wordpress/interactivity-router');
   const url = new URL(window.location.href);
   const params = new URLSearchParams(url.search);
 
   params.set(this.filters.queryId, queryStringObject);
 
   params.forEach((value, key) => {
-    if (value === "{}" || !Boolean(value)) {
+    if (value === '{}' || !Boolean(value)) {
       params.delete(key);
     }
   });
 
-  actions.navigate("?" + (params.toString() === "{}" ? "" : params.toString()));
+  actions.navigate('?' + (params.toString() === '{}' ? '' : params.toString()));
 
   if (this.templateRef) {
     const firstAnchor = this.templateRef.querySelector(
-      "[data-type='omnipress/single-product'] a"
+      "[data-type='omnipress/single-product'] a",
     );
 
     if (firstAnchor) {
@@ -521,55 +521,55 @@ async function fetchFilteredProducts() {
   }
 
   setTimeout(() => {
-    this.isProcessing = "false";
+    this.isProcessing = 'false';
   }, 1000); // Add a 1-second delay to display an animation while fetching products from the server.
 }
 
 // add to cart Helper functions
 function changeInnerHTML(ref, html) {
   ref.innerHTML = html;
-  ref.setAttribute("value", html);
+  ref.setAttribute('value', html);
 }
 
 function addToCartAnimation(ref, res, innerHtml) {
   const currentItem = res.items.find(
-    (item) => item.id === Number(ref.dataset.productId)
+    (item) => item.id === Number(ref.dataset.productId),
   );
 
   if (currentItem) {
     const qty = currentItem.quantity;
 
-    const innerText = `✓ ${qty} Item${qty > 1 ? "s" : ""} in the cart `;
+    const innerText = `✓ ${qty} Item${qty > 1 ? 's' : ''} in the cart `;
 
     changeInnerHTML(ref, innerText);
   }
 
   setTimeout(() => {
     changeInnerHTML(ref, innerHtml);
-    ref.style.pointerEvents = "auto";
+    ref.style.pointerEvents = 'auto';
     ref.dataset.isProcessing = false;
   }, 2000);
 }
 
 async function addToCart(ref, data) {
-  ref.innerHTML = "Adding to cart...";
-  ref.value = "Adding to cart...";
-  ref.style.pointerEvents = "none";
+  ref.innerHTML = 'Adding to cart...';
+  ref.value = 'Adding to cart...';
+  ref.style.pointerEvents = 'none';
 
   const response = await apiFetch({
     path: `/wc/store/v1/cart/add-item`,
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Nonce: window._omnipress.wc_nonce,
     },
     body: JSON.stringify(data),
   });
 
   document.dispatchEvent(
-    new CustomEvent("added_to_cart", {
+    new CustomEvent('added_to_cart', {
       detail: response,
-    })
+    }),
   );
 
   return response;

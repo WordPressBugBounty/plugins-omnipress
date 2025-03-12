@@ -65,6 +65,12 @@
       "type": "boolean",
       "default": false
     },
+    "text": {
+      "type": "string",
+      "source": "html",
+      "selector": ".op-block__heading-content",
+      "default": ""
+    },
     "content": {
       "type": "string",
       "source": "html",
@@ -80,10 +86,7 @@
     },
     "seperator": {
       "type": "object",
-      "default": {
-        "smDisplay": "block",
-        "mdDisplay": "block"
-      }
+      "default": {}
     },
     "subHeading": {
       "type": "string",
@@ -107,10 +110,7 @@
     },
     "subHeadingStyling": {
       "type": "object",
-      "default": {
-        "smDisplay": "block",
-        "mdDisplay": "block"
-      }
+      "default": {}
     },
     "headingWrapper": {
       "type": "object",

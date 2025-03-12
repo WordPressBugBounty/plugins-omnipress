@@ -63,25 +63,34 @@ class PostGrid extends AbstractBlock {
 	 */
 	public function render( array $attributes, string $content, \WP_Block $block ): string {
 		$block->parsed_block['attrs'] = $attributes;
-		$this->set_attributes( $attributes );
-		$this->set_block_name( 'post-grid' );
+		$this->block_attributes       = $attributes;
+		$this->block_name             = $block->name;
 
-		$wp_query           = new \WP_Query( $this->get_query_args() );
+		$wp_query = new \WP_Query( $this->get_query_args() );
+
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
-				'class'     => 'op-' . $attributes['blockId'] . ' op-block__post-grid op-grid-col-3',
+				'class'     => 'op-' . $attributes['blockId'] . ' op-block__post-grid',
 				'data-type' => 'omnipress/post-grid',
 			)
 		);
-		$content            = '<div ' . $wrapper_attributes . '>';
+
+		$content = '<div ' . $wrapper_attributes . '><div class="is-layout-grid">';
 
 		if ( $wp_query->have_posts() ) {
 			while ( $wp_query->have_posts() ) {
 				$wp_query->the_post();
-				$content .= $this->get_block_template( 'posts/single-post/layout-one', 'free', array( 'hidden_fields' => $attributes['hiddenFields'] ?? array() ) );
+				$content .= $this->get_block_template(
+					'posts/single-post/layout-one',
+					'free',
+					array(
+						'hidden_fields'     => $attributes['hiddenFields'] ?? array(),
+						'linked_attributes' => $this->block_attributes['linkedAttributes'],
+					),
+				);
 			}
 		}
-		$content .= '</div>';
+		$content .= '</div></div>';
 
 		return $content;
 	}
@@ -97,7 +106,7 @@ class PostGrid extends AbstractBlock {
 				's'              => $this->attributes['search'] ?? '',
 			);
 
-			if ( $this->attributes['selectedCategoryId'] ) {
+			if ( isset( $this->attributes['selectedCategoryId'] ) && $this->attributes['selectedCategoryId'] ) {
 				$args['tax_query'] = array(
 					array(
 						'taxonomy' => 'category',

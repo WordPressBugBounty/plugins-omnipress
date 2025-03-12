@@ -4,10 +4,9 @@ namespace Omnipress;
 
 use Exception;
 use OMNIPRESS\Core\FileSystemUtil;
-use Omnipress\Helpers\BlocksAssetsHelper;
+use Omnipress\Utils\BlocksAssetsHelper;
 use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Traits\Singleton;
-use OmnipressPro\DynamicContent\Helper;
 
 /**
  * Main class to block registration.
@@ -341,6 +340,7 @@ class BlockRegistrar {
 		}
 
 		$current_block_class_instance = BlocksAssetsHelper::get_block_class_instance_by_name( $block->name );
+		$content                      = apply_filters( 'omnipress_render_dynamic_content', $content, $attributes, $block );
 
 		if ( ! $current_block_class_instance ) {
 			return $content;
@@ -350,8 +350,6 @@ class BlockRegistrar {
 		if ( method_exists( $current_block_class_instance, 'render' ) ) {
 			$content = $current_block_class_instance->render( $attributes, $content, $block );
 		}
-
-		$content = apply_filters( 'omnipress_render_dynamic_content', $content, $attributes, $block );
 
 		return $content;
 	}

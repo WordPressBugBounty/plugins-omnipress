@@ -8,7 +8,6 @@
 namespace Omnipress\Models;
 
 use Omnipress\Abstracts\ModelsBase;
-use Omnipress\Helpers\GeneralHelpers;
 
 /**
  * Exit if accessed directly.

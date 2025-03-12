@@ -5,7 +5,6 @@ namespace Omnipress\Blocks;
 use OMNIPRESS\Core\FileSystemUtil;
 use Omnipress\Helpers\BlockStylesHelper;
 use Omnipress\Helpers\GeneralHelpers;
-use Omnipress\Models\GlobalStylesModel;
 use Omnipress\Traits\Singleton;
 
 defined( 'ABSPATH' ) || exit;
@@ -27,8 +26,6 @@ defined( 'ABSPATH' ) || exit;
  * @copyright (c) 2024
  */
 class BlockStyles {
-
-
 	use Singleton;
 
 	public array $rendered_blocks = array();

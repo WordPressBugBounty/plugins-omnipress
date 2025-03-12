@@ -10,8 +10,6 @@ window.addEventListener("load", () => {
           }
           const sanitizedOpAnimation = opAnimation.split(" ");
           entry.target.classList.add(...sanitizedOpAnimation);
-          // removed data set after added classlist
-          // entry.target.removeAttribute( 'data-op-animation' );
         } else {
           let timeout;
 

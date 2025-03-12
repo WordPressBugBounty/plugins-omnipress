@@ -1,5 +1,7 @@
 <?php
-use Omnipress\Core\WoocommerceFields;
+
+use Omnipress\Controllers\WoocommerceFields;
+
 $woo_fields = new WoocommerceFields( $product_id ? $product_id : get_the_ID(), $hidden_fields ?? array(), true );
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped

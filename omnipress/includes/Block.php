@@ -99,7 +99,9 @@ function enqueue_block_assets() {
 	}
 
 	wp_enqueue_style( 'fontawesome', 'https://use.fontawesome.com/releases/v5.15.4/css/all.css', array(), OMNIPRESS_VERSION );
+
 	wp_enqueue_style( 'omipress/blocks/styles', OMNIPRESS_URL . 'assets/build/css/frontend/frontend.min.css', array(), OMNIPRESS_VERSION );
+
 	wp_register_style( 'omnipress/block/layout', OMNIPRESS_URL . 'assets/build/css/layout.min.css', array(), OMNIPRESS_VERSION );
 
 	/**
@@ -153,12 +155,12 @@ function enqueue_generated_styles() {
 
 	$template_slug = $block_style_instance->get_template_slug();
 
-	// Block's Dynamic styles styles which generated during creating post. According to each block's attributes values.
+	// Block's Dynamic styles which generated during creating post. According to each block's attributes values.
 	if ( file_exists( OMNIPRESS_BLOCK_STYLES_PATH . $post_id . '.css' ) ) {
 		wp_enqueue_style( 'omnipress-post-block-styles', OMNIPRESS_BLOCK_STYLES_URL . $post_id . '.css', array(), filemtime( OMNIPRESS_BLOCK_STYLES_PATH . $post_id . '.css' ) );
 	}
 
-	// Block's Dynamic styles styles which generated during creating template. According to each block's attributes values.
+	// Block's Dynamic styles which generated during creating template. According to each block's attributes values.
 	if ( file_exists( OMNIPRESS_BLOCK_STYLES_PATH . $template_slug . '.css' ) ) {
 		wp_enqueue_style( 'omnipress-template-block-styles', OMNIPRESS_BLOCK_STYLES_URL . $template_slug . '.css', array(), filemtime( OMNIPRESS_BLOCK_STYLES_PATH . $template_slug . '.css' ) );
 	}

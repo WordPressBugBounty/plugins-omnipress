@@ -3,12 +3,12 @@
 namespace Omnipress\Blocks;
 
 use Exception;
+use Omnipress\Core\AbstractAssetsHandler;
 use OMNIPRESS\Core\FileSystemUtil;
 use Omnipress\Helpers;
-use Omnipress\Helpers\BlocksAssetsHelper;
+use Omnipress\Utils\BlocksAssetsHelper;
 use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Models\UsersModel;
-use Omnipress\Traits\Singleton;
 
 /**
  * Main class to block registration.
@@ -19,20 +19,42 @@ use Omnipress\Traits\Singleton;
  *
  * @copyright (c) 2024
  */
-class BlockRegistrar {
-
-	use Singleton;
+final class BlockRegistrar {
 
 	/**
-	 * Register blocks and block's categories.
+	 * @since 1.5.5
+	 *
+	 * @var AbstractAssetsHandler|null $assets_handler
 	 */
-	private function __construct() {
+	private ?AbstractAssetsHandler $assets_handler;
+
+	/**
+	 * @var BlockRegistrar $instance Instance of the class.
+	 */
+	private static BlockRegistrar $instance;
+
+	public static function init( ?AbstractAssetsHandler $assets_handler = null ) {
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self( $assets_handler );
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 *
+	 * Constructor
+	 *
+	 * @param AbstractAssetsHandler|null $assets_handler @since 1.5.5.
+	 *
+	 * @return void
+	 */
+	private function __construct( ?AbstractAssetsHandler $assets_handler = null ) {
+		$this->assets_handler = $assets_handler;
+
 		add_action( 'init', array( $this, 'register_blocks' ) );
-
 		add_action( 'omnipress_after_blocks_register', array( $this, 'assign_block_edit_caps' ) );
-
 		add_filter( 'block_categories_all', array( $this, 'register_block_categories' ), PHP_INT_MAX, 3 );
-
 		do_action( 'omnipress_after_blocks_register', $this->get_blocks_folders() );
 	}
 
@@ -70,8 +92,8 @@ class BlockRegistrar {
 	public function get_blocks_folders() {
 		$core_blocks = array(
 			'core'        => array(
-				'column',
 				'container',
+				'column',
 				'button',
 				'heading',
 				'google-maps',
@@ -92,6 +114,7 @@ class BlockRegistrar {
 				'post-grid',
 				'counter',
 				'popup',
+				'post-category',
 			),
 			'simple'      => array(
 				'custom-css',
@@ -357,7 +380,7 @@ class BlockRegistrar {
 					});
 				},
 				{
-					rootMargin: "0px 0px 0px 0px",
+					rootMargin: "0px 0px 0px 20px",
 					threshold: 0.5,
 				}
 				);
@@ -382,6 +405,7 @@ class BlockRegistrar {
 	 * @return mixed
 	 */
 	public function render_block( array $attributes, string $content, \WP_Block $block ) {
+
 		if ( isset( $attributes['opAnimation'] ) && $attributes['opAnimation'] && ! wp_script_is( 'omnipress-animations' ) ) {
 			$scripts = $this->add_animation_scripts();
 
@@ -394,16 +418,18 @@ class BlockRegistrar {
 
 		$current_block_class_instance = BlocksAssetsHelper::get_block_class_instance_by_name( $block->name );
 
+		// If the block class has a render callback, use that.
+		// this filter was useful when we need to modify any omnipress block's content before render in the frontend.
+		$content = apply_filters( 'omnipress_render_dynamic_content', $content, $attributes, $block );
+		$content = apply_filters( 'op_render_block', $content, $block->parsed_block );
+
 		if ( ! $current_block_class_instance ) {
 			return $content;
 		}
 
-		// If the block class has a render callback, use that.
 		if ( method_exists( $current_block_class_instance, 'render' ) ) {
 			$content = $current_block_class_instance->render( $attributes, $content, $block );
 		}
-
-		$content = apply_filters( 'omnipress_render_dynamic_content', $content, $attributes, $block );
 
 		if ( isset( $attributes['isSynced'] ) && $attributes['isSynced'] ) {
 			$pattern = (string) 'op-' . $attributes['blockId'];

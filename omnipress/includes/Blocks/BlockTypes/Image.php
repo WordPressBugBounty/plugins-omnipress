@@ -16,10 +16,10 @@ use Omnipress\Abstracts\AbstractBlock;
 class Image extends AbstractBlock {
 	public function render( array $attributes, string $content, \WP_Block $block ): string {
 
-		if ( isset( $attributes['href'] ) ) {
+		if ( isset( $attributes['post']['url'] ) && ! $attributes['enabledLightbox'] ) {
 			$content = sprintf(
 				'<a href="%s" target="%s" class="%s" rel="%s">%s</a>',
-				esc_attr( $attributes['href'] ),
+				esc_attr( $attributes['post']['url'] ),
 				esc_attr( $attributes['target'] ),
 				esc_attr( $attributes['linkClass'] ?? '' ),
 				esc_attr( $attributes['target'] ? 'noopener noreferrer' : '' ),
@@ -66,6 +66,7 @@ class Image extends AbstractBlock {
 						)
 					)
 				);
+				$p->set_attribute( 'data-lightbox', 'true' );
 
 				wp_register_script_module(
 					'~omnipress/block-interactivity/image',

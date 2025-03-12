@@ -5,6 +5,7 @@ declare( strict_types=1 );
 namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Helpers;
+use Omnipress\Utils;
 
 /**
  * Single Product Content.

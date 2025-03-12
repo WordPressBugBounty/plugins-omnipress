@@ -4,6 +4,7 @@ namespace Omnipress\Models;
 
 use Omnipress\Abstracts\ModelsBase;
 use Omnipress\Helpers;
+use Omnipress\Utils;
 use WP_REST_Request;
 
 class BlocksSettingsModel extends ModelsBase {

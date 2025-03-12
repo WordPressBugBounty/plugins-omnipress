@@ -4,8 +4,8 @@ namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
 use Omnipress\Helpers;
+use Omnipress\Helpers\GeneralHelpers;
 use WP_HTML_Tag_Processor;
-use WPForms\Admin\Forms\Page;
 
 /**
  * Query Template block.
@@ -67,7 +67,7 @@ class QueryPaginationNumbers extends AbstractBlock {
 			$query_args = Helpers::build_query_vars_from_omnipress_query_block( $block, $page );
 
 			if ( 'product' === $query_args['post_type'] ) {
-				$query_args = Helpers\GeneralHelpers::validate_wc_query_args( $query_args, $block );
+				$query_args = GeneralHelpers::validate_wc_query_args( $query_args, $block );
 			}
 
 			$query_vars = new \WP_Query( $query_args );

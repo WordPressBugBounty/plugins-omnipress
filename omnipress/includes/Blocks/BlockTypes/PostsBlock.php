@@ -8,6 +8,7 @@
 namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
+
 /**
  * Class PostsBlock
  *

@@ -6,7 +6,6 @@ defined( 'ABSPATH' ) || exit;
 
 use Omnipress\Abstracts\AbstractBlock;
 use Omnipress\Helpers\GeneralHelpers;
-use WC_Product_Variable;
 
 /**
  * Query Template block.
@@ -76,12 +75,13 @@ class SingleProduct extends AbstractBlock {
 			}
 		}
 
-		$context             = wp_interactivity_data_wp_context( $context, 'omnipress/query' );
-		$current_layout_type = $attributes['layoutType'] ?? 'one';
+		$context                 = wp_interactivity_data_wp_context( $context, 'omnipress/query' );
+		$current_layout_type     = $attributes['layoutType'] ?? 'one';
+		$attributes['blockId'] ??= '';
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
-				'class'               => 'op-block-single-product op-single-product-wrapper  op-block-single-product-layout-' . $current_layout_type . " op-{$attributes['blockId']}",
+				'class'               => 'op-block-single-product op-single-product-wrapper  op-block-single-product-layout-' . $current_layout_type . " op-{$attributes['blockId'] }",
 				'data-type'           => 'omnipress/single-product',
 				'data-wp-init'        => 'callbacks.initProduct',
 				'data-wp-interactive' => 'omnipress/query',
