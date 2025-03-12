@@ -4,7 +4,7 @@
  * Description: Omnipress is a ready-made WordPress Design Blocks, similar to the Gutenberg WordPress block editor, that takes a holistic approach to changing your complete site.
  * Author: omnipressteam
  * Author URI: https://omnipressteam.com/
- * Version: 1.5.5
+ * Version: 1.5.6
  * Text Domain: omnipress
  * License: GPLv3 or later
  * License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,7 +21,7 @@ class Omnipress {
 	/**
 	 * Plugin version.
 	 */
-	const VERSION = '1.5.5';
+	const VERSION = '1.5.6';
 
 	/**
 	 * Singleton instance.
@@ -48,24 +48,53 @@ class Omnipress {
 	 * Setup plugin constants.
 	 */
 	private function setup_constants() {
-		define( 'OMNIPRESS_VERSION', self::VERSION );
-		define( 'OMNIPRESS_FILE', __FILE__ );
-		define( 'OMNIPRESS_PATH', trailingslashit( plugin_dir_path( OMNIPRESS_FILE ) ) );
+		if ( ! defined( 'OMNIPRESS_VERSION' ) ) {
+			define( 'OMNIPRESS_VERSION', self::VERSION );
+		}
 
-		define( 'OMNIPRESS_TEMPLATES_PATH', trailingslashit( OMNIPRESS_PATH . 'templates' ) );
+		if ( ! defined( 'OMNIPRESS_FILE' ) ) {
+			define( 'OMNIPRESS_FILE', __FILE__ );
+		}
 
-		define( 'OMNIPRESS_BLOCK_STYLES_PATH', trailingslashit( wp_upload_dir()['basedir'] . '/omnipress/css/' ) );
-		define( 'OMNIPRESS_BLOCK_STYLES_URL', trailingslashit( wp_upload_dir()['baseurl'] . '/omnipress/css/' ) );
+		if ( ! defined( 'OMNIPRESS_PATH' ) ) {
+			define( 'OMNIPRESS_PATH', trailingslashit( plugin_dir_path( OMNIPRESS_FILE ) ) );
+		}
 
-		define( 'OMNIPRESS_URL', trailingslashit( plugin_dir_url( OMNIPRESS_FILE ) ) );
+		if ( ! defined( 'OMNIPRESS_TEMPLATES_PATH' ) ) {
+			define( 'OMNIPRESS_TEMPLATES_PATH', trailingslashit( OMNIPRESS_PATH . 'templates' ) );
+		}
 
-		define( 'OMNIPRESS_POST_EDIT_TIME', 'op_post_edit_time' );
+		if ( ! defined( 'OMNIPRESS_BLOCK_STYLES_PATH' ) ) {
+			define( 'OMNIPRESS_BLOCK_STYLES_PATH', trailingslashit( wp_upload_dir()['basedir'] . '/omnipress/css/' ) );
+		}
 
-		define( 'OMNIPRESS_PREFIX', 'opafg' ); // omnipress addons for gutenberg
-		define( 'OMNIPRESS_I18', 'omnipress' );
-		define( 'OMNIPRESS_BLOCK_PREFIX', 'omnipress' );
+		if ( ! defined( 'OMNIPRESS_BLOCK_STYLES_URL' ) ) {
+			define( 'OMNIPRESS_BLOCK_STYLES_URL', trailingslashit( wp_upload_dir()['baseurl'] . '/omnipress/css/' ) );
+		}
 
-		define( 'OMNIPRESS_BLOCK_EDIT_CAPABILITY', 'omnipress_edit_block' );
+		if ( ! defined( 'OMNIPRESS_URL' ) ) {
+			define( 'OMNIPRESS_URL', trailingslashit( plugin_dir_url( OMNIPRESS_FILE ) ) );
+		}
+
+		if ( ! defined( 'OMNIPRESS_POST_EDIT_TIME' ) ) {
+			define( 'OMNIPRESS_POST_EDIT_TIME', 'op_post_edit_time' );
+		}
+
+		if ( ! defined( 'OMNIPRESS_PREFIX' ) ) {
+			define( 'OMNIPRESS_PREFIX', 'opafg' ); // omnipress addons for gutenberg.
+		}
+
+		if ( ! defined( 'OMNIPRESS_I18N' ) ) {
+			define( 'OMNIPRESS_I18N', 'omnipress' );
+		}
+
+		if ( ! defined( 'OMNIPRESS_BLOCK_PREFIX' ) ) {
+			define( 'OMNIPRESS_BLOCK_PREFIX', 'omnipress' );
+		}
+
+		if ( ! defined( 'OMNIPRESS_BLOCK_EDIT_CAPABILITY' ) ) {
+			define( 'OMNIPRESS_BLOCK_EDIT_CAPABILITY', 'omnipress_edit_block' );
+		}
 	}
 
 	/**

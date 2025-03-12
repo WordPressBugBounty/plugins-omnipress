@@ -13,6 +13,7 @@ require_once OMNIPRESS_PATH . 'includes/Admin/taxonomies-settings/TaxonomiesCust
 
 use Omnipress\Controllers\SettingsController;
 use Omnipress\Helpers;
+use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Models\BlocksSettingsModel;
 use Omnipress\Transient;
 
@@ -436,24 +437,22 @@ class Init {
 
 		$recommended_plugins = apply_filters(
 			'omnipress_recommended_plugins',
-			array(
-				'woocommerce/woocommerce.php' => array(
-					'slug'    => 'woocommerce',
-					'title'   => 'WooCommerce',
-					'message' => 'Install WooCommerce plugin to unlock more features related to WooCommerce..',
-				),
-			)
+			array()
 		);
 
-		$recommended_plugins_markup = '<div class="notice notice-warning"> <h3>' . esc_html__( 'Omnipress plugin recommend following plugins', 'omnipress' ) . '</h3><ul style="display:grid;gap:20px;place-items:start;">';
+		$recommended_plugins_markup = '';
 
-		foreach ( $recommended_plugins as $path => $recommended_plugin ) {
-			$recommended_plugins_markup .= $this->recommended_plugins_with_install_link( $path, $recommended_plugin['slug'], $recommended_plugin['title'], $recommended_plugin['message'] );
+		if ( GeneralHelpers::is_valid_array( $recommended_plugins ) ) {
+			$recommended_plugins_markup = '<div class="notice notice-warning"> <h3>' . esc_html__( 'Omnipress plugin recommend following plugins', 'omnipress' ) . '</h3><ul style="display:grid;gap:20px;place-items:start;">';
+
+			foreach ( $recommended_plugins as $path => $recommended_plugin ) {
+				$recommended_plugins_markup .= $this->recommended_plugins_with_install_link( $path, $recommended_plugin['slug'], $recommended_plugin['title'], $recommended_plugin['message'] );
+			}
+
+			$recommended_plugins_markup .= $this->dismiss_admin_notice();
+
+			$recommended_plugins_markup .= '</ul></div>';
 		}
-
-		$recommended_plugins_markup .= $this->dismiss_admin_notice();
-
-		$recommended_plugins_markup .= '</ul></div>';
 
 		return $recommended_plugins_markup;
 	}
