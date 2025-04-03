@@ -3,6 +3,7 @@ namespace Omnipress\Block;
 
 use Omnipress\Blocks\BlockStyles;
 use OMNIPRESS\Core\FileSystemUtil;
+use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Models\BlocksSettingsModel;
 use Omnipress\Models\GlobalStylesModel;
 
@@ -148,9 +149,8 @@ function enqueue_frontend_assets() {
  * @return void
  */
 function enqueue_generated_styles() {
-	global $post;
+	$post_id = GeneralHelpers::get_current_unique_context_id();
 
-	$post_id              = $post ? $post->ID : '404';
 	$block_style_instance = BlockStyles::init();
 
 	$template_slug = $block_style_instance->get_template_slug();

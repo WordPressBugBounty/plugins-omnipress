@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-    var mediaUploader;
+    let mediaUploader;
     $('#upload_taxonomy_image').on('click', function(e) {
         e.preventDefault();
         if (mediaUploader) {
@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
             multiple: false
         });
         mediaUploader.on('select', function() {
-            var attachment = mediaUploader.state().get('selection').first().toJSON();
+            const attachment = mediaUploader.state().get('selection').first().toJSON();
             $('#taxonomy_image').val(attachment.url);
             $('#taxonomy_image_preview').html('<img src="' + attachment.url + '" alt="Taxonomy Image" style="max-width: 200px;">');
             $('#remove_taxonomy_image').show();

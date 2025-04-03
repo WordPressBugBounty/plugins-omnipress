@@ -38,14 +38,14 @@ const getCookie = (name) => {
 };
 
 const updatePopupDisplayCount = (instanceId, repetition) => {
-  if (repetition === -1) return;
+  if (repetition === -1) {return;}
 
   const count =
     parseInt(getCookie(`omnipress_popup_display_count_${instanceId}`), 10) || 0;
   setCookie(`omnipress_popup_display_count_${instanceId}`, count + 1, 7);
 };
 
-let popupCache = {};
+const popupCache = {};
 
 const removeElement = (element, instanceId, repetition, isShowNextTime) => {
   updatePopupDisplayCount(instanceId, repetition);
@@ -78,7 +78,7 @@ const initiateInactivityListener = (callback, idleTime = 3) => {
 };
 
 const closePopup = (context, isClicked) => {
-  if (!context.popupEl) return;
+  if (!context.popupEl) {return;}
 
   context.popupEl.style.cssText = STYLES.close;
 
@@ -92,7 +92,7 @@ const closePopup = (context, isClicked) => {
 };
 
 const togglePopup = function () {
-  if (!this || (this.close_button_delay > 0 && this.isOpened)) return;
+  if (!this || (this.close_button_delay > 0 && this.isOpened)) {return;}
 
   const { popupEl, auto_close_delay } = this;
 
@@ -116,7 +116,7 @@ const togglePopup = function () {
 };
 
 const startCloseTimer = (context) => {
-  if (context.close_button_delay <= 0) return;
+  if (context.close_button_delay <= 0) {return;}
 
   const interval = setInterval(() => {
     context.close_button_delay--;
@@ -129,7 +129,7 @@ const startCloseTimer = (context) => {
 };
 
 const openPopup = (context) => {
-  if (!context || !context.popupEl) return;
+  if (!context || !context.popupEl) {return;}
 
   if (context.popup_triggered === 'on_click' && context.childrenEl) {
     context.popupEl.innerHTML = popupCache.childrenEl;
@@ -162,7 +162,7 @@ const handlePopupTrigger = function () {
 
     case 'on_exit_intend':
       window.addEventListener('mouseout', (e) => {
-        if (e.clientY <= 0) openPopup(this);
+        if (e.clientY <= 0) {openPopup(this);}
       });
       break;
 
@@ -188,7 +188,7 @@ const handlePopupTrigger = function () {
 };
 
 const attachCloseOnClick = (context) => {
-  if (!context) return;
+  if (!context) {return;}
 
   document
     .querySelectorAll(`.opcpop-${context.instanceId}`)
@@ -208,7 +208,7 @@ const { state, actions, callbacks } = store('omnipress/popup', {
 
       const context = getContext();
 
-      if (context.close_button_delay > 0) return;
+      if (context.close_button_delay > 0) {return;}
 
       closePopup(context, context.popup_triggered === 'on_click');
     },

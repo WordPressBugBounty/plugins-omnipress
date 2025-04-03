@@ -181,6 +181,20 @@ if ( ! class_exists( 'AbstractBlock' ) ) {
 			);
 		}
 
+		public function get_block_name_without_namespace(): string {
+			return str_replace( 'omnipress/', '', $this->get_block_name() );
+		}
+
+		public function get_block_presets( $preset_name, array $args ): string {
+			ob_start();
+			foreach ( $args as $key => $value ) {
+				$$key = $value;
+			}
+
+			include OMNIPRESS_PATH . 'includes/views/blocks-presets/' . $this->get_block_name_without_namespace() . '/' . $preset_name . '.php';
+			return ob_get_clean();
+		}
+
 		public function is_hidden_field( string $field_name ) {
 			$attributes = $this->get_block_attributes();
 

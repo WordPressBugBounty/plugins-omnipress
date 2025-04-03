@@ -79,7 +79,6 @@ class BlockStyles {
 	 * @return mixed
 	 */
 	public function get_template_slug() {
-
 		global $post;
 
 		if ( ! $post && is_404() ) {
@@ -175,19 +174,8 @@ class BlockStyles {
 	}
 
 	public function get_current_page_dynamic_style_path() {
-		global $post;
-
-		$post_id = '';
-
 		$template_slug = $this->get_template_slug();
-
-		if ( ! empty( $post ) ) {
-			$post_id = $post->ID;
-		}
-
-		if ( is_404() && ! $post ) {
-			$post_id = '404';
-		}
+		$post_id       = GeneralHelpers::get_current_unique_context_id();
 
 		return $post_id ? OMNIPRESS_BLOCK_STYLES_PATH . $post_id . '.css' : OMNIPRESS_BLOCK_STYLES_PATH . $template_slug . '.css';
 	}
@@ -215,7 +203,6 @@ class BlockStyles {
 	 * @return void
 	 */
 	function maybe_generate_block_styles() {
-
 		$current_page_blocks_styles_path = $this->get_current_page_dynamic_style_path();
 
 		if ( BlockStylesHelper::are_block_styles_generated( $this->get_current_page_dynamic_style_path() ) ) {
@@ -242,13 +229,13 @@ class BlockStyles {
 			}
 
 			if ( FileSystemUtil::write_file( $current_page_blocks_styles_path, $blocks_generated_css ) ) {
+				// When the style is generated for the first time, it won’t be in the enqueued style file, so we add it as inline style at the time of generation. The next time, it will be enqueued from the file. This inline style code runs whenever we edit content and view it for the first time immediately after editing.
+				echo '<style class="omnipress-blocks-generated-styles">' . $blocks_generated_css . '</style>';
 				error_log( 'Successfully generated block styles.' ); // phpcs:ignore
 			}
 		} catch ( \Exception $exception ) {
 			throw $exception;
 		}
-
-		echo '<style>' . $blocks_generated_css . '</style>';
 	}
 }
 

@@ -115,6 +115,7 @@ final class BlockRegistrar {
 				'counter',
 				'popup',
 				'post-category',
+				'tax-query',
 			),
 			'simple'      => array(
 				'custom-css',
@@ -124,7 +125,9 @@ final class BlockRegistrar {
 				'contact-form',
 				'icon',
 			),
-
+			'advanced'    => array(
+				'single-testimonial',
+			),
 			'woocommerce' => array(
 				'product-carousel',
 				'product-category',
@@ -148,6 +151,7 @@ final class BlockRegistrar {
 				'product-filter',
 				'product-search',
 				'product-grid-2',
+				'tax-query',
 			),
 		);
 

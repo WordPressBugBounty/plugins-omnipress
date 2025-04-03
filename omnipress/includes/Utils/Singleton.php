@@ -17,8 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 if ( ! trait_exists( __NAMESPACE__ . '\SingletonTrait' ) ) {
 	trait Singleton {
-
-
 		private static $instance;
 
 		/**

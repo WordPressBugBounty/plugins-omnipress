@@ -30,9 +30,10 @@ class BlockAssetsManager extends AbstractAssetsHandler {
 				'window._omnipress = %s;',
 				wp_json_encode(
 					array(
-						'wc_nonce' => wp_create_nonce( 'wc_store_api' ),
-						'ajax_url' => admin_url( 'admin-ajax.php' ),
-						'op_nonce' => wp_create_nonce( 'op_block' ),
+						'wc_nonce'      => wp_create_nonce( 'wc_store_api' ),
+						'ajax_url'      => admin_url( 'admin-ajax.php' ),
+						'op_nonce'      => wp_create_nonce( 'op_block' ),
+						'wp_ajax_nonce' => wp_create_nonce( 'wp_ajax_nonce' ),
 
 					)
 				)

@@ -148,13 +148,14 @@ class PopupBuilder {
 		add_action( 'wp_trash_post', array( $this, 'remove_popup_related_data' ) );
 	}
 
-	public function enqueue_block_editor_assets() {
+
+	public function enqueue_block_editor_assets( $hook ) {
 		global $post;
 
 		if ( isset( $post->post_type ) && 'omnipress-popup' === $post->post_type ) {
 
 			$block_assets = include_once OMNIPRESS_PATH . 'assets/build/js/blocks/popup.asset.php';
-			wp_enqueue_script( 'omnipress_popup_block', OMNIPRESS_URL . 'assets/build/js/blocks/popup.js', $block_assets['dependencies'], $block_assets['version'], true );
+			wp_enqueue_script( 'omnipress_popup_block-editor', OMNIPRESS_URL . 'assets/build/js/blocks/popup.js', $block_assets['dependencies'], $block_assets['version'], true );
 		}
 	}
 
@@ -294,7 +295,10 @@ class PopupBuilder {
 			'show_in_admin_bar' => true,
 			'show_in_rest'      => true,
 			'template'          => array(
-				array( 'omnipress/popup', array() ),
+				array(
+					'omnipress/popup',
+					array(),
+				),
 			),
 			'rewrite'           => array(
 				'slug'       => 'omnipress-popup',

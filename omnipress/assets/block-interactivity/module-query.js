@@ -61,14 +61,14 @@ const DEFAULT_STATE = {
  * Creates a store for managing query-related state and actions.
  *
  * @function
- * @param {string} storeName - The name of the store ('omnipress/query').
- * @param {Object} storeConfig - Configuration object for the store.
- * @param {Object} storeConfig.state - Initial state of the store.
- * @param {Object} storeConfig.actions - Actions that can be performed on the store.
- * @param {Object} storeConfig.callbacks - Callback functions for various events.
- * @param {Object} options - Additional options for the store.
- * @param {boolean} options.lock - Whether to lock the store or not.
- * @returns {Object} An object containing the state and actions of the store.
+ * @param {string}  storeName             - The name of the store ('omnipress/query').
+ * @param {Object}  storeConfig           - Configuration object for the store.
+ * @param {Object}  storeConfig.state     - Initial state of the store.
+ * @param {Object}  storeConfig.actions   - Actions that can be performed on the store.
+ * @param {Object}  storeConfig.callbacks - Callback functions for various events.
+ * @param {Object}  options               - Additional options for the store.
+ * @param {boolean} options.lock          - Whether to lock the store or not.
+ * @return {Object} An object containing the state and actions of the store.
  */
 const { state } = store('omnipress/query', {
   state: DEFAULT_STATE,
@@ -100,8 +100,6 @@ const { state } = store('omnipress/query', {
       event.preventDefault();
       const ctx = getContext();
 
-      console.log(ctx, 'context');
-
       ctx.isProcessing = true;
 
       const { ref } = getElement();
@@ -116,14 +114,14 @@ const { state } = store('omnipress/query', {
         const { [name]: removed, ...rest } = ctx.filters;
         ctx.filters = rest;
       } else if (name.includes('pa_')) {
-        const attributes = ctx.filters['attributes'] ?? {};
+        const attributes = ctx.filters.attributes ?? {};
         const formattedAttribute = validateProductAttribute(
           attributes,
           name,
           value,
         );
 
-        ctx.filters['attributes'] = formattedAttribute;
+        ctx.filters.attributes = formattedAttribute;
       } else if ('sort' == name) {
         ctx.filters[name] = event.target.value;
       } else {
@@ -135,7 +133,7 @@ const { state } = store('omnipress/query', {
       }
 
       let timeout;
-      if (timeout) clearTimeout(timeout);
+      if (timeout) {clearTimeout(timeout);}
 
       timeout = setTimeout(async () => {
         await fetchFilteredProducts.call(ctx);
@@ -181,7 +179,7 @@ const { state } = store('omnipress/query', {
 
       const { productId, quantity, isAddable, productType } = ref.dataset;
 
-      let args = {
+      const args = {
         quantity: 1,
         id: parseInt(productId, 10),
       };
@@ -192,7 +190,7 @@ const { state } = store('omnipress/query', {
       }
 
       if (productType === 'variable' && context.selectedVariation) {
-        args['variation'] = [];
+        args.variation = [];
 
         for (const [key, value] of Object.entries(context.selectedVariation)) {
           args.variation.push({
@@ -252,23 +250,23 @@ const { state } = store('omnipress/query', {
 
       if (
         name === 'min_price' &&
-        Number.parseInt(value) < Number.parseInt(ctx.filters['max_price'])
+        Number.parseInt(value) < Number.parseInt(ctx.filters.max_price)
       ) {
-        ctx.filters['min_price'] = value;
+        ctx.filters.min_price = value;
       }
 
       if (
         name === 'max_price' &&
-        Number.parseInt(value) > Number.parseInt(ctx.filters['min_price'])
+        Number.parseInt(value) > Number.parseInt(ctx.filters.min_price)
       ) {
-        ctx.filters['max_price'] = value;
+        ctx.filters.max_price = value;
       }
 
       const sliderContent = ref.parentElement;
 
       const rangeTrack = sliderContent.querySelector('.range-highlight');
-      const minPriceWidth = (ctx.filters['min_price'] / 10000) * 100;
-      const maxPriceWidth = (ctx.filters['max_price'] / 10000) * 100;
+      const minPriceWidth = (ctx.filters.min_price / 10000) * 100;
+      const maxPriceWidth = (ctx.filters.max_price / 10000) * 100;
 
       const rangeTrackWidth = maxPriceWidth - minPriceWidth;
       rangeTrack.style = `width:${rangeTrackWidth}%; left:${minPriceWidth}%;`;
@@ -320,9 +318,9 @@ const { state } = store('omnipress/query', {
         }
 
         const matchedAttrs = context.attributes.find((attribute) => {
-          return Object.keys(attribute['attributes']).every(
+          return Object.keys(attribute.attributes).every(
             (key) =>
-              context.selectedVariation[key] === attribute['attributes'][key],
+              context.selectedVariation[key] === attribute.attributes[key],
           );
         });
 
@@ -424,10 +422,10 @@ function recursivelyRemoveEmptyKey(obj = {}) {
       continue;
     } else if ('min_price' === key || 'max_price' === key) {
       if (
-        Number.isNaN(parseInt(obj['min_price'])) ||
-        Number.isNaN(parseInt(obj['max_price'])) ||
-        Number.parseInt(obj['min_price'], 10) >
-          Number.parseInt(obj['max_price'], 10)
+        Number.isNaN(parseInt(obj.min_price)) ||
+        Number.isNaN(parseInt(obj.max_price)) ||
+        Number.parseInt(obj.min_price, 10) >
+          Number.parseInt(obj.max_price, 10)
       ) {
         continue;
       } else {
@@ -444,14 +442,14 @@ function recursivelyRemoveEmptyKey(obj = {}) {
 /**
  * Validate Query state remove empty values and only filter out only valid attributes.
  *
- * @param existingAttributes
- * @param attrName
- * @param attrValue
+ * @param  existingAttributes
+ * @param  attrName
+ * @param  attrValue
  *
- * @returns {object}
+ * @return {Object}
  */
 function validateProductAttribute(existingAttributes, attrName, attrValue) {
-  let attributes = { ...existingAttributes };
+  const attributes = { ...existingAttributes };
 
   if (!attributes[attrName]) {
     attributes[attrName] = [attrValue];
@@ -483,7 +481,7 @@ async function fetchFilteredProducts() {
 
   attributes &&
     Object.keys(attributes).forEach((key, i) => {
-      if (!attributes[key].length) return;
+      if (!attributes[key].length) {return;}
 
       rest[key] = Array.isArray(attributes[key]) && attributes[key].join(',');
     });

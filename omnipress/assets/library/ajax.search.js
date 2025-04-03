@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
           recentSearches[existingIndex].timestamp = new Date().getTime();
         } else {
           recentSearches.push({
-            query: query,
+            query,
             timestamp: new Date().getTime(),
           });
         }

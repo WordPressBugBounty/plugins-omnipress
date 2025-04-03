@@ -9,8 +9,6 @@ namespace Omnipress\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
-require_once OMNIPRESS_PATH . 'includes/Admin/taxonomies-settings/TaxonomiesCustomFields.php';
-
 use Omnipress\Controllers\SettingsController;
 use Omnipress\Helpers;
 use Omnipress\Helpers\GeneralHelpers;
@@ -129,7 +127,6 @@ class Init {
 	 * @return void
 	 */
 	public function __construct() {
-
 		add_action(
 			'in_plugin_update_message-' . plugin_basename( OMNIPRESS_FILE ),
 			function ( $plugin_data ) {
@@ -161,8 +158,29 @@ class Init {
 
 		// post handler.
 		add_action( 'admin_post_op_notice_dismissal', array( $this, 'notice_dismiss_handler' ) );
-		// todo: We are working on this feature but it's not ready yet.
-		// ComingSoonAdminSettings::init();
+		/* Extensions */
+		\Omnipress\Admin\Extensions\Init::init();
+
+		/* LOCALIZE PLUGINS SETTINGS*/
+		add_filter(
+			'omnipress_localize_admin_script',
+			static function ( $prev_val ) {
+				return array_merge(
+					$prev_val,
+					array(
+						'nonce'            => wp_create_nonce( '_omnipress_block_nonce' ),
+						'omnipressVersion' => OMNIPRESS_VERSION,
+						'isDevmode'        => ( 'development' === wp_get_environment_type() || 'local' === wp_get_environment_type() ) ? true : false,
+						'urls'             => array(
+							'home'        => home_url(),
+							'wpDashboard' => admin_url(),
+							'omnipress'   => OMNIPRESS_URL,
+							'ajax_url'    => admin_url( 'admin-ajax.php' ),
+						),
+					)
+				);
+			},
+		);
 	}
 
 
@@ -313,41 +331,31 @@ class Init {
 	 * @return void
 	 */
 	public function enqueue_scripts( $hook_prefix ) {
-
 		$editor_assets['dependencies'][] = 'omnipress-admin-script';
+		wp_register_style( 'omnipress-admin-css', OMNIPRESS_URL . 'assets/build/css/admin.css', array( 'wp-components' ), OMNIPRESS_VERSION, 'all' );
 
 		// Enqueue block editor config for the block editor.
 		// $editor_assets = include OMNIPRESS_PATH . 'assets/build/js/admin/block-editor.asset.php';
 
 		// wp_enqueue_script( 'omnipress-block-editor-config', OMNIPRESS_URL . 'assets/build/js/admin/block-editor.js', $editor_assets['dependencies'], $editor_assets['version'], true );
 
-		if (
-		'post-new.php' !== $hook_prefix &&
-		'post.php' !== $hook_prefix &&
-		'site-editor.php' !== $hook_prefix &&
-		'toplevel_page_omnipress' !== $hook_prefix
-		) {
-			return;
-		}
-
 		wp_enqueue_style( 'omnipress-setting-style', OMNIPRESS_URL . 'assets/build/css/settings/style.min.css', array( 'wp-components' ), OMNIPRESS_VERSION, 'all' );
 
-		if ( 'post-new.php' === $hook_prefix || 'post.php' === $hook_prefix ) {
-			switch ( get_post_type() ) {
-				case 'post':
-				case 'page':
-				case 'op-menu-templates':
-					break;
-				default:
-					return;
-			}
-		}
+		// if ( 'post-new.php' === $hook_prefix || 'post.php' === $hook_prefix ) {
+		// switch ( get_post_type() ) {
+		// case 'post':
+		// case 'page':
+		// case 'op-menu-templates':
+		// break;
+		// default:
+		// return;
+		// }
+		// }
 
 		$admin_assets = include OMNIPRESS_PATH . 'assets/build/js/admin/admin.asset.php';
-		wp_enqueue_style( 'omnipress-admin-style', OMNIPRESS_URL . 'assets/build/css/admin.css', array( 'wp-components' ), $admin_assets['version'], 'all' );
+		// wp_enqueue_style( 'omnipress-admin-style' );
 
 		do_action( 'omnipress_before_admin_scripts', $hook_prefix );
-		wp_enqueue_script( 'omnipress-admin-script', OMNIPRESS_URL . 'assets/build/js/admin/admin.js', $admin_assets['dependencies'], $admin_assets['version'], true );
 
 		$current_user = get_userdata( get_current_user_id() );
 
@@ -360,33 +368,42 @@ class Init {
 		$environment    = wp_get_environment_type();
 		$block_settings = new BlocksSettingsModel();
 
-		$localize = apply_filters(
-			'omnipress_localize_admin_script',
-			array(
-				'nonce'            => wp_create_nonce( '_omnipress_nonce' ),
-				'omnipressVersion' => OMNIPRESS_VERSION,
-				'isOmnipressPage'  => 'toplevel_page_omnipress' === $hook_prefix,
-				'status'           => $status['is_active'],
-				'isDevmode'        => ( 'development' === $environment || 'local' === $environment ) ? true : false,
-				'urls'             => array(
-					'home'        => home_url(),
-					'wpDashboard' => admin_url(),
-					'omnipress'   => OMNIPRESS_URL,
-				),
-				'settings'         => array(
-					'disabledBlocks' => $block_settings->get_disabled_blocks(),
-				),
-			)
-		);
-
 		if ( $current_user ) {
-			$localize['user'] = array(
+			$user = array(
 				'firstName' => $current_user ? $current_user->first_name : '',
 				'username'  => $current_user ? $current_user->user_login : '',
 				'avatarURL' => $current_user ? get_avatar_url( $current_user->ID ) : '',
 			);
 		}
-		wp_localize_script( 'omnipress-admin-script', '_omnipress', apply_filters( 'omnipress_localize_admin_script', $localize ) );
+
+		add_filter(
+			'omnipress_localize_admin_script',
+			static function ( $localize ) use ( $status, $hook_prefix, $block_settings, $user ) {
+				return array_merge(
+					$localize,
+					array(
+						'isOmnipressPage' => 'toplevel_page_omnipress' === $hook_prefix,
+						'status'          => $status['is_active'],
+						'settings'        => array(
+							'disabledBlocks' => $block_settings->get_disabled_blocks(),
+						),
+						'user'            => $user,
+					)
+				);
+			}
+		);
+
+		error_log( print_r( apply_filters( 'omnipress_localize_admin_script', array() ), true ) );
+
+		wp_register_script( 'omnipress-local-vars', null, array(), OMNIPRESS_VERSION, true );
+		wp_localize_script(
+			'omnipress-local-vars',
+			'_omnipress',
+			apply_filters( 'omnipress_localize_admin_script', array() )
+		);
+
+		wp_enqueue_script( 'omnipress-local-vars' );
+		wp_enqueue_script( 'omnipress-admin-script', OMNIPRESS_URL . 'assets/build/js/admin/admin.js', $admin_assets['dependencies'], $admin_assets['version'], true );
 
 		do_action( 'omnipress_after_admin_scripts', $hook_prefix );
 	}
@@ -405,7 +422,6 @@ class Init {
 	public function handle_usage_stats() {
 
 		$stats = $this->get_stats_object();
-
 		if ( ! empty( $_POST['omnipress_consent_optin'] ) ) {
 			if ( wp_verify_nonce( $_POST['omnipress_consent_optin'], 'omnipress_consent_optin' ) ) {
 				update_option( 'omnipress_consent_optin', 'yes' );
@@ -512,24 +528,21 @@ class Init {
 			return;
 		}
 		?>
-	<div class="op-update-warning-wrapper">
+		<div class="op-update-warning-wrapper">
 			<hr />
-		<h3>Important: Take a Backup Before Updating!</h3>
-		<p>
-		We strongly recommend taking a complete backup of your website before proceeding with the plugin update.<br>
-		This ensures you can restore your site if anything goes wrong during the update process.
-		<hr>
-		</p>
-		<em>
-		For a quick and reliable backup solution,
-		you can use the
-		<a href="https://wordpress.org/plugins/everest-backup/" target="_blank" rel="noopener noreferrer">
-		<b>Everest Backup plugin</b>
-		</a>.
-		( It’s easy to use and offers robust backup and restore features.)
-		</em>
-	</div>
-
+			<h3>Important: Take a Backup Before Updating!</h3>
+			<p>
+			We strongly recommend taking a complete backup of your website before proceeding with the plugin update.<br>
+			This ensures you can restore your site if anything goes wrong during the update process.
+			<hr>
+			</p>
+			<em>
+				For a quick and reliable backup solution,
+				you can use the
+				<a href="https://wordpress.org/plugins/everest-backup/" target="_blank" rel="noopener noreferrer"><b>Everest Backup plugin</b></a>.
+				( It’s easy to use and offers robust backup and restore features.)
+			</em>
+		</div>
 		<?php
 	}
 }

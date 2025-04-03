@@ -165,7 +165,7 @@ class QueryTemplate extends AbstractBlock {
 			$grid_layout_classes = 'is-layout-grid';
 
 			$inner_block_directives = ! $enhanced_pagination ? ' data-wp-key="query-template-item-' . $post_id . '"' : '';
-			$content               .= '<li' . $inner_block_directives . ' class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">' . $block_content . '</li>';
+			$content               .= '<li data-post-title="' . get_the_title() . '"' . $inner_block_directives . ' class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">' . $block_content . '</li>';
 
 			/*
 			* Use this function to restore the context of the template tags

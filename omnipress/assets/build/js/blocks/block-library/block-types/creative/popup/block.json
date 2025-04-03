@@ -10,7 +10,8 @@
   "supports": {
     "className": true,
     "anchor": true,
-    "interactivity": true
+    "interactivity": true,
+    "multiple": false
   },
   "attributes": {
     "blockId": {

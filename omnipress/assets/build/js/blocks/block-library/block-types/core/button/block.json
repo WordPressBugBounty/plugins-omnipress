@@ -8,6 +8,7 @@
   "icon": "",
   "description": "Add buttons to redirect user to different webpages",
   "supports": {
+    "className": true,
     "anchor": true
   },
   "opSupports": {

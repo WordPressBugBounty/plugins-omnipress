@@ -95,7 +95,7 @@ class QueryPaginationNumbers extends AbstractBlock {
 
 			$wrapper_attributes = get_block_wrapper_attributes(
 				array(
-					'class'     => 'op-block__query-pagination-numbers--wrapper op-' . $attributes['blockId'],
+					'class'     => 'op-block__query-pagination-numbers--wrapper op-' . ( $attributes['blockId'] ?? '' ),
 					'data-type' => 'omnipress/query-pagination-numbers',
 				)
 			);

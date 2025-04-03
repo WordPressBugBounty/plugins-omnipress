@@ -25,7 +25,9 @@ if ( ! class_exists( FileSystemUtil::class ) ) {
 		private static function init_filesystem() {
 			global $wp_filesystem;
 
-			require_once ABSPATH . 'wp-admin/includes/file.php';
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
 
 			if ( ! \WP_Filesystem() ) {
 				return new \WP_Error( 'filesystem_error', __( 'Failed to initialize the filesystem.', 'text-domain' ) );
@@ -151,9 +153,9 @@ if ( ! class_exists( FileSystemUtil::class ) ) {
 			}
 
 			$upload_dir  = wp_upload_dir();
-			$destination = FileSystem . phptrailingslashit( $upload_dir['basedir'] ) . $destination_path;
+			$destination = trailingslashit( $upload_dir['basedir'] ) . $destination_path;
 
-			// Move the uploaded file
+			// Move the uploaded file.
 			if ( ! $wp_filesystem->move( $file['tmp_name'], $destination ) ) {
 				return new \WP_Error( 'upload_move_error', __( 'Error moving uploaded file.', 'text-domain' ) );
 			}

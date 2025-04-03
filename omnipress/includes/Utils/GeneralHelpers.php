@@ -417,5 +417,128 @@ if ( ! class_exists( 'Omnipress\Helpers\GeneralHelpers' ) ) {
 		public static function is_assoc_array( $arr ): bool {
 			return is_array( $arr ) && array_keys( $arr ) !== range( 0, count( $arr ) - 1 );
 		}
+		/**
+		 * Get the current unique context ID.
+		 */
+		public static function get_current_unique_context_id() {
+			$context_id = 'default';
+
+			if ( is_singular() ) {
+				$context_id = get_the_ID();
+			} elseif ( is_category() || is_tag() || is_tax() ) {
+				$term = get_queried_object();
+				if ( $term instanceof \WP_Term ) {
+					$context_id = $term->name;
+				}
+			} elseif ( is_post_type_archive() ) {
+				$post_type  = get_post_type();
+				$context_id = 'archive-' . $post_type;
+			} elseif ( is_front_page() || is_home() ) {
+				$page_id    = is_front_page() ? get_option( 'page_on_front' ) : get_option( 'page_for_posts' );
+				$context_id = $page_id ? $page_id : 'home';
+			} elseif ( is_search() ) {
+				$context_id = 'search';
+			} elseif ( is_404() ) {
+				$context_id = '404';
+			} else {
+				$template = get_block_template( get_queried_object_id(), 'wp_template' );
+				if ( $template && isset( $template->slug ) ) {
+					$context_id = 'template-' . $template->slug;
+				}
+			}
+
+			return $context_id;
+		}
+
+
+		public static function render_switcher_button( string $name, string $id, string $value, bool $is_enabled = false ): string {
+			ob_start();
+			?>
+			<div class="op-space-x-2 op-items-center op-flex">
+				<label id="<?php echo esc_attr( $id ); ?>" class="op-switch op-relative op-inline-flex op-items-center op-cursor-pointer op-h-[33px]">
+					<input value="<?php echo esc_attr( $value ); ?>" id="<?php echo esc_attr( $id ); ?>"  name="<?php echo esc_attr( $name ); ?>" <?php checked( $is_enabled ); ?> type="checkbox" class="op-sr-only op-peer">
+					<span class="op-slider op-w-14 op-h-7 op-bg-gray-300 op-rounded-full op-shadow-inner op-transition op-duration-300 op-peer-checked:op-bg-blue-500"></span>
+					<span class="op-slide-indicator op-absolute op-left-1 op-top-[50%] -op-translate-y-1/2 op-w-5 op-h-5 op-bg-white op-rounded-full op-shadow-md op-transition-transform op-duration-300 op-transform op-peer-checked:op-translate-x-7"></span>
+				</label>
+
+				<?php if ( $is_enabled ) : ?>
+					<span class="op-inline-flex op-items-center op-justify-center op-gap-1 op-text-secondary">
+						<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg">
+							<path d="M21.03 5.72a.75.75 0 0 1 0 1.06l-11.5 11.5a.747.747 0 0 1-1.072-.012l-5.5-5.75a.75.75 0 1 1 1.084-1.036l4.97 5.195L19.97 5.72a.75.75 0 0 1 1.06 0Z"></path>
+						</svg>
+						Enabled
+					</span>
+
+				<?php else : ?>
+					<!-- <span class="op-inline-flex op-items-center op-justify-center op-gap-1 op-text-red-500">
+						<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="16px" width="16px" xmlns="http://www.w3.org/2000/svg">
+							<path d="M12 10.586l-4.95-4.95-1.414 1.415L10.586 12l-4.95 4.95 1.414 1.414L12 13.414l4.95 4.95 1.414-1.414L13.414 12l4.95-4.95-1.414-1.415z"></path>
+						</svg>
+						Disabled
+					</span> -->
+				<?php endif; ?>
+
+			</div>
+			<?php
+			return ob_get_clean();
+		}
+
+		/**
+		 * Parses a CSV file and returns its contents as an associative array.
+		 *
+		 * @param string $csv_file Path to the CSV file.
+		 * @return array|\WP_Error An associative array of CSV data or \WP_Error on failure.
+		 */
+		public static function get_csv_data( $csv_file ) {
+			// Initialize the WP_Filesystem API.
+			global $wp_filesystem;
+			if ( ! function_exists( 'WP_Filesystem' ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+			}
+
+			// Initialize the filesystem.
+			if ( ! WP_Filesystem() ) {
+				return new \WP_Error( 'filesystem_error', 'Unable to initialize WP_Filesystem.' );
+			}
+
+			// Check if the file exists.
+			if ( ! $wp_filesystem->exists( $csv_file ) ) {
+				return new \WP_Error( 'file_not_found', 'CSV file not found.' );
+			}
+
+			// Read the file contents.
+			$file_contents = $wp_filesystem->get_contents( $csv_file );
+			if ( ! $file_contents ) {
+				return new \WP_Error( 'file_read_error', 'Unable to read CSV file.' );
+			}
+
+			// Parse the CSV content into rows.
+			$rows = array_map(
+				function ( $line ) {
+					// Explicitly provide the $escape parameter to str_getcsv().
+					return str_getcsv( $line, ',', '"', '\\' );
+				},
+				explode( "\n", $file_contents )
+			);
+
+			// Extract the header row.
+			$header = array_shift( $rows );
+			if ( ! $header ) {
+				return new \WP_Error( 'invalid_csv', 'CSV file is empty or invalid.' );
+			}
+
+			// Initialize an array to store the parsed data.
+			$data = array();
+
+			// Loop through each row and combine with the header.
+			foreach ( $rows as $row ) {
+				if ( ! empty( $row ) && count( $row ) === count( $header ) ) {
+					$data[] = array_combine( $header, $row );
+				}
+			}
+
+			// Return the parsed data.
+			return $data;
+		}
 	}
 }

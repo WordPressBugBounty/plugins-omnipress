@@ -9,7 +9,7 @@ store('omnipress/slider', {
       let ref = getElement().ref;
 
       if (context.swiperEl) {
-        let swiperEl = document.querySelector(context.swiperEl);
+        const swiperEl = document.querySelector(context.swiperEl);
 
         ref = context.swiperEl;
       }
@@ -25,8 +25,6 @@ store('omnipress/slider', {
         navigation,
         pagination,
       } = context;
-
-      console.log('swiper', context);
 
       const swiper = new Swiper(ref, {
         ...context,

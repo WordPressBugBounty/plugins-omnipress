@@ -108,7 +108,9 @@ class StyleGenerator {
 
 					case 'margin':
 					case 'padding':
-						$css .= self::generate_spacing_css( $kebab_case_key, $value );
+						if ( ! empty( self::generate_spacing_css( $kebab_case_key, $value ) ) ) {
+							$css .= self::generate_spacing_css( $kebab_case_key, $value );
+						}
 						break;
 
 					case 'background-type':
@@ -150,12 +152,12 @@ class StyleGenerator {
 							break;
 						}
 
-						if ( is_array( $value ) ) {
+						if ( GeneralHelpers::is_valid_array( $value ) ) {
 							$css .= 'background-position:' . floatval( $value['x'] ?? 0 ) * 100 . '% ' . floatval( $value['y'] ?? 0 ) * 100 . '%;';
 						}
 						break;
 					default:
-						if ( ! is_array( $value ) ) {
+						if ( ! is_array( $value ) && ! empty( $value ) ) {
 							$css .= "$kebab_case_key:$value;";
 						}
 						break;
@@ -226,7 +228,7 @@ class StyleGenerator {
 			$selector
 		);
 
-		return $default_css . $mobile_attrs . $tablet_attrs;
+		return $default_css . $tablet_attrs . $mobile_attrs;
 	}
 
 		/**
@@ -262,21 +264,13 @@ class StyleGenerator {
 			return '';
 		}
 
-		$top    = $values['top'] ?? 0;
-		$right  = $values['right'] ?? 0;
-		$bottom = $values['bottom'] ?? 0;
-		$left   = $values['left'] ?? 0;
+		$top    = ! empty( $values['top'] ) ? $values['top'] : 0;
+		$right  = ! empty( $values['right'] ) ? $values['right'] : 0;
+		$bottom = ! empty( $values['bottom'] ) ? $values['bottom'] : 0;
+		$left   = ! empty( $values['left'] ) ? $values['left'] : 0;
 
 		if ( 4 === count( $values ) && array_filter( $values, fn( $value ) => $value !== $top ) === array() ) {
 			return "{$property_name}:{$top};";
-		}
-
-		if ( $top && $bottom && $top === $bottom && ! $left && ! $right ) {
-			return "{$property_name}-block:{$top};";
-		}
-
-		if ( $left && $right && $left === $right && ! $top && ! $bottom ) {
-			return "{$property_name}-inline:{$left};";
 		}
 
 		return "{$property_name}:{$top} {$right} {$bottom} {$left};";
