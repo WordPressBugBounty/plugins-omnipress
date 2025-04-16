@@ -108,6 +108,8 @@ function enqueue_block_assets() {
 	/**
 	 * All external library js.
 	 */
+	wp_register_script( 'omnipress-img-comparison-slider', OMNIPRESS_URL . 'assets/library/img-comparison-slider.js', array(), OMNIPRESS_VERSION, true );
+
 	// register swiper js and css.
 	wp_register_script( 'omnipress-slider-script', OMNIPRESS_URL . 'assets/library/swiper.js', array(), 'v11.1.12', true );
 	wp_register_style( 'omnipress-slider-style', OMNIPRESS_URL . 'assets/library/css/swiper.css', array(), 'v11.1.12' );
@@ -126,7 +128,9 @@ function register_module_scripts(): void {
 		'import' => 'dynamic',
 	);
 
+	error_log( 'enquque module' );
 	\wp_register_script_module( 'omnipress/woogrid', OMNIPRESS_URL . 'assets/block-interactivity/wc-block-module.js', $dependencies, OMNIPRESS_VERSION );
+	\wp_register_script_module( 'omnipress/module-query', OMNIPRESS_URL . 'assets/block-interactivity/module-query.js', $dependencies, OMNIPRESS_VERSION );
 }
 
 /**

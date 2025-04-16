@@ -15,7 +15,7 @@ require_once OMNIPRESS_PATH . 'includes/class-op-ajax.php';
 require_once OMNIPRESS_PATH . 'includes/Controllers/ComingSoonController.php';
 require_once OMNIPRESS_PATH . 'includes/Controllers/PatternsController.php';
 require_once OMNIPRESS_PATH . 'includes/Admin/Extensions/coming-soon.php';
-// require_once OMNIPRESS_PATH . 'includes/Models/TestimonialModel.php';
+require_once OMNIPRESS_PATH . 'includes/Models/TestimonialModel.php';
 
 use Omnipress\Admin\Init as AdminInit;
 use Omnipress\Abstracts\BlockTemplateBase;

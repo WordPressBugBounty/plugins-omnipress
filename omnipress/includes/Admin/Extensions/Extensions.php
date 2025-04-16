@@ -32,16 +32,16 @@ if ( ! class_exists( Extensions::class ) ) {
 				'slug'        => 'taxonomy-image',
 				'description' => 'Enable taxonomies thumbnail supports.',
 			),
-			// array(
-			// 'label'       => 'Custom Fields',
-			// 'slug'        => 'custom-fields',
-			// 'description' => 'Add custom fields to your website.',
-			// ),
-			// array(
-			// 'label'       => 'Preloader & Transitions',
-			// 'slug'        => 'preloader-transition',
-			// 'description' => 'Add a preloader and transitions to your website.',
-			// ),
+			array(
+				'label'       => 'Custom Fields',
+				'slug'        => 'custom-fields',
+				'description' => 'Add custom fields to your website.',
+			),
+			array(
+				'label'       => 'Preloader & Transitions',
+				'slug'        => 'preloader-transition',
+				'description' => 'Add a preloader and transitions to your website.',
+			),
 		);
 
 		/**
@@ -183,13 +183,13 @@ if ( ! class_exists( Extensions::class ) ) {
 			);
 		}
 
-									/**
-									 * Saved the current extension's input fields with it's name and type. To Sanitization field value and saved securely into the database.
-									 *
-									 * @param array $prev_values Other Extension's fields.
-									 *
-									 * @return array
-									 */
+		/**
+		 * Saved the current extension's input fields with it's name and type. To Sanitization field value and saved securely into the database.
+		 *
+		 * @param array $prev_values Other Extension's fields.
+		 *
+		 * @return array
+		 */
 		abstract public function get_input_fields( array $prev_values ): array;
 
 		public static function get_settings( $default_value = array() ) {
@@ -199,9 +199,9 @@ if ( ! class_exists( Extensions::class ) ) {
 			);
 		}
 
-									/**
-									 * Check is extension is enabled or not.
-									 */
+								/**
+								 * Check is extension is enabled or not.
+								 */
 		abstract protected function is_enabled(): bool;
 
 									/**

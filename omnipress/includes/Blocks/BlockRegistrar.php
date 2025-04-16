@@ -6,9 +6,9 @@ use Exception;
 use Omnipress\Core\AbstractAssetsHandler;
 use OMNIPRESS\Core\FileSystemUtil;
 use Omnipress\Helpers;
-use Omnipress\Utils\BlocksAssetsHelper;
 use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Models\UsersModel;
+use Omnipress\Utils\BlocksAssetsHelper;
 
 /**
  * Main class to block registration.
@@ -126,7 +126,13 @@ final class BlockRegistrar {
 				'icon',
 			),
 			'advanced'    => array(
+				'back-to-top',
+				'breadcrumb',
+				'list',
+				'list-item',
 				'single-testimonial',
+				'tooltip',
+
 			),
 			'woocommerce' => array(
 				'product-carousel',
@@ -152,6 +158,12 @@ final class BlockRegistrar {
 				'product-search',
 				'product-grid-2',
 				'tax-query',
+				'image-comparison',
+				'flip-box',
+				'flip-box-front',
+				'flip-box-back',
+				'progress-bar',
+				'lottie-animation',
 			),
 		);
 
@@ -317,8 +329,8 @@ final class BlockRegistrar {
 			$view_script = $this->get_frontend_script( $metadata['name'] );
 
 			if ( $view_script ) {
-				wp_register_script( $view_script['handle'], $view_script['src'], $view_script['deps'], $view_script['version'], true );
-				$args['viewScript'] = $view_script['handle'];
+				wp_register_script_module( $view_script['handle'], $view_script['src'], $view_script['deps'], $view_script['version'], true );
+				$args['viewScriptModule'] = $view_script['handle'];
 			}
 
 			$args['render_callback'] = array( $this, 'render_block' );
@@ -428,6 +440,28 @@ final class BlockRegistrar {
 		$content = apply_filters( 'op_render_block', $content, $block->parsed_block );
 
 		if ( ! $current_block_class_instance ) {
+			// add data-tooltip attribute to the content.
+			$p = new \WP_HTML_Tag_Processor( $content );
+			$p->next_tag();
+
+			if ( ! empty( $attributes['hideOnDesktop'] ) ) {
+				$p->set_attribute( 'data-hide-desktop', 'true' );
+			}
+
+			if ( ! empty( $attributes['hideOnTablet'] ) ) {
+				$p->set_attribute( 'data-hide-tablet', 'true' );
+			}
+
+			if ( ! empty( $attributes['hideOnMobile'] ) ) {
+				$p->set_attribute( 'data-hide-mobile', 'true' );
+			}
+
+			if ( ! empty( $attributes['tooltipText'] ) ) {
+				$p->set_attribute( 'data-tooltip', $attributes['tooltipText'] );
+
+				$p->set_attribute( 'data-tooltip-direction', ( $attributes['tooltipPosition'] ?? 'top' ) );
+			}
+			$content = $p->get_updated_html();
 			return $content;
 		}
 

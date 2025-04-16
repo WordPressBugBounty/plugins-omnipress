@@ -84,7 +84,7 @@ $form_handler  = new SettingsFormHelper( 'omnipress_fields', 'omnipress_fields',
 	</div>
 	<!-- Add New Button -->
 	<div class="op-mt-4 op-flex op-justify-end">
-		<button onclick="openModal('add')" class="op-bg-blue-600 op-text-white op-font-medium op-text-sm op-px-4 op-py-2 op-rounded-lg op-hover:bg-blue-700 op-flex op-items-center op-gap-2">
+		<button onclick="openModal('add')" class="op-bg-blue-600 op-text-white op-font-medium op-text-sm op-px-4 op-py-2 op-rounded-lg op-hover:bg-blue-700 op-flex op-items-center op-gap-2 op-cursor-pointer">
 			<svg class="op-w-4 op-h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
 			</svg>
@@ -182,8 +182,8 @@ $form_handler  = new SettingsFormHelper( 'omnipress_fields', 'omnipress_fields',
 
 			<!-- Form Actions -->
 			<div class="op-flex op-gap-2">
-				<button type="button" onclick="closeModal()" class="op-bg-gray-200 op-text-gray-700 op-font-medium op-text-sm op-px-4 op-py-2 op-rounded-lg op-hover:bg-gray-300">Close Field</button>
-				<button type="submit" class="op-bg-blue-600 op-text-white op-font-medium op-text-sm op-px-4 op-py-2 op-rounded-lg op-hover:bg-blue-700">Save</button>
+				<button type="button" onclick="closeModal()" class="op-bg-gray-200 op-text-gray-700 op-font-medium op-text-sm op-px-4 op-py-2 op-rounded-lg op-hover:bg-gray-300 op-cursor-pointer">Close Field</button>
+				<button type="submit" id="field-submit" class="op-bg-blue-600 op-text-white op-font-medium op-text-sm op-px-4 op-py-2 op-rounded-lg op-hover:bg-blue-700 op-cursor-pointer">Save</button>
 			</div>
 
 		<?php $form_handler->close_form(); ?>
@@ -200,6 +200,17 @@ $form_handler  = new SettingsFormHelper( 'omnipress_fields', 'omnipress_fields',
 		const itemName = document.getElementById('item-name');
 		const itemSlug = document.getElementById('item-slug');
 		const postTypes = form.querySelectorAll('input[name="item_post_types[]"]');
+		const submitButton = document.getElementById('field-submit');
+
+		itemName.addEventListener('focusout', (e) => {
+			const slug  = e.target.value.trim().toLowerCase().replace(/\s+/g, '_');
+			itemSlug.value =slug;
+		} )
+
+		form.addEventListener('submit', (e) => {
+			submitButton.innerHTML = 'Saving...';
+			submitButton.disabled = true;
+		})
 
 		// Reset form
 		form.reset();

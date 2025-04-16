@@ -19,7 +19,7 @@
     "testimonial": {
       "group": "design",
       "selector": ".op-testimonial--content",
-      "label": "Content",
+      "label": "Testimonial",
       "fields": {
         "spacing": {
           "padding": true
@@ -163,6 +163,12 @@
     },
     "backgroundType": {
       "type": "string"
+    },
+    "tooltipPosition": {
+      "type": "string"
+    },
+    "tooltipText": {
+      "type": "string"
     }
   },
   "supports": {
@@ -171,8 +177,7 @@
   },
   "textdomain": "omnipress",
   "keywords": [
-    "taxonomy",
-    "category",
-    "tags"
+    "testimonial",
+    "comment"
   ]
 }

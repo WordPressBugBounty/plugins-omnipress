@@ -45,6 +45,14 @@ class BlockAssetsManager extends AbstractAssetsHandler {
 	 * @inheritDoc
 	 */
 	public function register_scripts(): void {
+		$dependencies = array(
+			'id'     => '@wordpress/interactivity',
+			'import' => 'dynamic',
+		);
+
+		\wp_register_script_module( 'omnipress/woogrid', OMNIPRESS_URL . 'assets/block-interactivity/wc-block-module.js', $dependencies, OMNIPRESS_VERSION );
+		\wp_register_script_module( 'omnipress/module-query', OMNIPRESS_URL . 'assets/block-interactivity/module-query.js', $dependencies, OMNIPRESS_VERSION );
+
 		$this->register_script_module( 'omnipress/woogrid', 'wc-block-module' );
 		$this->register_script_module( 'omnipress/content/switcher', 'content-switcher', array(), filemtime( OMNIPRESS_PATH . 'assets/block-interactivity/content-switcher.js' ) );
 

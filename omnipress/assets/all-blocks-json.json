@@ -1,4 +1,72 @@
 {
+  "omnipress/back-to-top": {
+    "type": "free",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions",
+      "button",
+      "scrollBar"
+    ],
+    "label": "Back To Top",
+    "block_name": "omnipress/back-to-top",
+    "selectors": {
+      "button": "#back-to-top",
+      "scrollBar": ".circle-progress::after"
+    }
+  },
+  "omnipress/breadcrumb": {
+    "type": "free",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions",
+      "breadcrumbItem",
+      "activeBreadcrumb"
+    ],
+    "label": "Breadcrumb",
+    "block_name": "omnipress/breadcrumb",
+    "selectors": {
+      "breadcrumbItem": ".breadcrumb-item",
+      "activeBreadcrumb": ".breadcrumb-item.active"
+    }
+  },
+  "omnipress/list-item": {
+    "type": "free",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions",
+      "gradientMarker"
+    ],
+    "label": "List Item",
+    "block_name": "omnipress/list-item",
+    "selectors": {
+      "gradientMarker": ".list-item-content::before"
+    }
+  },
+  "omnipress/list": {
+    "type": "free",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions",
+      "gradientMarker"
+    ],
+    "label": "List",
+    "block_name": "omnipress/list",
+    "selectors": {
+      "gradientMarker": ".list-item-content::before"
+    }
+  },
   "omnipress/single-testimonial": {
     "type": "free",
     "styles_attributes": [
@@ -19,6 +87,20 @@
       "featureImage": ".op-testimonial--thumbnail",
       "authorName": ".op-testimonial--author-name",
       "authorRole": ".op-testimonial--author-role"
+    }
+  },
+  "omnipress/tooltip": {
+    "type": "free",
+    "styles_attributes": [
+      "preview",
+      "componentName",
+      "componentId",
+      "wrapper"
+    ],
+    "label": "Tooltip",
+    "block_name": "omnipress/tooltip",
+    "selectors": {
+      "wrapper": ".tooltip"
     }
   },
   "omnipress/button": {
@@ -809,6 +891,74 @@
     "selectors": {},
     "icon": "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'> <path d='M20.0518 7C20.0518 7.10107 19.9956 7.30379 19.6494 7.58825C19.3073 7.86928 18.7646 8.15643 18.021 8.41207C16.541 8.9209 14.4273 9.25 12 9.25C9.57255 9.25 7.4879 8.92085 6.03727 8.41339C5.30867 8.15851 4.78068 7.87266 4.44923 7.59382C4.11572 7.31325 4.05713 7.10952 4.05713 7C4.05713 6.89048 4.11572 6.68675 4.44923 6.40618C4.78068 6.12734 5.30867 5.84149 6.03727 5.58661C7.4879 5.07915 9.57255 4.75 12 4.75C14.4273 4.75 16.541 5.0791 18.021 5.58793C18.7646 5.84357 19.3073 6.13072 19.6494 6.41175C19.9956 6.69621 20.0518 6.89893 20.0518 7Z' stroke='#175FFF' stroke-width='1.5' /> <path d='M20 10.5C20 12.1569 16.4183 13.5 12 13.5C7.58172 13.5 4 12.1569 4 10.5' stroke='#175FFF' stroke-width='1.5' /> <path d='M20 14.5C20 16.1569 16.4183 17.5 12 17.5C7.58172 17.5 4 16.1569 4 14.5' stroke='#175FFF' stroke-width='1.5' /> <path d='M20 18C20 19.6569 16.4183 21 12 21C7.58172 21 4 19.6569 4 18' stroke='#175FFF' stroke-width='1.5' /> <path d='M4 7V18.5M20 7V18.5' stroke='#175FFF' stroke-width='1.5' /> </svg> "
   },
+  "omnipress/flip-box-back": {
+    "type": "pro",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions"
+    ],
+    "label": "Flip Box Back",
+    "block_name": "omnipress/flip-box-back",
+    "selectors": {}
+  },
+  "omnipress/flip-box-front": {
+    "type": "pro",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions"
+    ],
+    "label": "Flip Box Front",
+    "block_name": "omnipress/flip-box-front",
+    "selectors": {}
+  },
+  "omnipress/flip-box": {
+    "type": "pro",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions"
+    ],
+    "label": "Flip Box",
+    "block_name": "omnipress/flip-box",
+    "selectors": {}
+  },
+  "omnipress/image-comparison": {
+    "type": "pro",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions"
+    ],
+    "label": "Image Comparison",
+    "block_name": "omnipress/image-comparison",
+    "selectors": {}
+  },
+  "omnipress/lottie-animation": {
+    "type": "pro",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions",
+      "conftti"
+    ],
+    "label": "Lottie Animation",
+    "block_name": "omnipress/lottie-animation",
+    "selectors": {
+      "conftti": ".tooltip"
+    }
+  },
   "omnipress/product-filter": {
     "type": "pro",
     "styles_attributes": [
@@ -887,6 +1037,28 @@
       "dropdown": ".op-product-search-form-select-wrapper",
       "input": ".op-search-input",
       "searchButton": ".op-search-button"
+    }
+  },
+  "omnipress/progress-bar": {
+    "type": "pro",
+    "styles_attributes": [
+      "wrapper",
+      "preview",
+      "componentName",
+      "componentId",
+      "interactions",
+      "track",
+      "indicator",
+      "label",
+      "labelActive"
+    ],
+    "label": "Progress Bar",
+    "block_name": "omnipress/progress-bar",
+    "selectors": {
+      "track": ".progress-track",
+      "indicator": ".progress-indicator",
+      "label": ".progress-label",
+      "labelActive": ".progress-indicator .progress-label"
     }
   },
   "omnipress/query-no-results": {

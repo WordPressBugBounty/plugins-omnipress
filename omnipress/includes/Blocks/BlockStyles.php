@@ -119,6 +119,7 @@ class BlockStyles {
 				}
 			}
 		}
+		$template_slug = GeneralHelpers::convertToHyphen( $template_slug );
 
 		return $template_slug;
 	}

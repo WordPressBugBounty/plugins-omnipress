@@ -78,11 +78,9 @@ class TestimonialModel {
 				);
 
 				if ( $post_id ) {
-					update_post_meta( $post_id, 'author_role', $role );
-					update_post_meta( $post_id, 'author_organization', $organization );
-					update_post_meta( $post_id, 'author_date', $date );
-					update_post_meta( $post_id, 'author_name', $name );
-					update_post_meta( $post_id, 'rating', $rating );
+					update_post_meta( $post_id, '_author_role', $role );
+					update_post_meta( $post_id, '_author_company', $organization );
+					update_post_meta( $post_id, '_author_name', $name );
 					// Handle featured image.
 					if ( ! empty( $image_url ) ) {
 						$this->set_featured_image_from_url( $post_id, $image_url );
@@ -297,7 +295,7 @@ class TestimonialModel {
 				'public'       => true,
 				'rest_base'    => 'testimonials',
 				'show_in_rest' => true,
-				'supports'     => array( 'title', 'editor', 'thumbnail' ),
+				'supports'     => array( 'title', 'thumbnail', 'editor' ),
 				'menu_icon'    => 'dashicons-testimonial',
 			)
 		);
@@ -332,26 +330,22 @@ class TestimonialModel {
 
 	public function render_testimonial_meta_box( $post ) {
 		wp_nonce_field( 'save_testimonial_details', 'testimonial_nonce' );
-		$author_name         = get_post_meta( $post->ID, 'author_name', true );
-		$author_role         = get_post_meta( $post->ID, 'author_role', true );
-		$author_organization = get_post_meta( $post->ID, 'author_organization', true );
-		$rating              = get_post_meta( $post->ID, 'rating', true );
+		$author_name    = get_post_meta( $post->ID, '_author_name', true );
+		$author_role    = get_post_meta( $post->ID, '_author_role', true );
+		$author_company = get_post_meta( $post->ID, '_author_company', true );
+
 		?>
 			<p class="op-flex op-gap-5 op-items-center">
 				<label for="author_name"><?php esc_html_e( 'Author Name', 'omnipress' ); ?></label>
 				<input type="text" id="author_name" name="author_name" value="<?php echo esc_attr( $author_name ); ?>" />
 			</p>
 			<p class="op-flex op-gap-5 op-items-center">
-				<label for="author_role"><?php esc_html_e( 'Author Position', 'omnipress' ); ?></label>
+				<label for="author_role"><?php esc_html_e( 'Author Role', 'omnipress' ); ?></label>
 				<input type="text" id="author_role" name="author_role" value="<?php echo esc_attr( $author_role ); ?>" />
 			</p>
 			<p class="op-flex op-gap-5 op-items-center">
-				<label for="author_organization"><?php esc_html_e( 'Author Company', 'omnipress' ); ?></label>
-				<input type="text" id="author_organization" name="author_organization" value="<?php echo esc_attr( $author_organization ); ?>" />
-			</p>
-			<p class="op-flex op-gap-5 op-items-center">
-				<label for="rating"><?php esc_html_e( 'Rating (1-5)', 'omnipress' ); ?></label>
-				<input type="number" id="rating" name="rating" min="1" max="5" value="<?php echo esc_attr( $rating ); ?>" />
+				<label for="author_company"><?php esc_html_e( 'Author Company', 'omnipress' ); ?></label>
+				<input type="text" id="author_company" name="author_company" value="<?php echo esc_attr( $author_company ); ?>" />
 			</p>
 		<?php
 	}
@@ -366,14 +360,16 @@ class TestimonialModel {
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
-		if ( isset( $_POST['author_position'] ) ) {
-			update_post_meta( $post_id, '_author_position', sanitize_text_field( $_POST['author_position'] ) );
+
+		if ( isset( $_POST['author_name'] ) ) {
+			update_post_meta( $post_id, '_author_name', sanitize_text_field( $_POST['author_name'] ) );
+		}
+
+		if ( isset( $_POST['author_role'] ) ) {
+			update_post_meta( $post_id, '_author_role', sanitize_text_field( $_POST['author_role'] ) );
 		}
 		if ( isset( $_POST['author_company'] ) ) {
 			update_post_meta( $post_id, '_author_company', sanitize_text_field( $_POST['author_company'] ) );
-		}
-		if ( isset( $_POST['rating'] ) ) {
-			update_post_meta( $post_id, '_rating', intval( $_POST['rating'] ) );
 		}
 
 		$custom_fields = get_option( 'omnipress_fields', array() );

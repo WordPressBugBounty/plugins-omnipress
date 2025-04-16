@@ -315,7 +315,7 @@ class WoocategoryList extends AbstractBlock {
 		}
 
 		$screen_reader_text = sprintf(
-			_n( '%d product', '%1$d Products', absint( $category->count ), 'woocommerce' ),
+			_n( '%d product', '%1$d Products', absint( $category->count ), 'omnipress' ),
 			absint( $category->count ),
 		);
 

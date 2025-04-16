@@ -31,7 +31,6 @@ if ( ! class_exists( 'AbstractBlock' ) ) {
 		 */
 		protected $block_name;
 
-
 		protected array $default_attributes; // phpcs:ignore
 
 		protected array $block_attributes;  // phpcs:ignore
@@ -77,7 +76,6 @@ if ( ! class_exists( 'AbstractBlock' ) ) {
 		public function get_block_type_context(): array {
 			return array();
 		}
-
 
 		/**
 		 * Get the block name.
@@ -154,31 +152,43 @@ if ( ! class_exists( 'AbstractBlock' ) ) {
 
 			$attributes = $this->get_block_attributes();
 
-			if ( ! empty( $this->get_block_attributes()['styles']['grid'] ) ) {
-
-			}
-
 			if ( isset( $attributes['hideOnTablet'] ) && $attributes['hideOnTablet'] ) {
-				$classes .= ' op-hidden-tablet';
+				$classes .= ' is-hide-tablet';
 			}
 
 			if ( isset( $attributes['hideOnMobile'] ) && $attributes['hideOnMobile'] ) {
-				$classes .= ' op-hidden-mobile';
+				$classes .= ' is-hide-mobile';
 			}
 
 			if ( isset( $attributes['hideOnDesktop'] ) && $attributes['hideOnDesktop'] ) {
-				$classes .= ' op-hidden-desktop';
+				$classes .= ' is-hide-desktop';
+			}
+			$attrs = array(
+				'class'     => 'op-' . esc_attr( $this->get_block_attributes()['blockId'] ??= '' ) . ' ' . $classes,
+				'data-type' => $this->block_name,
+			);
+
+			if ( ! empty( $attributes['tooltipText'] ) ) {
+				$attrs['data-tooltip']           = $attributes['tooltipText'];
+				$attrs['data-tooltip-direction'] = $attributes['tooltipPosition'] ?? 'top';
 			}
 
 			return get_block_wrapper_attributes(
 				array_merge(
-					array(
-						'class'     => 'op-' . esc_attr( $this->get_block_attributes()['blockId'] ??= '' ) . ' ' . $classes,
-						'data-type' => $this->block_name,
-					),
+					$attrs,
 					$extra_attributes
 				)
 			);
+		}
+		public function set_attributes( array $attributes ): void {
+			$this->block_attributes = $attributes;
+		}
+		public function get_block_category(): string {
+			return $this->block_category;
+		}
+
+		public function set_block_name( string $block_name ): void {
+			$this->block_name = $block_name;
 		}
 
 		public function get_block_name_without_namespace(): string {

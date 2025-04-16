@@ -77,7 +77,8 @@ if ( ! class_exists( '\Omnipress\Controllers\ComingSoonController' ) ) {
 					}
 				}
 
-				$visibility = ! empty( $settings['visibility'] ) ? $settings['visibility'] : 'both';
+				$visibility = ! empty( $settings['visibility'] ) ? $settings['visibility'] : 'logged_out';
+
 				if ( 'both' === $visibility ) {
 					return true;
 				}

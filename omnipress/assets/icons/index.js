@@ -246,7 +246,7 @@ export const dualbutton = (
 export const infoBox = (
   <svg
     style={{
-      color: "#1e85f0",
+      color: '#1e85f0',
     }}
     width="40px"
     height="40px"
@@ -713,37 +713,101 @@ export const postGrid = (
 
 // Post Blocks =====================================
 
-// Social Blocks =====================================
-
 // Woo Blocks =====================================
 export const productCatalog = (
-  <svg className="op-block-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill="none" d="M4 2.75H9C9.69036 2.75 10.25 3.30964 10.25 4V9C10.25 9.69036 9.69036 10.25 9 10.25H4C3.30964 10.25 2.75 9.69036 2.75 9V4C2.75 3.30964 3.30964 2.75 4 2.75ZM4 13.75H9C9.69036 13.75 10.25 14.3096 10.25 15V20C10.25 20.6904 9.69036 21.25 9 21.25H4C3.30964 21.25 2.75 20.6904 2.75 20V15C2.75 14.3096 3.30964 13.75 4 13.75ZM15 2.75H20C20.6904 2.75 21.25 3.30964 21.25 4V9C21.25 9.69036 20.6904 10.25 20 10.25H15C14.3096 10.25 13.75 9.69036 13.75 9V4C13.75 3.30964 14.3096 2.75 15 2.75ZM15 13.75H20C20.6904 13.75 21.25 14.3096 21.25 15V20C21.25 20.6904 20.6904 21.25 20 21.25H15C14.3096 21.25 13.75 20.6904 13.75 20V15C13.75 14.3096 14.3096 13.75 15 13.75Z" stroke="#175FFF" strokeWidth="1.5" />
+  <svg
+    className="op-block-icons"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill="none"
+      d="M4 2.75H9C9.69036 2.75 10.25 3.30964 10.25 4V9C10.25 9.69036 9.69036 10.25 9 10.25H4C3.30964 10.25 2.75 9.69036 2.75 9V4C2.75 3.30964 3.30964 2.75 4 2.75ZM4 13.75H9C9.69036 13.75 10.25 14.3096 10.25 15V20C10.25 20.6904 9.69036 21.25 9 21.25H4C3.30964 21.25 2.75 20.6904 2.75 20V15C2.75 14.3096 3.30964 13.75 4 13.75ZM15 2.75H20C20.6904 2.75 21.25 3.30964 21.25 4V9C21.25 9.69036 20.6904 10.25 20 10.25H15C14.3096 10.25 13.75 9.69036 13.75 9V4C13.75 3.30964 14.3096 2.75 15 2.75ZM15 13.75H20C20.6904 13.75 21.25 14.3096 21.25 15V20C21.25 20.6904 20.6904 21.25 20 21.25H15C14.3096 21.25 13.75 20.6904 13.75 20V15C13.75 14.3096 14.3096 13.75 15 13.75Z"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+    />
   </svg>
 );
 
 export const singleProduct = (
-  <svg className="op-block-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill="none" d="M4 2.75H20C20.6904 2.75 21.25 3.30964 21.25 4V20C21.25 20.6904 20.6904 21.25 20 21.25H4C3.30964 21.25 2.75 20.6904 2.75 20V4C2.75 3.30964 3.30964 2.75 4 2.75Z" stroke="#175FFF" strokeWidth="1.5" />
-    <path fill="none" d="M7.55371 10.299L11.2499 12.433V16.701L7.55371 14.567V10.299ZM11.9999 11.134L8.30371 9L11.9999 6.86603L15.696 9L11.9999 11.134ZM12.7499 12.433L16.446 10.299V14.567L12.7499 16.701V12.433Z" fill="#D9D9D9" stroke="#175FFF" strokeWidth="1.5" />
+  <svg
+    className="op-block-icons"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill="none"
+      d="M4 2.75H20C20.6904 2.75 21.25 3.30964 21.25 4V20C21.25 20.6904 20.6904 21.25 20 21.25H4C3.30964 21.25 2.75 20.6904 2.75 20V4C2.75 3.30964 3.30964 2.75 4 2.75Z"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+    />
+    <path
+      fill="none"
+      d="M7.55371 10.299L11.2499 12.433V16.701L7.55371 14.567V10.299ZM11.9999 11.134L8.30371 9L11.9999 6.86603L15.696 9L11.9999 11.134ZM12.7499 12.433L16.446 10.299V14.567L12.7499 16.701V12.433Z"
+      fill="#D9D9D9"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+    />
   </svg>
 );
 
-
 export const productFilter = (
-  <svg className="op-block-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill="none" d="M10.5109 12.4274L3.47279 2.75H20.5271L13.489 12.4274C13.3337 12.641 13.25 12.8984 13.25 13.1626V18.625L10.75 20.5V13.1626C10.75 12.8984 10.6663 12.641 10.5109 12.4274Z" stroke="#175FFF" strokeWidth="1.5" strokeLinejoin="round" />
+  <svg
+    className="op-block-icons"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill="none"
+      d="M10.5109 12.4274L3.47279 2.75H20.5271L13.489 12.4274C13.3337 12.641 13.25 12.8984 13.25 13.1626V18.625L10.75 20.5V13.1626C10.75 12.8984 10.6663 12.641 10.5109 12.4274Z"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
 export const advancedProductSearch = (
-  <svg className="op-block-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fill="none" d="M17.25 10C17.25 14.0041 14.0041 17.25 10 17.25C5.99594 17.25 2.75 14.0041 2.75 10C2.75 5.99594 5.99594 2.75 10 2.75C14.0041 2.75 17.25 5.99594 17.25 10Z" stroke="#175FFF" strokeWidth="1.5" />
-    <path fill="none" d="M6 10C6 7.79086 7.79086 6 10 6" stroke="#175FFF" strokeWidth="1.5" strokeLinecap="round" />
-    <path fill="none" d="M21 21L16.7122 16.712" stroke="#175FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  <svg
+    className="op-block-icons"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill="none"
+      d="M17.25 10C17.25 14.0041 14.0041 17.25 10 17.25C5.99594 17.25 2.75 14.0041 2.75 10C2.75 5.99594 5.99594 2.75 10 2.75C14.0041 2.75 17.25 5.99594 17.25 10Z"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+    />
+    <path
+      fill="none"
+      d="M6 10C6 7.79086 7.79086 6 10 6"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      fill="none"
+      d="M21 21L16.7122 16.712"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
-
 
 export const woocategoryList = (
   <svg
@@ -944,11 +1008,22 @@ export const productList = (
 );
 
 export const productCarousel = (
-<svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path d="M4.56818 3.88889V3.13889H3.81818H2.75V2.75H4.72727C4.78842 2.75 4.88636 2.80983 4.88636 2.94444V21.0556C4.88636 21.1902 4.78843 21.25 4.72727 21.25H2.75V20.8611H3.81818H4.56818V20.1111V3.88889ZM9.27273 3.13889H8.52273V3.88889V20.1111V20.8611H9.27273H14.7273H15.4773V20.1111V3.88889V3.13889H14.7273H9.27273ZM20.1818 20.8611H21.25V21.25H19.2727C19.2116 21.25 19.1136 21.1902 19.1136 21.0556V2.94444C19.1136 2.80982 19.2116 2.75 19.2727 2.75H21.25V3.13889H20.1818H19.4318V3.88889V20.1111V20.8611H20.1818ZM8.20455 2.94444C8.20455 2.80983 8.30249 2.75 8.36364 2.75H15.6364C15.6975 2.75 15.7955 2.80982 15.7955 2.94444V21.0556C15.7955 21.1902 15.6975 21.25 15.6364 21.25H8.36364C8.30248 21.25 8.20455 21.1902 8.20455 21.0556V2.94444Z" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-</svg>
+  <svg
+    className="op-block-icons"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M4.56818 3.88889V3.13889H3.81818H2.75V2.75H4.72727C4.78842 2.75 4.88636 2.80983 4.88636 2.94444V21.0556C4.88636 21.1902 4.78843 21.25 4.72727 21.25H2.75V20.8611H3.81818H4.56818V20.1111V3.88889ZM9.27273 3.13889H8.52273V3.88889V20.1111V20.8611H9.27273H14.7273H15.4773V20.1111V3.88889V3.13889H14.7273H9.27273ZM20.1818 20.8611H21.25V21.25H19.2727C19.2116 21.25 19.1136 21.1902 19.1136 21.0556V2.94444C19.1136 2.80982 19.2116 2.75 19.2727 2.75H21.25V3.13889H20.1818H19.4318V3.88889V20.1111V20.8611H20.1818ZM8.20455 2.94444C8.20455 2.80983 8.30249 2.75 8.36364 2.75H15.6364C15.6975 2.75 15.7955 2.80982 15.7955 2.94444V21.0556C15.7955 21.1902 15.6975 21.25 15.6364 21.25H8.36364C8.30248 21.25 8.20455 21.1902 8.20455 21.0556V2.94444Z"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+  </svg>
 );
-
 
 export const carousel = (
   <svg
@@ -1166,18 +1241,46 @@ export const accordion = (
 );
 
 export const queryLoop = (
-  <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" >
-    <path fill="none" d="M12 12.5L9.36396 10.0251C7.90812 8.65829 5.54773 8.65829 4.09188 10.0251C2.63604 11.392 2.63604 13.608 4.09188 14.9749C5.54773 16.3417 7.90812 16.3417 9.36396 14.9749L12 12.5ZM12 12.5L14.636 10.0251C16.0919 8.65829 18.4523 8.65829 19.9081 10.0251C21.364 11.392 21.364 13.608 19.9081 14.9749C18.4523 16.3417 16.0919 16.3417 14.636 14.9749L12 12.5Z" stroke="#175FFF" strokeWidth="1.5" />
+  <svg
+    className="op-block-icons"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width="24"
+    height="24"
+    fill="none"
+  >
+    <path
+      fill="none"
+      d="M12 12.5L9.36396 10.0251C7.90812 8.65829 5.54773 8.65829 4.09188 10.0251C2.63604 11.392 2.63604 13.608 4.09188 14.9749C5.54773 16.3417 7.90812 16.3417 9.36396 14.9749L12 12.5ZM12 12.5L14.636 10.0251C16.0919 8.65829 18.4523 8.65829 19.9081 10.0251C21.364 11.392 21.364 13.608 19.9081 14.9749C18.4523 16.3417 16.0919 16.3417 14.636 14.9749L12 12.5Z"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+    />
   </svg>
 );
 
 export const taxonomy = (
-    <svg className="op-block-icons" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 2.75H21C21.1381 2.75 21.25 2.86193 21.25 3V8C21.25 8.13807 21.1381 8.25 21 8.25H3C2.86193 8.25 2.75 8.13807 2.75 8V3C2.75 2.86193 2.86193 2.75 3 2.75ZM17 16.75H21C21.1381 16.75 21.25 16.8619 21.25 17V21C21.25 21.1381 21.1381 21.25 21 21.25H17C16.8619 21.25 16.75 21.1381 16.75 21V17C16.75 16.8619 16.8619 16.75 17 16.75ZM10 16.75H14C14.1381 16.75 14.25 16.8619 14.25 17V21C14.25 21.1381 14.1381 21.25 14 21.25H10C9.86193 21.25 9.75 21.1381 9.75 21V17C9.75 16.8619 9.86193 16.75 10 16.75ZM3 16.75H7C7.13807 16.75 7.25 16.8619 7.25 17V21C7.25 21.1381 7.13807 21.25 7 21.25H3C2.86193 21.25 2.75 21.1381 2.75 21V17C2.75 16.8619 2.86193 16.75 3 16.75Z" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-        <path d="M12 17V8.5M5 17V13H19V17" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-    </svg>
+  <svg
+    className="op-block-icons"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M3 2.75H21C21.1381 2.75 21.25 2.86193 21.25 3V8C21.25 8.13807 21.1381 8.25 21 8.25H3C2.86193 8.25 2.75 8.13807 2.75 8V3C2.75 2.86193 2.86193 2.75 3 2.75ZM17 16.75H21C21.1381 16.75 21.25 16.8619 21.25 17V21C21.25 21.1381 21.1381 21.25 21 21.25H17C16.8619 21.25 16.75 21.1381 16.75 21V17C16.75 16.8619 16.8619 16.75 17 16.75ZM10 16.75H14C14.1381 16.75 14.25 16.8619 14.25 17V21C14.25 21.1381 14.1381 21.25 14 21.25H10C9.86193 21.25 9.75 21.1381 9.75 21V17C9.75 16.8619 9.86193 16.75 10 16.75ZM3 16.75H7C7.13807 16.75 7.25 16.8619 7.25 17V21C7.25 21.1381 7.13807 21.25 7 21.25H3C2.86193 21.25 2.75 21.1381 2.75 21V17C2.75 16.8619 2.86193 16.75 3 16.75Z"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+    <path
+      d="M12 17V8.5M5 17V13H19V17"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+  </svg>
 );
-
 
 export const popup = (
   <svg
@@ -1192,35 +1295,102 @@ export const popup = (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M20 3.5H16C15.7239 3.5 15.5 3.72386 15.5 4V8C15.5 8.27614 15.7239 8.5 16 8.5H20C20.2761 8.5 20.5 8.27614 20.5 8V4C20.5 3.72386 20.2761 3.5 20 3.5ZM16 2C14.8954 2 14 2.89543 14 4V8C14 9.10457 14.8954 10 16 10H20C21.1046 10 22 9.10457 22 8V4C22 2.89543 21.1046 2 20 2H16ZM5 4.8C4.33726 4.8 3.8 5.33726 3.8 6V19C3.8 19.6627 4.33726 20.2 5 20.2H19C19.6627 20.2 20.2 19.6627 20.2 19V12.5C20.2 12.0582 20.5582 11.7 21 11.7C21.4418 11.7 21.8 12.0582 21.8 12.5V19C21.8 20.5464 20.5464 21.8 19 21.8H5C3.4536 21.8 2.2 20.5464 2.2 19V6C2.2 4.4536 3.4536 3.2 5 3.2H12C12.4418 3.2 12.8 3.55817 12.8 4C12.8 4.44183 12.4418 4.8 12 4.8H5ZM13 10.25H6.25C5.83579 10.25 5.5 10.5858 5.5 11C5.5 11.4142 5.83579 11.75 6.25 11.75H11.1893L6.46967 16.4697C6.17678 16.7626 6.17678 17.2374 6.46967 17.5303C6.76256 17.8232 7.23744 17.8232 7.53033 17.5303L12.25 12.8107V17.75C12.25 18.1642 12.5858 18.5 13 18.5C13.4142 18.5 13.75 18.1642 13.75 17.75V11C13.75 10.5858 13.4142 10.25 13 10.25Z"
-      fill="#175FFF" 
+      fill="#175FFF"
     />
   </svg>
 );
 
 export const popModal = (
-    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <rect x="2.75" y="2.75" width="18.5" height="12.5" rx="1.25" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-        <path d="M5 16V16C5 17.1046 5.89543 18 7 18H17C18.1046 18 19 17.1046 19 16V16" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-        <path d="M7 19V19C7 20.1046 7.89543 21 9 21H12H15C16.1046 21 17 20.1046 17 19V19" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-    </svg>
+  <svg
+    className="op-block-icons"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <rect
+      x="2.75"
+      y="2.75"
+      width="18.5"
+      height="12.5"
+      rx="1.25"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+    <path
+      d="M5 16V16C5 17.1046 5.89543 18 7 18H17C18.1046 18 19 17.1046 19 16V16"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+    <path
+      d="M7 19V19C7 20.1046 7.89543 21 9 21H12H15C16.1046 21 17 20.1046 17 19V19"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+  </svg>
 );
-
 
 export const popFloating = (
-    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <rect x="2.75" y="2.75" width="18.5" height="18.5" rx="1.25" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-        <path d="M6 6L18 6" fill="none" stroke="#175FFF" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
+  <svg
+    className="op-block-icons"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <rect
+      x="2.75"
+      y="2.75"
+      width="18.5"
+      height="18.5"
+      rx="1.25"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+    <path
+      d="M6 6L18 6"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+  </svg>
 );
-
 
 export const popDrawer = (
-    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <rect x="2.75" y="2.75" width="18.5" height="18.5" rx="1.25" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-        <path d="M17 6L17 18" fill="none" stroke="#175FFF" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
+  <svg
+    className="op-block-icons"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <rect
+      x="2.75"
+      y="2.75"
+      width="18.5"
+      height="18.5"
+      rx="1.25"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+    <path
+      d="M17 6L17 18"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+  </svg>
 );
-  
 
 export const queryTemplate = (
   <svg
@@ -1247,7 +1417,8 @@ export const queryTemplate = (
 );
 
 export const pagination = (
-  <svg className="op-block-icons"
+  <svg
+    className="op-block-icons"
     xmlns="http://www.w3.org/2000/svg"
     width="24"
     height="24"
@@ -1369,7 +1540,12 @@ export const dynamicFieldQuery = (
       stroke="#175FFF"
       strokeWidth="1.5"
     />
-    <path fill="none" d="M4 7V18.5M20 7V18.5" stroke="#175FFF" strokeWidth="1.5" />
+    <path
+      fill="none"
+      d="M4 7V18.5M20 7V18.5"
+      stroke="#175FFF"
+      strokeWidth="1.5"
+    />
   </svg>
 );
 
@@ -1572,15 +1748,51 @@ export const allSides = (
 );
 
 export const contentSwitcher = (
-    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-    <path d="M6.5 7.75H17.5C19.5711 7.75 21.25 9.42893 21.25 11.5C21.25 13.5711 19.5711 15.25 17.5 15.25H6.5C4.42893 15.25 2.75 13.5711 2.75 11.5C2.75 9.42893 4.42893 7.75 6.5 7.75Z" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-    <path d="M7.25 11.5C7.25 11.9142 6.91421 12.25 6.5 12.25C6.08579 12.25 5.75 11.9142 5.75 11.5C5.75 11.0858 6.08579 10.75 6.5 10.75C6.91421 10.75 7.25 11.0858 7.25 11.5Z" fill="none" stroke="#175FFF" stroke-width="1.5"/>
-    </svg>
+  <svg
+    className="op-block-icons"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M6.5 7.75H17.5C19.5711 7.75 21.25 9.42893 21.25 11.5C21.25 13.5711 19.5711 15.25 17.5 15.25H6.5C4.42893 15.25 2.75 13.5711 2.75 11.5C2.75 9.42893 4.42893 7.75 6.5 7.75Z"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+    <path
+      d="M7.25 11.5C7.25 11.9142 6.91421 12.25 6.5 12.25C6.08579 12.25 5.75 11.9142 5.75 11.5C5.75 11.0858 6.08579 10.75 6.5 10.75C6.91421 10.75 7.25 11.0858 7.25 11.5Z"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+    />
+  </svg>
 );
 
 export const blockAddition = (
-    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M12 6L12 18" fill="none" stroke="#175FFF" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M18 12L6 12" fill="none" stroke="#175FFF" stroke-width="1.5" stroke-linecap="round"/>
-    </svg>
+  <svg
+    className="op-block-icons"
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+  >
+    <path
+      d="M12 6L12 18"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M18 12L6 12"
+      fill="none"
+      stroke="#175FFF"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+  </svg>
 );

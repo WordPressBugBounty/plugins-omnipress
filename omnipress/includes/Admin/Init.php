@@ -393,8 +393,6 @@ class Init {
 			}
 		);
 
-		error_log( print_r( apply_filters( 'omnipress_localize_admin_script', array() ), true ) );
-
 		wp_register_script( 'omnipress-local-vars', null, array(), OMNIPRESS_VERSION, true );
 		wp_localize_script(
 			'omnipress-local-vars',

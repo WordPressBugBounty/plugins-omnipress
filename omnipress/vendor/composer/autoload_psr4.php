@@ -12,4 +12,5 @@ return array(
     'Omnipress\\Core\\' => array($baseDir . '/includes/Core'),
     'Omnipress\\Abstracts\\' => array($baseDir . '/includes/Core'),
     'Omnipress\\' => array($baseDir . '/includes', $baseDir . '/classes', $baseDir . '/!includes/Libraries'),
+    'Detection\\' => array($vendorDir . '/mobiledetect/mobiledetectlib/src'),
 );

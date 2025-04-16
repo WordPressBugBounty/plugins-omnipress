@@ -22,7 +22,9 @@
       "label": "Content",
       "fields": {
         "color": {
-          "background": true
+          "background": true,
+          "backgroundImage": true,
+          "backgroundVideo": true
         }
       }
     },

@@ -1,7 +1,26 @@
+== Version 1.6.1 ==
+  **Release Date:** April 16, 2025
+  ##fixes:
+    - Fixed a minor bugs.
+
+  ### New blocks:
+    - Testimonial
+    - Back to Top
+    - Progress Bar [PRO]
+    - Image comparison [PRO]
+    - Flip Box [PRO]
+    - Tooltip
+
+  ## New Settings.
+    - Site preloader and Page transition Effect.
+    - Custom Filed for any post Types.
+
+
 == Version 1.6.0 ==
-  **Release Date:02 April, 2025
+  **Release Date:** April 2 , 2025
   ### New
-    - Introduce Coming soon Features and Maintenance mode for the entire site.
+    - Added coming soon and maintenance mode feature.
+    - Added a new block for displaying any types of taxonomies.[PRO]
 
 == Version 1.5.6 ==
   **Release Date:** March 12, 2025

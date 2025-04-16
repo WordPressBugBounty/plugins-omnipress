@@ -8,7 +8,7 @@ use Omnipress\Abstracts\AbstractBlock;
 /**
  * Class Accordion
  *
- * @author Ishwor Khadka <asishwor@gmail.com>
+ * @author WpOmnipress
  * @package app\core
  */
 

@@ -276,6 +276,17 @@ if ( ! class_exists( 'Omnipress\Helpers\GeneralHelpers' ) ) {
 			return null;
 		}
 
+		public static function convertToHyphen( string $text ): string {
+			if ( ! is_string( $text ) ) {
+				return $text;
+			}
+
+			$result = preg_replace( '/[^a-zA-Z0-9]+/', '-', $text );
+			$result = strtolower( trim( $result, '-' ) );
+			return $result;
+		}
+
+
 		public static function validate_wc_query_args( array $default_query_args, \WP_Block $block, $params = null ): array {
 			if ( is_null( $params ) ) {
 				$params = $_GET;
@@ -446,7 +457,7 @@ if ( ! class_exists( 'Omnipress\Helpers\GeneralHelpers' ) ) {
 					$context_id = 'template-' . $template->slug;
 				}
 			}
-
+			$context_id = self::convertToHyphen( $context_id );
 			return $context_id;
 		}
 

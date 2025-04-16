@@ -174,11 +174,11 @@ if ( ! class_exists( ComingSoon::class ) ) {
 									<?php esc_html_e( 'Coming Soon Visibility', 'omnipress' ); ?>
 								</label>
 								<select name="<?php echo esc_attr( static::OPTION_NAME . '[' . static::SETTING_NAME . '][visibility]' ); ?>" class="op-w-full sm:op-w-[200px] op-p-2 op-border op-border-gray-300 op-rounded-md op-focus:op-ring-2 op-focus:op-ring-blue-600 op-transition op-duration-300">
-									<option value="logged_in" <?php selected( $settings['visibility'], 'logged_in' ); ?>>
-										<?php esc_html_e( 'Logged-in Users Only', 'omnipress' ); ?>
-									</option>
 									<option value="logged_out" <?php selected( $settings['visibility'], 'logged_out' ); ?>>
 										<?php esc_html_e( 'Logged-out Users Only', 'omnipress' ); ?>
+									</option>
+									<option value="logged_in" <?php selected( $settings['visibility'], 'logged_in' ); ?>>
+										<?php esc_html_e( 'Logged-in Users Only', 'omnipress' ); ?>
 									</option>
 									<option value="both" <?php selected( $settings['visibility'], 'both' ); ?>>
 										<?php esc_html_e( 'Both (Logged-in & Logged-out) Users', 'omnipress' ); ?>
@@ -282,111 +282,125 @@ if ( ! class_exists( ComingSoon::class ) ) {
 			<?php endif; ?>
 
 			<button type="submit" class="op-bg-primary op-text-white op-px-4 op-py-2 op-rounded op-hover:bg-blue-700 op-transition-colors op-duration-200 op-cursor-pointer op-block hover:op-bg-blue-500">
-					<?php esc_html_e( 'Save Setting', OMNIPRESS_I18N ); ?>
+				<?php esc_html_e( 'Save Setting', OMNIPRESS_I18N ); ?>
 			</button>
 		</div>
 
-	<!-- Our Built in  Coming soon template Patterns -->
+		<!-- Our Built in  Coming soon template Patterns -->
 			<?php if ( $is_enabled ) : ?>
+				<!--  Modal for preview -->
+				<div id="modal" class="op-hidden op-fixed op-w-[calc(100vw-160px)] op-inset-0 !op-left-[160px] op-bg-black op-bg-opacity-50 op-flex op-items-center op-justify-center op-z-50">
+					<div class="op-bg-white op-rounded-xl op-shadow-2xl op-w-full op-max-w-[1000px] op-p-6 op-relative op-transform op-transition-all op-duration-300 op-scale-95">
+						<!-- Close Button -->
+						<button id="closeModal" class="op-absolute op-top-4 op-right-4 op-text-gray-500 op-hover:op-text-gray-700 op-focus:op-outline-none op-cursor-pointer">
+							<svg class="op-w-6 op-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+							</svg>
+						</button>
 
-		<!--  Modal for preview -->
-		<div id="modal" class="op-hidden op-fixed op-w-[calc(100vw-160px)] op-inset-0 !op-left-[160px] op-bg-black op-bg-opacity-50 op-flex op-items-center op-justify-center op-z-50">
-			<div class="op-bg-white op-rounded-xl op-shadow-2xl op-w-full op-max-w-[1000px] op-p-6 op-relative op-transform op-transition-all op-duration-300 op-scale-95">
-				<!-- Close Button -->
-				<button id="closeModal" class="op-absolute op-top-4 op-right-4 op-text-gray-500 op-hover:op-text-gray-700 op-focus:op-outline-none op-cursor-pointer">
-					<svg class="op-w-6 op-h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-					</svg>
-				</button>
+						<!-- Modal Header -->
+						<h2 class="op-text-2xl op-font-bold op-text-gray-800 op-mb-4">
+							<?php echo esc_html_e( 'Pattern Preview', OMNIPRESS_I18N ); ?>
+						</h2>
 
-				<!-- Modal Header -->
-				<h2 class="op-text-2xl op-font-bold op-text-gray-800 op-mb-4">
-					<?php echo esc_html_e( 'Pattern Preview', OMNIPRESS_I18N ); ?>
-				</h2>
-
-				<!-- Image Preview -->
-				<div class="op-bg-gray-50 op-p-4 op-rounded-lg op-border op-border-gray-200 op-mb-6">
-					<img id="previewImage" src="" alt="Pattern Preview" class="op-w-full op-h-auto op-rounded-md op-object-cover">
-					<p class="op-text-gray-600 op-text-sm op-mt-2">
-						<?php echo esc_html_e( 'Selected Pattern Preview', OMNIPRESS_I18N ); ?>
-					</p>
+						<!-- Image Preview -->
+						<div class="op-bg-gray-50 op-p-4 op-rounded-lg op-border op-border-gray-200 op-mb-6">
+							<img id="previewImage" src="" alt="Pattern Preview" class="op-w-full op-h-auto op-rounded-md op-object-cover">
+							<p class="op-text-gray-600 op-text-sm op-mt-2">
+								<?php echo esc_html_e( 'Selected Pattern Preview', OMNIPRESS_I18N ); ?>
+							</p>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- Templates  -->
-		<div class="op-bg-white op-rounded-[4px] op-mt-10">
-			<div class="op-p-10 op-bg-primary op-flex op-flex-col op-gap-2 op-rounded-t-sm">
-				<h2 class="op-text-3xl op-font-bold op-m-0 op-p-0 op-text-white">
-					<?php echo esc_html_e( 'Launch with Confidence - Stunning Coming Soon Pages', OMNIPRESS_I18N ); ?>
-				</h2>
-				<p class="op-m-0 op-p-0 op-text-white">Use our pre-built Coming Soon templates to keep visitors informed while your site is under construction. Easily customize and launch in minutes.</p>
-			</div>
+				<!-- Templates  -->
+				<div class="op-bg-white op-rounded-[4px] op-mt-10">
+					<div class="op-p-10 op-bg-primary op-flex op-flex-col op-gap-2 op-rounded-t-sm">
+						<h2 class="op-text-3xl op-font-bold op-m-0 op-p-0 op-text-white">
+							<?php echo esc_html_e( 'Launch with Confidence - Stunning Coming Soon Pages', OMNIPRESS_I18N ); ?>
+						</h2>
+						<p class="op-m-0 op-p-0 op-text-white"><?php echo esc_html__( 'Use our pre-built Coming Soon templates to keep visitors informed while your site is under construction. Easily customize and launch in minutes.', 'omnipress' ); ?></p>
+					</div>
 
-			<div class="op-p-8">
-				<div class="op-columns-1 md:op-columns-2 lg:op-columns-3 op-gap-6">
-					<?php foreach ( $patterns->patterns as $pattern ) : ?>
-						<!-- Template -->
-							<div id="demo-list" class=" op-bg-white op-relative op-rounded-lg op-overflow-hidden op-mb-6 op-min-h-[60px] op-group op-shadow-[0_5px_20px_0px_rgba(0,0,0,0.15)] hover:op-shadow-[0_10px_30px_0px_rgba(0,0,0,0.2)] op-flex op-flex-col op-justify-between">
+					<div class="op-p-8">
+						<div class="op-columns-1 md:op-columns-2 lg:op-columns-3 op-gap-6">
+							<?php foreach ( $patterns->patterns as $pattern ) : ?>
+								<!-- Template -->
+								<div id="demo-list" class=" op-bg-white op-relative op-rounded-lg op-overflow-hidden op-mb-6 op-min-h-[60px] op-group op-shadow-[0_5px_20px_0px_rgba(0,0,0,0.15)] hover:op-shadow-[0_10px_30px_0px_rgba(0,0,0,0.2)] op-flex op-flex-col op-justify-between">
 
-								<!-- Ribbon -->
-								<?php if ( 'pro' === $pattern->type ) : ?>
-									<div type="button" class="op-absolute op-flex !op-flex-row op-items-center op-gap-2 op-bg-[#ff4900] op-top-xsmall op-right-0 op-text-white op-rounded-l op-px-3 op-py-1 op-group/pro">
-										<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class=" op-text-white" height="16" width="16">
-											<g>
-												<path fill="none" d="M0 0h24v24H0z"></path>
-												<path d="M2 19h20v2H2v-2zM2 5l5 3 5-6 5 6 5-3v12H2V5z"></path>
-											</g>
-										</svg>
-										<span class="op-text-14 op-uppercase op-leading-5">Premium</span>
-									</div>
-								<?php endif; ?>
-
-
-								<!-- image -->
-								<div class="op-flex op-overflow-hidden op-rounded-t-md">
-									<img decoding="async" src="<?php echo $pattern->thumbnails->low; ?>" class="op-w-full op-h-full op-object-contain op-object-top">
-								</div>
-
-								<div class="info op-p-xsmall op-pt-6">
-									<div class="op-flex op-justify-start op-items-center op-gap-2">
-										<?php if ( ! empty( $pattern->content ) ) : ?>
-											<button
-												data-post-id="<?php echo $settings['post_id']; ?>"
-												data-pattern-content="<?php echo esc_attr( $pattern->content ); ?>"
-												id="<?php echo 'coming-soon-patterns-inserter'; ?>"
-												class="op-text-white op-font-semibold op-py-1 op-px-4 op-rounded-[2px] op-cursor-pointer op-bg-secondary hover:op-bg-secondary/90 !op-no-underline"
-											>
-												<?php echo esc_html_e( 'Insert', OMNIPRESS_I18N ); ?>
-											</button>
-										<?php else : ?>
-											<a
-												href="<?php echo esc_url( 'https://omnipressteam.com/pricing?utm_campaign=omnipress-extensions' ); ?>"
-												target="_blank"
-												id="restricted"
-												class="op-text-white op-font-semibold op-py-1 op-no-underline op-px-4 op-rounded-[2px] op-cursor-pointer op-bg-secondary hover:!op-text-white hover:op-bg-secondary/90"
-											>
-												<?php echo esc_html_e( 'Buy Premium', OMNIPRESS_I18N ); ?>
-											</a>
-										<?php endif; ?>
-
-										<button data-preview-image="<?php echo esc_url( $pattern->thumbnails->original ); ?>" id="coming-soon-preview-toggler" class="op-bg-primary op-text-white op-flex op-items-center op-justify-center op-gap-1 op-font-semibold op-py-1 op-px-4 op-rounded-[2px] op-hover:bg-blue-600 op-cursor-pointer hover:op-bg-primary/90 !op-no-underline">
-											<?php echo esc_html_e( 'Preview', OMNIPRESS_I18N ); ?>
-											<svg width="16" height="16" viewBox="0 0 20 20" fill="none" class=" op-fill-white group-hover/btn:op-fill-primary">
-												<path d="M15.8333 17.5H4.16667C3.25 17.5 2.5 16.75 2.5 15.8333V4.16667C2.5 3.25 3.25 2.5 4.16667 2.5H10V4.16667H4.16667V15.8333H15.8333V10H17.5V15.8333C17.5 16.75 16.75 17.5 15.8333 17.5Z"></path>
-												<path d="M17.5 8.33333H15.8333V4.16667H11.6666V2.5H17.5V8.33333Z"></path>
-												<path d="M6.89795 11.9237L16.0902 2.73116L17.2687 3.90965L8.07648 13.1022L6.89795 11.9237Z"></path>
+									<!-- Ribbon -->
+									<?php if ( 'pro' === $pattern->type ) : ?>
+										<div type="button" class="op-absolute op-flex !op-flex-row op-items-center op-gap-2 op-bg-[#ff4900] op-top-xsmall op-right-0 op-text-white op-rounded-l op-px-3 op-py-1 op-group/pro">
+											<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" class=" op-text-white" height="16" width="16">
+												<g>
+													<path fill="none" d="M0 0h24v24H0z"></path>
+													<path d="M2 19h20v2H2v-2zM2 5l5 3 5-6 5 6 5-3v12H2V5z"></path>
+												</g>
 											</svg>
-										</button>
+											<span class="op-text-14 op-uppercase op-leading-5"><?php echo esc_html__( 'Premium', 'omnipress' ); ?></span>
+										</div>
+									<?php endif; ?>
+
+
+									<!-- image -->
+									<div class="op-flex op-overflow-hidden op-rounded-t-md">
+										<img decoding="async" src="<?php echo $pattern->thumbnails->low; ?>" class="op-w-full op-h-full op-object-contain op-object-top">
 									</div>
 
+									<div class="info op-p-xsmall op-pt-6">
+										<div class="op-flex op-justify-start op-items-center op-gap-2">
+											<?php if ( ! empty( $pattern->content ) ) : ?>
+												<button
+													data-post-id="<?php echo $settings['post_id']; ?>"
+													data-pattern-content="<?php echo esc_attr( $pattern->content ); ?>"
+													id="<?php echo 'coming-soon-patterns-inserter'; ?>"
+													class="op-text-white op-font-semibold op-py-1 op-px-4 op-rounded-[2px] op-cursor-pointer op-bg-secondary hover:op-bg-secondary/90 !op-no-underline"
+												>
+													<?php echo esc_html_e( 'Insert', OMNIPRESS_I18N ); ?>
+												</button>
+											<?php else : ?>
+												<a
+													href="<?php echo esc_url( 'https://omnipressteam.com/pricing?utm_campaign=omnipress-extensions' ); ?>"
+													target="_blank"
+													id="restricted"
+													class="op-text-white op-font-semibold op-py-1 op-no-underline op-px-4 op-rounded-[2px] op-cursor-pointer op-bg-secondary hover:!op-text-white hover:op-bg-secondary/90"
+												>
+													<?php echo esc_html_e( 'Buy Premium', OMNIPRESS_I18N ); ?>
+												</a>
+											<?php endif; ?>
+
+											<button data-preview-image="<?php echo esc_url( $pattern->thumbnails->original ); ?>" id="coming-soon-preview-toggler" class="op-bg-primary op-text-white op-flex op-items-center op-justify-center op-gap-1 op-font-semibold op-py-1 op-px-4 op-rounded-[2px] op-hover:bg-blue-600 op-cursor-pointer hover:op-bg-primary/90 !op-no-underline">
+												<?php echo esc_html_e( 'Preview', OMNIPRESS_I18N ); ?>
+												<svg width="16" height="16" viewBox="0 0 20 20" fill="none" class=" op-fill-white group-hover/btn:op-fill-primary">
+													<path d="M15.8333 17.5H4.16667C3.25 17.5 2.5 16.75 2.5 15.8333V4.16667C2.5 3.25 3.25 2.5 4.16667 2.5H10V4.16667H4.16667V15.8333H15.8333V10H17.5V15.8333C17.5 16.75 16.75 17.5 15.8333 17.5Z"></path>
+													<path d="M17.5 8.33333H15.8333V4.16667H11.6666V2.5H17.5V8.33333Z"></path>
+													<path d="M6.89795 11.9237L16.0902 2.73116L17.2687 3.90965L8.07648 13.1022L6.89795 11.9237Z"></path>
+												</svg>
+											</button>
+										</div>
+
+									</div>
+								</div>
+							<?php endforeach; ?>
+
+							<!-- Stay Tuned Card -->
+							<div class="op-w-80 op-h-[400px] op-bg-gradient-to-br op-from-blue-500 op-to-purple-500 op-rounded-3xl op-shadow-lg op-overflow-hidden op-relative op-m-5 op-cursor-pointer op-transition op-transform op-duration-300 hover:op--translate-y-2 hover:op-shadow-xl">
+								<div class="op-absolute op-inset-x-0 op-bottom-0 op-h-1/2 op-bg-white/10 op-backdrop-blur-sm op-wave-animation"></div>
+								<!-- Content -->
+								<div class="op-relative op-z-10 op-flex op-flex-col op-items-center op-justify-center op-h-full op-text-white op-p-6">
+									<h2 class="op-text-3xl op-font-bold op-mb-4 op-text-center op-text-white">
+										<?php echo esc_html__( 'More Templates Coming!', 'omnipress' ); ?>
+									</h2>
+									<p class="op-text-lg op-text-center op-mb-6"><?php echo esc_html__( 'Stay tuned for exciting new designs.', 'omnipress' ); ?></p>
+									<button class="op-bg-white op-text-blue-600 op-font-semibold op-py-2 op-px-6 op-rounded-full op-shadow-md op-transition op-duration-300 hover:op-bg-blue-100">
+										<?php echo esc_html__( 'Check Back Soon', 'omnipress' ); ?>
+									</button>
 								</div>
 							</div>
-					<?php endforeach; ?>
+						</div>
+					</div>
 				</div>
-			</div>
-		</div>
-		<?php endif; ?>
+			<?php endif; ?>
 			<?php
 		}
 
