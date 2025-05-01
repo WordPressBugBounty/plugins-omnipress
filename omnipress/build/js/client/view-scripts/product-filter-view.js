@@ -1,0 +1,1 @@
+var e=document.getElementById("filterToggler"),t=document.getElementById("filterContent"),n=document.getElementById("maxRange"),i=document.getElementById("minPrice"),l=document.getElementById("maxPrice"),c=document.getElementById("highlight");e&&e.addEventListener("click",()=>{t.classList.toggle("open-filter")});

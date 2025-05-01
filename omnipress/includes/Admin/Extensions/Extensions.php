@@ -106,6 +106,7 @@ if ( ! class_exists( Extensions::class ) ) {
 			if ( defined( 'OMNIPRESS_PRO_EXTENSIONS' ) ) {
 				return;
 			}
+
 			$extensions_menus = apply_filters( 'omnipress_extensions_menus', array() );
 
 			foreach ( static::PREMIUM_EXTENSIONS as $details ) {
@@ -175,7 +176,7 @@ if ( ! class_exists( Extensions::class ) ) {
 		public function enqueue_admin_assets() {
 			wp_enqueue_media();
 			wp_enqueue_style( 'omnipress-admin-css' );
-			wp_enqueue_script( 'omnipress-admin-extensions-js', OMNIPRESS_URL . 'assets/build/js/admin/extensions.js', array( 'wp-api-fetch' ), OMNIPRESS_VERSION, true );
+			wp_enqueue_script( 'omnipress-admin-extensions-js', OMNIPRESS_URL . 'build/js/admin/extensions.js', array( 'wp-api-fetch' ), OMNIPRESS_VERSION, true );
 			wp_localize_script(
 				'omnipress-admin-extensions-js',
 				'_omnipress',
@@ -199,31 +200,31 @@ if ( ! class_exists( Extensions::class ) ) {
 			);
 		}
 
-								/**
-								 * Check is extension is enabled or not.
-								 */
+		/**
+		 * Check is extension is enabled or not.
+		 */
 		abstract protected function is_enabled(): bool;
 
-									/**
-									 * Get menu slug.
-									 */
+		/**
+		 * Get menu slug.
+		 */
 		abstract public function get_menu_slug(): string;
 
-									/**
-									 * Get menu label. Which shows in the extensions menu.
-									 */
+		/**
+		 * Get menu label. Which shows in the extensions menu.
+		 */
 		abstract public function get_menu_label(): string;
 
-									/**
-									 * Register settings fields. To handles the extension settings.
-									 */
+		/**
+		 * Register settings fields. To handles the extension settings.
+		 */
 		abstract public function render_setting(): void;
 
-									/**
-									 * Render extensions settings related form's  fields.
-									 *
-									 * @return void
-									 */
+		/**
+		 * Render extensions settings related form's  fields.
+		 *
+		 * @return void
+		 */
 		abstract public function render_form_fields(): void;
 	}
 }

@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  * @return void
  */
 function enqueue_editor_scripts() {
-	$block_assets   = include OMNIPRESS_PATH . 'assets/build/js/blocks/block.asset.php';
+	$block_assets   = include OMNIPRESS_PATH . 'build/js/blocks/block.asset.php';
 	$environment    = wp_get_environment_type();
 	$block_settings = new BlocksSettingsModel();
 
@@ -45,14 +45,12 @@ function enqueue_editor_scripts() {
 		)
 	);
 
-	wp_enqueue_script( 'omnipress-blocks', OMNIPRESS_URL . 'assets/build/js/blocks/block.js', $block_assets['dependencies'], $block_assets['version'], true );
+	wp_enqueue_script( 'omnipress-blocks', OMNIPRESS_URL . 'build/js/blocks/block.js', $block_assets['dependencies'], $block_assets['version'], true );
 
-	wp_enqueue_script( 'omnipress-store', OMNIPRESS_URL . 'assets/build/js/admin/store.js', array( 'regenerator-runtime', 'wp-api-fetch', 'wp-core-data', 'wp-data', 'wp-editor', 'wp-i18n', 'wp-notices' ), OMNIPRESS_VERSION, true );
+	wp_enqueue_script( 'omnipress-store', OMNIPRESS_URL . 'build/js/admin/store.js', array( 'regenerator-runtime', 'wp-api-fetch', 'wp-core-data', 'wp-data', 'wp-editor', 'wp-i18n', 'wp-notices' ), OMNIPRESS_VERSION, true );
 
-	$block_recovery_deps = include OMNIPRESS_PATH . 'assets/build/js/blocks/block-recovery.asset.php';
-	wp_enqueue_script_module( 'omnipress-auto-block-recovery', OMNIPRESS_URL . 'assets/build/js/blocks/block-recovery.js', $block_recovery_deps['dependencies'], $block_assets['version'], true );
-
-	// wp_enqueue_script( 'omnipress-fonts-loader', OMNIPRESS_URL . 'assets/library/fonts-loader.js', array( 'wp-api-fetch', 'omnipress-blocks' ), OMNIPRESS_VERSION, true );
+	$block_recovery_deps = include OMNIPRESS_PATH . 'build/js/blocks/block-recovery.asset.php';
+	wp_enqueue_script_module( 'omnipress-auto-block-recovery', OMNIPRESS_URL . 'build/js/blocks/block-recovery.js', $block_recovery_deps['dependencies'], $block_assets['version'], true );
 
 	wp_localize_script( 'omnipress-blocks', '_omnipress', apply_filters( 'omnipress_localize_admin_script', $localize ) );
 }
@@ -63,11 +61,8 @@ function enqueue_editor_scripts() {
  * @return void
  */
 function enqueue_editor_styles() {
-
-	wp_enqueue_style( 'op-layout-editor-style', OMNIPRESS_URL . 'assets/build/css/editor/layout.min.css', array(), OMNIPRESS_VERSION );
-
-	wp_enqueue_style( 'op-blocks-editor-style', OMNIPRESS_URL . 'assets/build/css/editor/style.min.css', array(), OMNIPRESS_VERSION );
-
+	wp_enqueue_style( 'op-blocks-editor-style', OMNIPRESS_URL . 'build/css/editor/style.min.css', array(), OMNIPRESS_VERSION );
+	wp_enqueue_style( 'omnipress-admin-block-style', OMNIPRESS_URL . 'build/css/admin.css', array(), OMNIPRESS_VERSION );
 	wp_enqueue_style( 'fontawesome', 'https://use.fontawesome.com/releases/v5.15.4/css/all.css', array(), OMNIPRESS_VERSION );
 }
 
@@ -78,10 +73,8 @@ function enqueue_editor_styles() {
  * @return void
  */
 function enqueue_block_editor_assets() {
-	if ( is_admin() ) {
-		call_user_func( 'Omnipress\Block\enqueue_editor_scripts' );
-		call_user_func( 'Omnipress\Block\enqueue_editor_styles' );
-	}
+	call_user_func( 'Omnipress\Block\enqueue_editor_scripts' );
+	call_user_func( 'Omnipress\Block\enqueue_editor_styles' );
 }
 
 /**
@@ -90,29 +83,35 @@ function enqueue_block_editor_assets() {
  * @return void
  */
 function enqueue_block_assets() {
+
 	// register critical css inline.
-	$container_css = FileSystemUtil::read_file( OMNIPRESS_PATH . 'assets/build/css/blocks/container-layout.min.css' );
+	$container_css = FileSystemUtil::read_file( OMNIPRESS_PATH . 'build/css/blocks/container-layout.min.css' );
 
 	if ( is_string( $container_css ) && ! empty( $container_css ) ) {
-		wp_register_style( 'omnipress/block/container', false, array(), filemtime( OMNIPRESS_PATH . 'assets/build/css/blocks/container-layout.min.css' ) );
+		wp_register_style( 'omnipress/block/container', false, array(), filemtime( OMNIPRESS_PATH . 'build/css/blocks/container-layout.min.css' ) );
 		wp_add_inline_style( 'omnipress/block/container', $container_css );
 		wp_enqueue_style( 'omnipress/block/container' );
 	}
 
+	if ( is_admin() ) {
+		wp_enqueue_style( 'omnipress-admin-block-style', OMNIPRESS_URL . 'build/css/admin.css', array(), OMNIPRESS_VERSION );
+	}
+
 	wp_enqueue_style( 'fontawesome', 'https://use.fontawesome.com/releases/v5.15.4/css/all.css', array(), OMNIPRESS_VERSION );
-
-	wp_enqueue_style( 'omipress/blocks/styles', OMNIPRESS_URL . 'assets/build/css/frontend/frontend.min.css', array(), OMNIPRESS_VERSION );
-
-	wp_register_style( 'omnipress/block/layout', OMNIPRESS_URL . 'assets/build/css/layout.min.css', array(), OMNIPRESS_VERSION );
+	wp_enqueue_style( 'omipress/blocks/styles', OMNIPRESS_URL . 'build/css/frontend/frontend.min.css', array(), OMNIPRESS_VERSION );
 
 	/**
 	 * All external library js.
 	 */
 	wp_register_script( 'omnipress-img-comparison-slider', OMNIPRESS_URL . 'assets/library/img-comparison-slider.js', array(), OMNIPRESS_VERSION, true );
 
-	// register swiper js and css.
-	wp_register_script( 'omnipress-slider-script', OMNIPRESS_URL . 'assets/library/swiper.js', array(), 'v11.1.12', true );
-	wp_register_style( 'omnipress-slider-style', OMNIPRESS_URL . 'assets/library/css/swiper.css', array(), 'v11.1.12' );
+	// light gallery.
+	wp_register_style( 'light-gallery', OMNIPRESS_URL . 'assets/library/light-gallery/index.css', array(), OMNIPRESS_VERSION, 'all' );
+	wp_register_script_module( 'light-gallery', OMNIPRESS_URL . 'assets/library/light-gallery/lightbox.js', array(), OMNIPRESS_VERSION, true );
+	wp_register_script_module( 'light-gallery-init', OMNIPRESS_URL . 'assets/library/light-gallery/gallery.js', array(), OMNIPRESS_VERSION, true );
+
+	// swiper.
+	wp_register_style( 'omnipress-slider-style', OMNIPRESS_URL . 'assets/library/swiper/index.css', array(), 'v11.1.12' );
 }
 
 /**
@@ -128,7 +127,6 @@ function register_module_scripts(): void {
 		'import' => 'dynamic',
 	);
 
-	error_log( 'enquque module' );
 	\wp_register_script_module( 'omnipress/woogrid', OMNIPRESS_URL . 'assets/block-interactivity/wc-block-module.js', $dependencies, OMNIPRESS_VERSION );
 	\wp_register_script_module( 'omnipress/module-query', OMNIPRESS_URL . 'assets/block-interactivity/module-query.js', $dependencies, OMNIPRESS_VERSION );
 }

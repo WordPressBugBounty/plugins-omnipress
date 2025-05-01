@@ -45,7 +45,7 @@ class ContentSwitcher extends AbstractBlock {
 
 		$initial_styles = '[data-type="omnipress/content-switcher-contents"] > *{display:none;}';
 
-		return sprintf( '<div %s><style data-wp-text="context.style">%s</style><style>%s</style>%s</div>', $wrapper_attributes, "#switch-1{{$active_styles}}", $initial_styles, $content );
+		return sprintf( '<div %s><style data-wp-text="context.style">%s</style><style>%s</style>%s</div>', $wrapper_attributes, ". wp-block-omnipress-container.switch-1{{$active_styles}}", $initial_styles, $content );
 	}
 }
 

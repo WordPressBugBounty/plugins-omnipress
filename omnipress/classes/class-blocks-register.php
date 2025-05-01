@@ -301,13 +301,13 @@ class BlockRegistrar {
 	 */
 	private function get_frontend_script( string $block_name ) {
 		$file_name      = explode( '/', $block_name )[1] . '-view';
-		$view_file_path = OMNIPRESS_PATH . 'assets/build/js/view-scripts/' . $file_name . '.js';
+		$view_file_path = OMNIPRESS_PATH . 'build/js/view-scripts/' . $file_name . '.js';
 
 		if ( file_exists( $view_file_path ) ) {
-			$assets = include_once OMNIPRESS_PATH . 'assets/build/js/view-scripts/' . $file_name . '.asset.php';
+			$assets = include_once OMNIPRESS_PATH . 'build/js/view-scripts/' . $file_name . '.asset.php';
 			return array(
 				'handle'  => $file_name,
-				'src'     => OMNIPRESS_URL . 'assets/build/js/view-scripts/' . $file_name . '.js',
+				'src'     => OMNIPRESS_URL . 'build/js/view-scripts/' . $file_name . '.js',
 				'deps'    => GeneralHelpers::is_valid_array( $assets ) ? $assets['dependencies'] : array(),
 				'version' => GeneralHelpers::is_valid_array( $assets ) ? $assets['dependencies'] : OMNIPRESS_VERSION,
 			);

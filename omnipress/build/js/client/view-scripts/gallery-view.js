@@ -1,0 +1,1 @@
+import o from"https://unpkg.com/photoswipe@5/dist/photoswipe-lightbox.esm.min.js";var i=new o({gallery:'[data-type="omnipress/gallery"]',children:"a",pswpModule:()=>import("https://unpkg.com/photoswipe@5/dist/photoswipe.esm.min.js"),showAnimationDuration:300,hideAnimationDuration:300,zoom:!0,loop:!1,clickToCloseNonZoomable:!0,secondaryZoomLevel:2,bgOpacity:.85});i.init();

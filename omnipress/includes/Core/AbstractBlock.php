@@ -152,17 +152,18 @@ if ( ! class_exists( 'AbstractBlock' ) ) {
 
 			$attributes = $this->get_block_attributes();
 
-			if ( isset( $attributes['hideOnTablet'] ) && $attributes['hideOnTablet'] ) {
-				$classes .= ' is-hide-tablet';
+			if ( ! empty( $attributes['hideOnDesktop'] ) ) {
+				$extra_attributes['data-hide-desktop'] = 'true';
 			}
 
-			if ( isset( $attributes['hideOnMobile'] ) && $attributes['hideOnMobile'] ) {
-				$classes .= ' is-hide-mobile';
+			if ( ! empty( $attributes['hideOnTablet'] ) ) {
+				$extra_attributes['data-hide-tablet'] = 'true';
 			}
 
-			if ( isset( $attributes['hideOnDesktop'] ) && $attributes['hideOnDesktop'] ) {
-				$classes .= ' is-hide-desktop';
+			if ( ! empty( $attributes['hideOnMobile'] ) ) {
+				$extra_attributes['data-hide-mobile'] = 'true';
 			}
+
 			$attrs = array(
 				'class'     => 'op-' . esc_attr( $this->get_block_attributes()['blockId'] ??= '' ) . ' ' . $classes,
 				'data-type' => $this->block_name,

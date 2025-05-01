@@ -1,3 +1,9 @@
+== Version 1.6.2 ==
+  **Release Date:** April 30, 2025
+  ##fixes:
+    - Fixed a minor bugs related various blocks and setting.
+    - Enhanced demo import process.
+
 == Version 1.6.1 ==
   **Release Date:** April 16, 2025
   ##fixes:

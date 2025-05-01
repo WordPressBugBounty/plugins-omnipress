@@ -332,29 +332,19 @@ class Init {
 	 */
 	public function enqueue_scripts( $hook_prefix ) {
 		$editor_assets['dependencies'][] = 'omnipress-admin-script';
-		wp_register_style( 'omnipress-admin-css', OMNIPRESS_URL . 'assets/build/css/admin.css', array( 'wp-components' ), OMNIPRESS_VERSION, 'all' );
+		switch ( $hook_prefix ) {
+			case 'post.php':
+			case 'post-new.php':
+			case 'site-editor.php':
+			case 'toplevel_page_omnipress':
+				break;
+			default:
+				return;
+		}
 
-		// Enqueue block editor config for the block editor.
-		// $editor_assets = include OMNIPRESS_PATH . 'assets/build/js/admin/block-editor.asset.php';
+		wp_register_style( 'omnipress-admin-css', OMNIPRESS_URL . 'build/css/admin.css', array( 'wp-components' ), OMNIPRESS_VERSION, 'all' );
 
-		// wp_enqueue_script( 'omnipress-block-editor-config', OMNIPRESS_URL . 'assets/build/js/admin/block-editor.js', $editor_assets['dependencies'], $editor_assets['version'], true );
-
-		wp_enqueue_style( 'omnipress-setting-style', OMNIPRESS_URL . 'assets/build/css/settings/style.min.css', array( 'wp-components' ), OMNIPRESS_VERSION, 'all' );
-
-		// if ( 'post-new.php' === $hook_prefix || 'post.php' === $hook_prefix ) {
-		// switch ( get_post_type() ) {
-		// case 'post':
-		// case 'page':
-		// case 'op-menu-templates':
-		// break;
-		// default:
-		// return;
-		// }
-		// }
-
-		$admin_assets = include OMNIPRESS_PATH . 'assets/build/js/admin/admin.asset.php';
-		// wp_enqueue_style( 'omnipress-admin-style' );
-
+		$admin_assets = include OMNIPRESS_PATH . 'build/js/admin/admin.asset.php';
 		do_action( 'omnipress_before_admin_scripts', $hook_prefix );
 
 		$current_user = get_userdata( get_current_user_id() );
@@ -401,7 +391,8 @@ class Init {
 		);
 
 		wp_enqueue_script( 'omnipress-local-vars' );
-		wp_enqueue_script( 'omnipress-admin-script', OMNIPRESS_URL . 'assets/build/js/admin/admin.js', $admin_assets['dependencies'], $admin_assets['version'], true );
+
+		wp_enqueue_script( 'omnipress-admin-script', OMNIPRESS_URL . 'build/js/admin/admin.js', $admin_assets['dependencies'], $admin_assets['version'], true );
 
 		do_action( 'omnipress_after_admin_scripts', $hook_prefix );
 	}

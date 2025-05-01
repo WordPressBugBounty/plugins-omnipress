@@ -8,6 +8,7 @@
 namespace Omnipress\Models;
 
 use Omnipress\Abstracts\ModelsBase;
+use WP_Import;
 
 /**
  * Exit if accessed directly.
@@ -29,7 +30,7 @@ class DemosModel extends ModelsBase {
 	private function _demo_data_contents( $file_contents, $file_url ) {
 
 		if ( ! class_exists( 'WP_Import' ) ) {
-			require_once OMNIPRESS_PATH . 'includes/Libraries/importer/init.php';
+			require_once OMNIPRESS_PATH . 'includes/libraries/importer/init.php';
 		}
 
 		require_once ABSPATH . 'wp-includes/post.php';
@@ -42,8 +43,9 @@ class DemosModel extends ModelsBase {
 		/**
 		 * Bufferring because WP_Import echos and dies progress during import which causes JSON error at client side.
 		 */
+
 		ob_start();
-		$wp_import                    = new \WP_Import();
+		$wp_import                    = new WP_Import();
 		$wp_import->fetch_attachments = true;
 		$wp_import->import( $tmpfile );
 		ob_end_clean();

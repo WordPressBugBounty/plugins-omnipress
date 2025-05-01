@@ -319,7 +319,7 @@
     "label": "Counter",
     "block_name": "omnipress/counter",
     "selectors": {
-      "label": ".op-block_counter-label",
+      "label": ".op-block__counter-label",
       "icon": ".op-block__counter-icon-wrapper i",
       "number": ".op-block__counter-number-wrapper .op-block__counter-number",
       "prefix": ".op-block__counter-number-prefix",
@@ -554,7 +554,9 @@
       "formInput",
       "submitButton",
       "titleStyle",
-      "descriptionStyle"
+      "descriptionStyle",
+      "successMessage",
+      "errorMessage"
     ],
     "label": "Contact Form",
     "block_name": "omnipress/contact-form",
@@ -565,7 +567,9 @@
       "formInput": ".wpcf7 .wpcf7-form-control-wrap textarea.wpcf7-form-control, .wpcf7 form input:not([type=file]):not([type=radio]):not([type=checkbox]):not([type=submit])",
       "submitButton": ".wpcf7 form input[type=submit]",
       "titleStyle": ".op-block__contact-form-header h4",
-      "descriptionStyle": ".op-block__contact-form-header p"
+      "descriptionStyle": ".op-block__contact-form-header p",
+      "successMessage": ".wpcf7-form.sent .wpcf7-response-output",
+      "errorMessage": ".wpcf7-form-control-wrap .wpcf7-not-valid-tip, .wpcf7-form.invalid .wpcf7-response-output"
     },
     "icon": "<svg className='op-block-icons' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' > <path d='M21.25 8.23607V20C21.25 20.6904 20.6904 21.25 20 21.25H4C3.30964 21.25 2.75 20.6904 2.75 20V8.23607C2.75 7.7626 3.0175 7.32977 3.44098 7.11803L11.441 3.11803C11.7929 2.94208 12.2071 2.94208 12.559 3.11803L20.559 7.11803C20.9825 7.32977 21.25 7.7626 21.25 8.23607Z' stroke='#175FFF' fill='none' stroke-width='1.5' /> <path d='M21.25 9V21C21.25 21.1381 21.1381 21.25 21 21.25H3C2.86193 21.25 2.75 21.1381 2.75 21V9C2.75 8.79399 2.98519 8.67639 3.15 8.8L10.95 14.65C11.5722 15.1167 12.4278 15.1167 13.05 14.65L20.85 8.8C21.0148 8.67639 21.25 8.79399 21.25 9Z' stroke='#175FFF' fill='none' stroke-width='1.5' /> <path d='M7 12V10C7 8.89543 7.89543 8 9 8H15C16.1046 8 17 8.89543 17 10V12' stroke='#175FFF' fill='none' stroke-width='1.5' /> <path d='M10 11H14' stroke='#175FFF' fill='none' stroke-width='1.5' strokeLinecap='round' /> </svg> "
   },
@@ -705,7 +709,7 @@
     "block_name": "omnipress/woocategory",
     "selectors": {
       "card": ".op-woo__category-card",
-      "grid": "[class*='op-grid-col']",
+      "grid": ".is-layout-grid",
       "image": "figure .op-woo__category-image",
       "title": ".op-woo__category-title",
       "count": ".product-category-count",
@@ -735,7 +739,7 @@
     "block_name": "omnipress/woogrid",
     "selectors": {
       "content": ".op-product-item__details.op-woo__content",
-      "grid": "[class*='op-grid-col']",
+      "grid": ".is-layout-grid",
       "mediaWrapperImg": ".op-woo__media-wrapper-img",
       "title": ".op-woo__card .op-woo__title",
       "discount": ".op-woo__discount",
@@ -930,6 +934,18 @@
     "block_name": "omnipress/flip-box",
     "selectors": {}
   },
+  "omnipress/gallery": {
+    "type": "pro",
+    "styles_attributes": [
+      "preview",
+      "componentName",
+      "componentId",
+      "wrapper"
+    ],
+    "label": "Gallery",
+    "block_name": "omnipress/gallery",
+    "selectors": {}
+  },
   "omnipress/image-comparison": {
     "type": "pro",
     "styles_attributes": [
@@ -946,18 +962,14 @@
   "omnipress/lottie-animation": {
     "type": "pro",
     "styles_attributes": [
-      "wrapper",
       "preview",
       "componentName",
       "componentId",
-      "interactions",
-      "conftti"
+      "wrapper"
     ],
     "label": "Lottie Animation",
     "block_name": "omnipress/lottie-animation",
-    "selectors": {
-      "conftti": ".tooltip"
-    }
+    "selectors": {}
   },
   "omnipress/product-filter": {
     "type": "pro",

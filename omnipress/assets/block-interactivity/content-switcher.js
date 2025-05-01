@@ -67,7 +67,7 @@ store(
           });
         }
 
-        const style = `.op-${context.uniqueId} #${context.activeTarget}{${context.activeStyles}}`;
+        const style = `.op-${context.uniqueId} .wp-block-omnipress-container.${context.activeTarget}{${context.activeStyles}}`;
 
         context.style = style;
       },

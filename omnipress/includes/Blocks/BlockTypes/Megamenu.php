@@ -103,7 +103,8 @@ class Megamenu extends AbstractBlock {
 
 			if ( $post && 'publish' === $post->post_status && 'op-menu-templates' === $post->post_type ) {
 				$template_content .= apply_filters( 'the_content', $post->post_content );
-				$title             = $title ?? $post->post_title;
+
+				$title = $title ?? $post->post_title;
 			}
 		}
 
@@ -132,6 +133,7 @@ class Megamenu extends AbstractBlock {
 
 			echo '</ul>';
 		}
+
 		if ( $template ) {
 			echo '<ul class="op-block__megamenu-submenu" aria-labelledby="op-block__dropdown-lists">' . $template_content . '</ul>';
 		}

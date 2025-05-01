@@ -124,7 +124,7 @@ class StyleGenerator {
 						break;
 
 					case 'grid-template-columns':
-						$css .= "grid-template-columns:repeat($value, 1fr);";
+						$css .= "grid-template-columns:repeat($value, minmax(0px, 1fr));";
 						break;
 
 					case 'grid-template-rows':

@@ -164,8 +164,8 @@ class Popup extends AbstractBlock {
 		$wrapper_attributes = get_block_wrapper_attributes( $wrapper_custom_attrs );
 		$block_styles       = '';
 
-		if ( file_exists( OMNIPRESS_PATH . 'assets/build/css/blocks/popup-' . $attributes['popupType'] . '.min.css' ) ) {
-			$block_styles .= FileSystemUtil::read_file( OMNIPRESS_PATH . 'assets/build/css/blocks/popup-' . $attributes['popupType'] . '.min.css' );
+		if ( file_exists( OMNIPRESS_PATH . 'build/css/blocks/popup-' . $attributes['popupType'] . '.min.css' ) ) {
+			$block_styles .= FileSystemUtil::read_file( OMNIPRESS_PATH . 'build/css/blocks/popup-' . $attributes['popupType'] . '.min.css' );
 		}
 
 		$block_styles = ! empty( $block_styles ) ? '<style>' . $block_styles . '</style>' : '';

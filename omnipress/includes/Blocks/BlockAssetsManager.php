@@ -1,6 +1,10 @@
 <?php
 
+declare( strict_types = 1 );
+
 namespace Omnipress\Blocks;
+
+defined( 'ABSPATH' ) || exit;
 
 use Omnipress\Core\AbstractAssetsHandler;
 
@@ -50,13 +54,21 @@ class BlockAssetsManager extends AbstractAssetsHandler {
 			'import' => 'dynamic',
 		);
 
-		\wp_register_script_module( 'omnipress/woogrid', OMNIPRESS_URL . 'assets/block-interactivity/wc-block-module.js', $dependencies, OMNIPRESS_VERSION );
-		\wp_register_script_module( 'omnipress/module-query', OMNIPRESS_URL . 'assets/block-interactivity/module-query.js', $dependencies, OMNIPRESS_VERSION );
-
+		// Internal interactivity scripts.
+		wp_register_script_module( 'omnipress/woogrid', OMNIPRESS_URL . 'assets/block-interactivity/wc-block-module.js', $dependencies, OMNIPRESS_VERSION );
+		wp_register_script_module( 'omnipress/module-query', OMNIPRESS_URL . 'assets/block-interactivity/module-query.js', $dependencies, OMNIPRESS_VERSION );
 		$this->register_script_module( 'omnipress/woogrid', 'wc-block-module' );
 		$this->register_script_module( 'omnipress/content/switcher', 'content-switcher', array(), filemtime( OMNIPRESS_PATH . 'assets/block-interactivity/content-switcher.js' ) );
 
-		$module_scripts = glob( OMNIPRESS_PATH . 'assets/build/js/client/interactivity-modules/*.js' );
+		// External libraries.
+		/**
+		 * @since 1.6.2
+		 */
+		wp_register_script( 'op-lib-lightbox', OMNIPRESS_URL . 'assets/library/light-box/glightbox.min.js', array(), OMNIPRESS_VERSION, true );
+		wp_register_script( 'op-lib-image-uploader', OMNIPRESS_URL . 'assets/library/image-uploader.js', array(), OMNIPRESS_VERSION, true );
+		wp_register_script( 'op-lib-masonry', OMNIPRESS_URL . 'assets/library/masonry.js', array(), OMNIPRESS_VERSION, true );
+
+		$module_scripts = glob( OMNIPRESS_PATH . 'build/js/client/interactivity-modules/*.js' );
 
 		foreach ( $module_scripts as $module_script ) {
 			if ( ! strpos( $module_script, 'chunk' ) ) {

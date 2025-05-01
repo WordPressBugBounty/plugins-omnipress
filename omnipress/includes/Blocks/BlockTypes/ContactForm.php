@@ -23,22 +23,28 @@ class ContactForm extends AbstractBlock {
 		$this->block_name       = $block->name;
 
 		$wrapper_attributes = $this->get_block_wrapper_attributes();
+
+		if ( ! isset( $attributes['selectedFormId'] ) ) {
+			return '';
+		}
+
 		ob_start();
 		?>
 			<div <?php echo $wrapper_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> >
-				<div className="op-block__contact-form-wrapper">
-					<?php if ( empty( $attributes['hasDescription'] ) && empty( $attributes['hasTitle'] ) ) : ?>
-						<div className="op-block__contact-form-header">
-							<?php if ( ! empty( $attributes['hasTitle'] ) && isset( $attributes['title'] ) ) : ?>
-								<h4><?php echo $$attributes['title']; ?></h4>
+				<div class="op-block__contact-form-wrapper">
+					<?php if ( $attributes['hasDescription'] || $attributes['hasTitle'] ) : ?>
+						<div class="op-block__contact-form-header">
+							<?php if ( $attributes['hasTitle'] && ! empty( $attributes['title'] ) ) : ?>
+								<h4><?php echo esc_html( $attributes['title'] ); ?></h4>
 							<?php endif; ?>
-							<?php if ( ! empty( $attributes['hasDescription'] ) && isset( $attributes['description'] ) ) : ?>
-								<h4><?php echo $$attributes['description']; ?></h4>
+
+							<?php if ( $attributes['hasDescription'] && ! empty( $attributes['description'] ) ) : ?>
+								<p><?php echo esc_html( $attributes['description'] ); ?></p>
 							<?php endif; ?>
 						</div>
 					<?php endif; ?>
 
-					<div className="form-content" >
+					<div class="form-content" >
 						<?php echo do_shortcode( '[contact-form-7 id="' . $attributes['selectedFormId'] . '" title="' . ( $attributes['title'] ?? '' ) . '" description="' . ( $attributes['description'] ?? '' ) . '"]' ); ?>
 					</div>
 				</div>

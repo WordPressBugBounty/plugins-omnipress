@@ -1,9 +1,12 @@
 <?php
 
+declare( strict_types=1 );
+
 namespace Omnipress\Blocks\BlockTypes;
 
-use Omnipress\Abstracts\AbstractBlock;
+defined( 'ABSPATH' ) || exit;
 
+use Omnipress\Abstracts\AbstractBlock;
 
 /**
  * Class Container block main class.
@@ -19,19 +22,19 @@ class Container extends AbstractBlock {
 		$this->block_attributes = $attributes;
 		$this->block_name       = $block->name;
 
-		$inherit_id = isset( $attributes['extraClasses'] ) ? $attributes['extraClasses'] : '';
+		$inherit_id = isset( $attributes['extraClasses'] ) ? $attributes['extraClasses'] : ' ';
 
-		$inherit_classes = isset( $block->context['classNames'] ) ? $block->context['classNames'] : '';
+		$inherit_classes = isset( $block->context['classNames'] ) ? $block->context['classNames'] : ' ';
 
 		if ( $attributes ) {
 			$classes = array();
 
 			if ( isset( $attributes['styles']['wrapper']['backgroundType'] ) && 'video' === $attributes['styles']['wrapper']['backgroundType'] && ! empty( $attributes['styles']['wrapper']['backgroundVideo'] ) ) {
-				$classes[] = 'has-bg-video has-background-media';
+				$classes[] = ' has-bg-video has-background-media';
 			}
 
 			if ( isset( $attributes['styles']['wrapper']['backgroundType'] ) && 'image' === $attributes['styles']['wrapper']['backgroundType'] && ! empty( $attributes['styles']['wrapper']['backgroundImage'] ) ) {
-				$classes[] = 'has-bg-image has-background-media';
+				$classes[] = ' has-bg-image has-background-media';
 			}
 
 			$inherit_classes         .= ! empty( $classes ) ? implode( ' ', $classes ) : '';
@@ -47,9 +50,23 @@ class Container extends AbstractBlock {
 		$p = new \WP_HTML_Tag_Processor( $content );
 
 		while ( $p->next_tag() && false === $updated_wrapper ) {
+			if ( ! empty( $attributes['hideOnDesktop'] ) ) {
+				$p->set_attribute( 'data-hide-desktop', 'true' );
+			}
+
+			if ( ! empty( $attributes['hideOnTablet'] ) ) {
+				$p->set_attribute( 'data-hide-tablet', 'true' );
+			}
+
+			if ( ! empty( $attributes['hideOnMobile'] ) ) {
+				$p->set_attribute( 'data-hide-mobile', 'true' );
+			}
+
 			$id = $p->get_attribute( 'id' );
 
-			$p->set_attribute( 'id', $id . $inherit_id );
+			if ( ! empty( $id ) ) {
+				$p->set_attribute( 'id', $id . $inherit_id );
+			}
 
 			if ( preg_match( '/class="([^"]*)"/', $block_wrapper_attributes, $matches ) ) {
 				$class_value = $matches[1];

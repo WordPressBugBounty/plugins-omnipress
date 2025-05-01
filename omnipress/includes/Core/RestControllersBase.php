@@ -77,6 +77,10 @@ if ( ! class_exists( 'RestControllersBase' ) ) {
 			return current_user_can( 'manage_options' );
 		}
 
+		public function upload_file_permissions_check( $request ): bool {
+			return current_user_can( 'upload_files' );
+		}
+
 
 
 		/**

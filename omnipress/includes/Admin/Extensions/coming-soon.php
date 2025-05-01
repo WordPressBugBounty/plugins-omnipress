@@ -510,7 +510,6 @@ if ( ! class_exists( ComingSoon::class ) ) {
 					return;
 				}
 			} else {
-				update_option( 'show_on_front', 'posts' );
 				$new_value[ static::SETTING_NAME ]['post_id'] = '';
 				update_option( static::SETTING_NAME, $new_value );
 			}

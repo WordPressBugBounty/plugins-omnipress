@@ -45,7 +45,9 @@ final class BlockRegistrar {
 	 *
 	 * Constructor
 	 *
-	 * @param AbstractAssetsHandler|null $assets_handler @since 1.5.5.
+	 * @param AbstractAssetsHandler|null $assets_handler Assets handler instance.
+	 *
+	 * @since 1.5.5
 	 *
 	 * @return void
 	 */
@@ -56,7 +58,14 @@ final class BlockRegistrar {
 		add_action( 'omnipress_after_blocks_register', array( $this, 'assign_block_edit_caps' ) );
 		add_filter( 'block_categories_all', array( $this, 'register_block_categories' ), PHP_INT_MAX, 3 );
 		do_action( 'omnipress_after_blocks_register', $this->get_blocks_folders() );
+		add_action(
+			'wp_enqueue_scripts',
+			function () {
+				wp_enqueue_style( 'omnipress_blocks', OMNIPRESS_URL . 'build/css/block.css', array(), filemtime( OMNIPRESS_PATH . 'build/css/block.css' ) );
+			}
+		);
 	}
+
 
 
 	/**
@@ -156,7 +165,7 @@ final class BlockRegistrar {
 				'content-switcher-switch',
 				'product-filter',
 				'product-search',
-				'product-grid-2',
+				'product-tab-grid',
 				'tax-query',
 				'image-comparison',
 				'flip-box',
@@ -164,6 +173,7 @@ final class BlockRegistrar {
 				'flip-box-back',
 				'progress-bar',
 				'lottie-animation',
+				'gallery',
 			),
 		);
 
@@ -330,7 +340,9 @@ final class BlockRegistrar {
 
 			if ( $view_script ) {
 				wp_register_script_module( $view_script['handle'], $view_script['src'], $view_script['deps'], $view_script['version'], true );
-				$args['viewScriptModule'] = $view_script['handle'];
+				if ( ! is_admin() ) {
+					$args['viewScriptModule'] = $view_script['handle'];
+				}
 			}
 
 			$args['render_callback'] = array( $this, 'render_block' );
@@ -353,12 +365,12 @@ final class BlockRegistrar {
 	 */
 	private function get_frontend_script( string $block_name ) {
 		$file_name      = explode( '/', $block_name )[1] . '-view';
-		$view_file_path = OMNIPRESS_PATH . 'assets/build/js/client/view-scripts/' . $file_name . '.js';
+		$view_file_path = OMNIPRESS_PATH . 'build/js/client/view-scripts/' . $file_name . '.js';
 
 		if ( file_exists( $view_file_path ) ) {
 			return array(
 				'handle'  => $file_name,
-				'src'     => OMNIPRESS_URL . 'assets/build/js/client/view-scripts/' . $file_name . '.js',
+				'src'     => OMNIPRESS_URL . 'build/js/client/view-scripts/' . $file_name . '.js',
 				'deps'    => array(),
 				'version' => filemtime( $view_file_path ),
 			);

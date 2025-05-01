@@ -4,7 +4,6 @@ namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
 use Omnipress\Helpers;
-use Omnipress\Utils;
 use Omnipress\Helpers\GeneralHelpers;
 
 /**
@@ -162,7 +161,7 @@ class QueryTemplate extends AbstractBlock {
 			remove_filter( 'render_block_context', $filter_block_context, 2 );
 
 			// Wrap the render inner blocks in a `li` element with the appropriate post classes.
-			$grid_layout_classes = 'is-layout-grid';
+			$grid_layout_classes = 'is-layout-grid op-grid op-grid-cols-3 sm:op-grid-cols-2  op-list-none';
 
 			$inner_block_directives = ! $enhanced_pagination ? ' data-wp-key="query-template-item-' . $post_id . '"' : '';
 			$content               .= '<li data-post-title="' . get_the_title() . '"' . $inner_block_directives . ' class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">' . $block_content . '</li>';

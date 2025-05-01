@@ -57,6 +57,13 @@ if ( ! class_exists( 'ModelsBase' ) ) {
 		protected $data;
 
 		/**
+		 * Ignored categories.
+		 *
+		 * @var array
+		 */
+		protected $ignored_categories = array();
+
+		/**
 		 * Class construct.
 		 */
 		public function __construct() {
@@ -254,8 +261,8 @@ if ( ! class_exists( 'ModelsBase' ) ) {
 			$this->set();
 		}
 
-		public function filter( $key ) {
-			if ( ! $key ) {
+		public function filter( $key, $ignored_categories = array() ) {
+			if ( ! $key && empty( $ignored_categories ) ) {
 				$this->set();
 				return;
 			}
@@ -274,7 +281,11 @@ if ( ! class_exists( 'ModelsBase' ) ) {
 						continue;
 					}
 
-					if ( $demo_pattern->category->key !== $key ) {
+					if ( ! empty( $key ) && $demo_pattern->category->key !== $key ) {
+						continue;
+					}
+
+					if ( in_array( $demo_pattern->category->key, $ignored_categories, true ) ) {
 						continue;
 					}
 

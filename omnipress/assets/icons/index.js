@@ -1020,7 +1020,7 @@ export const productCarousel = (
       d="M4.56818 3.88889V3.13889H3.81818H2.75V2.75H4.72727C4.78842 2.75 4.88636 2.80983 4.88636 2.94444V21.0556C4.88636 21.1902 4.78843 21.25 4.72727 21.25H2.75V20.8611H3.81818H4.56818V20.1111V3.88889ZM9.27273 3.13889H8.52273V3.88889V20.1111V20.8611H9.27273H14.7273H15.4773V20.1111V3.88889V3.13889H14.7273H9.27273ZM20.1818 20.8611H21.25V21.25H19.2727C19.2116 21.25 19.1136 21.1902 19.1136 21.0556V2.94444C19.1136 2.80982 19.2116 2.75 19.2727 2.75H21.25V3.13889H20.1818H19.4318V3.88889V20.1111V20.8611H20.1818ZM8.20455 2.94444C8.20455 2.80983 8.30249 2.75 8.36364 2.75H15.6364C15.6975 2.75 15.7955 2.80982 15.7955 2.94444V21.0556C15.7955 21.1902 15.6975 21.25 15.6364 21.25H8.36364C8.30248 21.25 8.20455 21.1902 8.20455 21.0556V2.94444Z"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
   </svg>
 );
@@ -1271,13 +1271,13 @@ export const taxonomy = (
       d="M3 2.75H21C21.1381 2.75 21.25 2.86193 21.25 3V8C21.25 8.13807 21.1381 8.25 21 8.25H3C2.86193 8.25 2.75 8.13807 2.75 8V3C2.75 2.86193 2.86193 2.75 3 2.75ZM17 16.75H21C21.1381 16.75 21.25 16.8619 21.25 17V21C21.25 21.1381 21.1381 21.25 21 21.25H17C16.8619 21.25 16.75 21.1381 16.75 21V17C16.75 16.8619 16.8619 16.75 17 16.75ZM10 16.75H14C14.1381 16.75 14.25 16.8619 14.25 17V21C14.25 21.1381 14.1381 21.25 14 21.25H10C9.86193 21.25 9.75 21.1381 9.75 21V17C9.75 16.8619 9.86193 16.75 10 16.75ZM3 16.75H7C7.13807 16.75 7.25 16.8619 7.25 17V21C7.25 21.1381 7.13807 21.25 7 21.25H3C2.86193 21.25 2.75 21.1381 2.75 21V17C2.75 16.8619 2.86193 16.75 3 16.75Z"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
     <path
       d="M12 17V8.5M5 17V13H19V17"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
   </svg>
 );
@@ -1317,19 +1317,19 @@ export const popModal = (
       rx="1.25"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
     <path
       d="M5 16V16C5 17.1046 5.89543 18 7 18H17C18.1046 18 19 17.1046 19 16V16"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
     <path
       d="M7 19V19C7 20.1046 7.89543 21 9 21H12H15C16.1046 21 17 20.1046 17 19V19"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
   </svg>
 );
@@ -1351,14 +1351,14 @@ export const popFloating = (
       rx="1.25"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
     <path
       d="M6 6L18 6"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
-      stroke-linecap="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
     />
   </svg>
 );
@@ -1380,14 +1380,14 @@ export const popDrawer = (
       rx="1.25"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
     <path
       d="M17 6L17 18"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
-      stroke-linecap="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
     />
   </svg>
 );
@@ -1760,13 +1760,13 @@ export const contentSwitcher = (
       d="M6.5 7.75H17.5C19.5711 7.75 21.25 9.42893 21.25 11.5C21.25 13.5711 19.5711 15.25 17.5 15.25H6.5C4.42893 15.25 2.75 13.5711 2.75 11.5C2.75 9.42893 4.42893 7.75 6.5 7.75Z"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
     <path
       d="M7.25 11.5C7.25 11.9142 6.91421 12.25 6.5 12.25C6.08579 12.25 5.75 11.9142 5.75 11.5C5.75 11.0858 6.08579 10.75 6.5 10.75C6.91421 10.75 7.25 11.0858 7.25 11.5Z"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
+      strokeWidth="1.5"
     />
   </svg>
 );
@@ -1784,15 +1784,15 @@ export const blockAddition = (
       d="M12 6L12 18"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
-      stroke-linecap="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
     />
     <path
       d="M18 12L6 12"
       fill="none"
       stroke="#175FFF"
-      stroke-width="1.5"
-      stroke-linecap="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
     />
   </svg>
 );

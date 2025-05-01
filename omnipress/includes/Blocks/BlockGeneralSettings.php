@@ -2,7 +2,6 @@
 
 namespace Omnipress\Blocks;
 
-
 use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Traits\Singleton;
 
@@ -78,6 +77,9 @@ class BlockGeneralSettings {
 		$previous_localized_vars['containerStyles']  = $this->get_container_blocks_initial_styles();
 		$previous_localized_vars['block_permission'] = current_user_can( OMNIPRESS_BLOCK_EDIT_CAPABILITY );
 
+		if ( GeneralHelpers::is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			$previous_localized_vars['wcBlock'] = true;
+		}
 		$disabled_blocks = $this->get_disabled_blocks();
 
 		$previous_localized_vars['disabledBlocks'] = $disabled_blocks;

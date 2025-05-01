@@ -87,6 +87,7 @@ class RestApi {
 			'changelogs'     => __NAMESPACE__ . '\\Controllers\\V1\\ChangelogController',
 			'wc'             => __NAMESPACE__ . '\\Controllers\\V1\\WoocommerceController',
 			'global-styles'  => __NAMESPACE__ . '\\Controllers\\V1\\GlobalStylesController',
+			'file-uploads'   => __NAMESPACE__ . '\\Controllers\\V1\\FileUploadRestController',
 		);
 	}
 

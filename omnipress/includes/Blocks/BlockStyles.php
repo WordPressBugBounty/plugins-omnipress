@@ -232,7 +232,7 @@ class BlockStyles {
 			if ( FileSystemUtil::write_file( $current_page_blocks_styles_path, $blocks_generated_css ) ) {
 				// When the style is generated for the first time, it won’t be in the enqueued style file, so we add it as inline style at the time of generation. The next time, it will be enqueued from the file. This inline style code runs whenever we edit content and view it for the first time immediately after editing.
 				echo '<style class="omnipress-blocks-generated-styles">' . $blocks_generated_css . '</style>';
-				error_log( 'Successfully generated block styles.' ); // phpcs:ignore
+				error_log( 'Successfully generated block styles for ' . $current_page_blocks_styles_path ); // phpcs:ignore
 			}
 		} catch ( \Exception $exception ) {
 			throw $exception;

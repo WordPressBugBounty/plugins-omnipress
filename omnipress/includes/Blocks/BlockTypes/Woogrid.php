@@ -148,8 +148,7 @@ class Woogrid extends AbstractBlock {
 
 		$wrapper_attributes = get_block_wrapper_attributes(
 			array(
-
-				'class'               => "op-woo-grid op-block__woogrid op-$block_id",
+				'class'               => "op-woo-grid op-block__woogrid op-w-full op-$block_id",
 				'data-type'           => 'omnipress/woogrid',
 				'data-wp-interactive' => 'omnipress/wc',
 			)
@@ -164,7 +163,7 @@ class Woogrid extends AbstractBlock {
 			);
 
 			$html .= '<div id="' . $block_id . '" class="op-block-product-grid">';
-			$html .= "<div class='op-woo__grid-wrapper op-grid-col-{$attributes['columns']}  op-grid-col-{$attributes['mdColumns']}-md  op-grid-col-{$attributes['smColumns']}-sm'>";
+			$html .= "<div class='op-woo__grid-wrapper is-layout-grid'>";
 
 			$class_name = '';
 		}

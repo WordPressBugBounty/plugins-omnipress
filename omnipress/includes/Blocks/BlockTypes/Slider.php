@@ -17,6 +17,8 @@ class Slider extends AbstractBlock {
 	 * @inheritDoc
 	 */
 	public function render( array $attributes, string $content, \WP_Block $block ): string {
+		$this->set_attributes( $attributes );
+		$this->set_block_name( $block->name );
 		$block->parsed_block['attrs'] = $attributes;
 		$block_id                     = $attributes['blockId'];
 
@@ -34,6 +36,7 @@ class Slider extends AbstractBlock {
 		if ( isset( $attributes['configs']['smSlidePerView'] ) ) {
 			$swiper_settings['slidePerView'] = $attributes['configs']['smSlidePerView'];
 		}
+
 		if ( isset( $attributes['configs']['smSpaceBetween'] ) ) {
 			$swiper_settings['spaceBetween'] = $attributes['configs']['smSpaceBetween'];
 		}
@@ -96,10 +99,9 @@ class Slider extends AbstractBlock {
 			);
 		}
 
-		$wrapper_attributes = get_block_wrapper_attributes(
+		$wrapper_attributes = $this->get_block_wrapper_attributes(
+			'op-block__slider op-isolation swiper',
 			array(
-				'data-type'           => 'omnipress/slider',
-				'class'               => "op-block__slider op-{$block_id} op-isolation swiper",
 				'data-wp-interactive' => 'omnipress/slider',
 				'data-wp-init'        => 'callbacks.init',
 			)
@@ -141,7 +143,7 @@ class Slider extends AbstractBlock {
 	}
 
 	public function get_slider_wrapper_attributes( $block ) {
-		if ( empty( $block ) || 1 !== count( $block->parsed_block['innerBlocks'] ) ) {
+		if ( empty( $block ) || 1 !== count( $block->parsed_block['innerBlocks'] ) || 'omnipress/container' === $block->parsed_block['innerBlocks'][0]['blockName'] ) {
 			return 'class="swiper-wrapper"';
 		}
 

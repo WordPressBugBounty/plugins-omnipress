@@ -127,9 +127,10 @@ class Carousel extends AbstractBlock {
 	 * Enqueue the carousel script.
 	 */
 	private function enqueue_carousel_script() {
+
 		wp_register_script_module(
 			'omnipress/block-library/carousel',
-			OMNIPRESS_URL . 'assets/block-interactivity/slider-module.js',
+			OMNIPRESS_URL . 'build/js/client/view-scripts/slider-view.js',
 			array(
 				array(
 					'id'     => '@wordpress/interactivity',

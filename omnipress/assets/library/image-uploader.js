@@ -2,8 +2,8 @@
   /**
    * Initialize a single image uploader instance.
    *
-   * @param {string} inputId - ID of the hidden input field.
-   * @param {string} previewId - ID of the preview container.
+   * @param {string} inputId        - ID of the hidden input field.
+   * @param {string} previewId      - ID of the preview container.
    * @param {string} uploadButtonId - ID of the upload button.
    * @param {string} removeButtonId - ID of the remove button.
    */

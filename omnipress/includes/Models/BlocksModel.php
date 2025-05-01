@@ -37,24 +37,24 @@ class BlocksModel {
 	 */
 	public function define_block_constants() {
 		if ( ! defined( 'OMNIPRESS_BLOCKS_PATH' ) ) {
-			define( 'OMNIPRESS_BLOCKS_PATH', trailingslashit( OMNIPRESS_PATH . 'assets/build/js/blocks/block-library/block-types' ) );
+			define( 'OMNIPRESS_BLOCKS_PATH', trailingslashit( OMNIPRESS_PATH . 'build/js/blocks/block-library/block-types' ) );
 		}
 		if ( ! defined( 'OMNIPRESS_BLOCKS_URL' ) ) {
-			define( 'OMNIPRESS_BLOCKS_URL', trailingslashit( OMNIPRESS_URL . 'assets/build/js/block-library/block-types' ) );
+			define( 'OMNIPRESS_BLOCKS_URL', trailingslashit( OMNIPRESS_URL . 'build/js/block-library/block-types' ) );
 		}
 
 		if ( ! defined( 'OMNIPRESS_BLOCKS_STYLES_PATH' ) ) {
-			define( 'OMNIPRESS_BLOCKS_STYLES_PATH', trailingslashit( OMNIPRESS_PATH . 'assets/build/css/blocks' ) );
+			define( 'OMNIPRESS_BLOCKS_STYLES_PATH', trailingslashit( OMNIPRESS_PATH . 'build/css/blocks' ) );
 		}
 		if ( ! defined( 'OMNIPRESS_BLOCKS_STYLES_URL' ) ) {
-			define( 'OMNIPRESS_BLOCKS_STYLES_URL', trailingslashit( OMNIPRESS_URL . 'assets/build/css/blocks' ) );
+			define( 'OMNIPRESS_BLOCKS_STYLES_URL', trailingslashit( OMNIPRESS_URL . 'build/css/blocks' ) );
 		}
 
 		if ( ! defined( 'OMNIPRESS_BLOCKS_VIEW_JS_PATH' ) ) {
-			define( 'OMNIPRESS_BLOCKS_VIEW_JS_PATH', trailingslashit( OMNIPRESS_PATH . 'assets/build/js/view-scripts' ) );
+			define( 'OMNIPRESS_BLOCKS_VIEW_JS_PATH', trailingslashit( OMNIPRESS_PATH . 'build/js/view-scripts' ) );
 		}
 		if ( ! defined( 'OMNIPRESS_BLOCKS_VIEW_JS_URL' ) ) {
-			define( 'OMNIPRESS_BLOCKS_VIEW_JS_URL', trailingslashit( OMNIPRESS_URL . 'assets/build/js/view-scripts' ) );
+			define( 'OMNIPRESS_BLOCKS_VIEW_JS_URL', trailingslashit( OMNIPRESS_URL . 'build/js/view-scripts' ) );
 		}
 	}
 }

@@ -1,0 +1,1 @@
+window.addEventListener("load",()=>{let o=document.querySelectorAll(".accordion");o&&o.forEach((r,c)=>{r.addEventListener("click",t=>{t.stopPropagation(),o.forEach((e,d)=>{if(d===c){e.querySelector(".accordion-body").classList.toggle("op-hidden");return}e.querySelector(".accordion-body").classList.remove("op-block")})})})});

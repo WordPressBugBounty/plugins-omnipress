@@ -204,7 +204,7 @@ if ( ! class_exists( 'BlockStylesHelper' ) ) {
 
 						$css_file_name = explode( '/', $block_name )[1] . '.min.css';
 
-						$stylesheet_path = OMNIPRESS_PATH . "assets/build/css/blocks/{$css_file_name}";
+						$stylesheet_path = OMNIPRESS_PATH . "build/css/blocks/{$css_file_name}";
 
 						if ( file_exists( $stylesheet_path ) ) {
 

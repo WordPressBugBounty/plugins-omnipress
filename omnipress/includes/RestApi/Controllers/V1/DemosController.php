@@ -9,8 +9,8 @@ namespace Omnipress\RestApi\Controllers\V1;
 
 use Omnipress\Abstracts\RestControllersBase;
 use Omnipress\Helpers;
-use Omnipress\Utils;
 use Omnipress\Models\DemosModel;
+
 
 /**
  * Exit if accessed directly.
@@ -119,15 +119,81 @@ class DemosController extends RestControllersBase {
 	public function get_items( $request ) {
 		$demos_model = new DemosModel();
 
+		// If current request is for premium theme demo.
+		if ( 'theme' === $request->get_param( 'source' ) ) {
+			return $this->get_premium_theme_demo( $request );
+		}
+
 		if ( $request->get_param( 'sync' ) ) {
 			$demos_model->sync();
 		}
 
 		if ( $request->get_param( 'filter' ) ) {
-			$demos_model->filter( $request->get_param( 'filter' ) );
+			$demos_model->filter( $request->get_param( 'filter' ), array( 'etwoo' ) );
+		} else {
+			$demos_model->filter( '', array( 'etwoo' ) );
 		}
 
-		return $demos_model->get();
+		$demos = $demos_model->get();
+
+		return $demos;
+	}
+
+	/**
+	 * Get theme info.
+	 *
+	 * @return array
+	 */
+	public function get_theme_info() {
+		$theme  = wp_get_theme();
+		$parent = $theme->parent();
+
+		return array(
+			'name'        => $theme->get( 'Name' ),
+			'author'      => $theme->get( 'Author' ),
+			'description' => $theme->get( 'Description' ),
+			'tags'        => $theme->get( 'Tags' ),
+			'version'     => $theme->get( 'Version' ),
+			'template'    => $theme->get( 'Template' ),
+			'author_uri'  => $theme->get( 'AuthorURI' ),
+			'is_child'    => $parent ? true : false,
+			'parent'      => $parent ? $parent->get( 'Name' ) : null,
+		);
+	}
+
+	public function get_premium_theme_demo( $request ) {
+		$theme_name = wp_get_theme()->get( 'TextDomain' );
+
+		$demos_model = new DemosModel();
+
+		$demos_model->filter( 'etwoo' );
+
+		$demos = $demos_model->get()->demos;
+
+		if ( empty( $demos ) ) {
+			return false;
+		}
+
+		foreach ( $demos as $demo ) {
+			if ( $demo->theme === $theme_name && 'free' === $demo->type ) {
+				$demo->theme_details        = $this->get_theme_info();
+				$demo->recommended->plugins = $this->recommended_plugins_check( $demo->recommended->plugins );
+				return $demo;
+			}
+		}
+
+		return false;
+	}
+
+	public function recommended_plugins_check( $plugins ) {
+		if ( is_object( $plugins ) && ! empty( $plugins ) ) {
+			foreach ( $plugins as $slug => $item ) {
+				$plugins->{$slug}->status = Helpers::get_plugin_status( $slug );
+				$plugins->{$slug}->slug   = $slug;
+			}
+		}
+
+		return $plugins;
 	}
 
 	/**
@@ -142,10 +208,6 @@ class DemosController extends RestControllersBase {
 		}
 
 		$demos_model = new DemosModel();
-
-		if ( ! function_exists( 'is_plugin_active' ) || ! function_exists( 'is_plugin_paused' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
 
 		$demo = $demos_model->get_by_keys( $key );
 
@@ -174,14 +236,7 @@ class DemosController extends RestControllersBase {
 							if ( ! is_object( $recommended->{$item_key} ) ) {
 								$recommended->{$item_key} = $items;
 							}
-
-							if ( is_object( $items ) && ! empty( $items ) ) {
-								foreach ( $items as $slug => $item ) {
-									$recommended->{$item_key}->{$slug}->status = Helpers::get_plugin_status( $slug );
-									$recommended->{$item_key}->{$slug}->slug   = $slug;
-								}
-							}
-
+							$recommended->{$item_key} = $this->recommended_plugins_check( $items );
 							break;
 
 						case 'themes':
@@ -224,20 +279,26 @@ class DemosController extends RestControllersBase {
 				$response = wp_remote_get( "https://api.wordpress.org/themes/info/1.1/?action=theme_information&request[slug]={$suggested_theme}" );
 
 				if ( is_wp_error( $response ) ) {
-					return new WP_Error( 'theme_fetch_error', 'Failed to fetch theme information from WordPress.org' );
+					return new \WP_Error( 'theme_fetch_error', 'Failed to fetch theme information from WordPress.org' );
 				}
 
 				$theme_info = json_decode( \wp_remote_retrieve_body( $response ) );
 
 				if ( empty( $theme_info->download_link ) ) {
-					return new WP_Error( 'theme_download_link_missing', 'Download link not found for the specified theme' );
+
+					return wp_send_json_error(
+						array(
+							'error'  => 'theme_download_link_missing',
+							'status' => 'activate',
+						),
+					);
 				}
 
 				// Step 2: Download and install the theme.
-				include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-				include_once ABSPATH . 'wp-admin/includes/file.php';
-				include_once ABSPATH . 'wp-admin/includes/misc.php';
-				include_once ABSPATH . 'wp-admin/includes/theme.php';
+				require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+				require_once ABSPATH . 'wp-admin/includes/misc.php';
+				require_once ABSPATH . 'wp-admin/includes/theme.php';
 
 				ob_start();
 				$upgrader = new \Theme_Upgrader();
@@ -252,7 +313,8 @@ class DemosController extends RestControllersBase {
 				switch_theme( $suggested_theme );
 				ob_end_clean();
 			}
-		} catch ( Exception $exception ) {
+		} catch ( \Exception $exception ) {
+
 			return array(
 				'error'  => $exception->getMessage(),
 				'status' => 'activate',
@@ -270,6 +332,8 @@ class DemosController extends RestControllersBase {
 	 * @param \WP_REST_Request $request
 	 */
 	public function prepare_demo_contents( $request ) {
+		// download attachments and replace demo's home url into current home_url.
+		require_once OMNIPRESS_PATH . 'includes/class-omnipress-importer.php';
 
 		$key = $request->get_param( 'key' );
 
@@ -283,16 +347,6 @@ class DemosController extends RestControllersBase {
 		$demos_model->set_templates( $key );
 		$demos_model->set_template_parts( $key );
 		$demo = $demos_model->get_by_keys( $key );
-
-		// if ( is_dir( ABSPATH . 'wp-content/omnipress-css' ) ) {
-		// unlink( ABSPATH . 'wp-content/omnipress-css/theme-woo.css' ); // phpcs:ignore
-		// rmdir( ABSPATH . "wp-content/omnipress-css" ); // phpcs:ignore
-		// }
-
-		// if ( ! empty( $demo->styles ) ) {
-		// mkdir( ABSPATH . "wp-content/omnipress-css" ); // phpcs:ignore
-		// file_put_contents( ABSPATH . "wp-content/omnipress-css/theme-woo.css", $demo->styles ); // phpcs:ignore
-		// }
 
 		return true;
 	}

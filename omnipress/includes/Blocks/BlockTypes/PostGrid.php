@@ -33,7 +33,7 @@ class PostGrid extends AbstractBlock {
 	 * @param array $attributes The attributes to set for the block.
 	 * @return void
 	 */
-	public function set_attributes( $attributes ) {
+	public function set_attributes( array $attributes ): void {
 		$this->attributes = $attributes;
 	}
 
@@ -45,7 +45,7 @@ class PostGrid extends AbstractBlock {
 	 * @param string $block_name The name of the block.
 	 * @return void
 	 */
-	public function set_block_name( $block_name ) {
+	public function set_block_name( string $block_name ): void {
 		$this->block_name = $block_name;
 	}
 

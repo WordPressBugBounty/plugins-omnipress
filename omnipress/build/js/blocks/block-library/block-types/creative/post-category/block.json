@@ -1,0 +1,106 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "omnipress/post-category",
+  "version": "1.0.0",
+  "title": "Post Category",
+  "category": "omnipress",
+  "description": "Show company stats or how many happy customers you have with animation effects",
+  "supports": {
+    "className": true,
+    "anchor": true
+  },
+  "opSettings": {
+    "title": {
+      "group": "design",
+      "selector": ".category-title",
+      "label": "Title",
+      "fields": {
+        "spacing": {
+          "margin": true,
+          "padding": true
+        },
+        "color": {
+          "background": true
+        },
+        "typography": true
+      }
+    },
+    "featureImage": {
+      "group": "design",
+      "selector": ".category-image",
+      "label": "Feature Image",
+      "fields": {
+        "dimension": {
+          "width": true,
+          "height": true
+        },
+        "spacing": {
+          "margin": true
+        },
+        "border": {
+          "border": true,
+          "borderRadius": true
+        }
+      }
+    },
+    "description": {
+      "group": "design",
+      "selector": ".category-description",
+      "label": "Description",
+      "fields": {
+        "spacing": {
+          "margin": true,
+          "padding": true,
+          "gap": true
+        },
+        "color": {
+          "background": true
+        },
+        "typography": true
+      }
+    },
+    "count": {
+      "group": "design",
+      "selector": ".category-count",
+      "label": "Count",
+      "fields": {
+        "spacing": {
+          "padding": true
+        },
+        "color": {
+          "background": true
+        },
+        "typography": true
+      }
+    },
+    "content": {
+      "group": "design",
+      "selector": ".category-content",
+      "label": "Content",
+      "fields": {
+        "spacing": {
+          "padding": true
+        },
+        "color": {
+          "background": true
+        },
+        "typography": true
+      }
+    }
+  },
+  "attributes": {
+    "blockId": {
+      "type": "string"
+    },
+    "prefix": {
+      "type": "string"
+    }
+  },
+  "textdomain": "omnipress",
+  "keywords": [
+    "post",
+    "category",
+    "categories"
+  ]
+}
