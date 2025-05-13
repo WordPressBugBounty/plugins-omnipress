@@ -7,9 +7,14 @@ defined( 'ABSPATH' ) || exit;
 
 use Omnipress\Abstracts\RestControllersBase;
 use Omnipress\Uploader\FileUploader;
+
+
 use WP_REST_Request;
 use WP_REST_Response;
 
+if ( ! class_exists( FileUploader::class ) ) {
+	require_once OMNIPRESS_PATH . 'includes/uploader/FileUploader.php';
+}
 class FileUploadRestController extends RestControllersBase {
 
 	public function register_routes() {

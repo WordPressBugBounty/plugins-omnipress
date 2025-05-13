@@ -203,7 +203,7 @@ class BlockStyles {
 	 *
 	 * @return void
 	 */
-	function maybe_generate_block_styles() {
+	public function maybe_generate_block_styles() {
 		$current_page_blocks_styles_path = $this->get_current_page_dynamic_style_path();
 
 		if ( BlockStylesHelper::are_block_styles_generated( $this->get_current_page_dynamic_style_path() ) ) {

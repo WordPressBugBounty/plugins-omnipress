@@ -331,20 +331,21 @@ class Init {
 	 * @return void
 	 */
 	public function enqueue_scripts( $hook_prefix ) {
+		wp_register_style( 'omnipress-admin-css', OMNIPRESS_URL . 'build/css/admin.css', array( 'wp-components' ), OMNIPRESS_VERSION, 'all' );
+
 		$editor_assets['dependencies'][] = 'omnipress-admin-script';
 		switch ( $hook_prefix ) {
 			case 'post.php':
 			case 'post-new.php':
 			case 'site-editor.php':
 			case 'toplevel_page_omnipress':
+			case 'omnipress_page_omnipress-extensions':
 				break;
 			default:
 				return;
 		}
 
-		wp_register_style( 'omnipress-admin-css', OMNIPRESS_URL . 'build/css/admin.css', array( 'wp-components' ), OMNIPRESS_VERSION, 'all' );
-
-		$admin_assets = include OMNIPRESS_PATH . 'build/js/admin/admin.asset.php';
+		$admin_assets = include OMNIPRESS_PATH . 'build/admin/admin.asset.php';
 		do_action( 'omnipress_before_admin_scripts', $hook_prefix );
 
 		$current_user = get_userdata( get_current_user_id() );
@@ -392,7 +393,7 @@ class Init {
 
 		wp_enqueue_script( 'omnipress-local-vars' );
 
-		wp_enqueue_script( 'omnipress-admin-script', OMNIPRESS_URL . 'build/js/admin/admin.js', $admin_assets['dependencies'], $admin_assets['version'], true );
+		wp_enqueue_script( 'omnipress-admin-script', OMNIPRESS_URL . 'build/admin/admin.js', $admin_assets['dependencies'], $admin_assets['version'], true );
 
 		do_action( 'omnipress_after_admin_scripts', $hook_prefix );
 	}

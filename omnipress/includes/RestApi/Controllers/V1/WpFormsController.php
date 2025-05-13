@@ -34,8 +34,6 @@ class WpFormsController extends RestControllersBase {
 
 	public function get_form_markup( $request ) {
 		$callback = new WpFormsModal();
-		error_log( 'contact form' );
-
 		return $callback->get_contact_form_7_html( $request );
 	}
 

@@ -2,8 +2,11 @@
 
 namespace Omnipress\Blocks\BlockTypes;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use Omnipress\Abstracts\AbstractBlock;
-use OmnipressPro\DynamicContent\source\Woocommerce;
 
 /**
  * Class BreadCrumb

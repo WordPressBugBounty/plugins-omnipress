@@ -41,7 +41,6 @@ class Container extends AbstractBlock {
 			$block_wrapper_attributes = $this->get_block_wrapper_attributes(
 				'op-block-container ' . esc_attr( $inherit_classes ) . ' ' . esc_attr( $inherit_id ),
 			);
-
 		}
 
 		$updated_wrapper = false;

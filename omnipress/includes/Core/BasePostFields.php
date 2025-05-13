@@ -60,6 +60,7 @@ class BasePostFields {
 		if ( $this->is_hidden( 'thumbnail' ) ) {
 			return '';
 		}
+		$thumbnail_url = get_the_post_thumbnail_url( $this->post_id );
 
 		return sprintf(
 			'<a href="%2$s"><figure><img loading="lazy" %3$s %4$s src="%5$s" class="post-thumbnail" alt="%7$s"></figure></a>',
@@ -67,7 +68,7 @@ class BasePostFields {
 			esc_url( get_the_permalink( $this->post_id ) ),
 			$this->is_interactive ? 'data-wp-bind--src="context.thumbnail" ' : '', // This added to make dynamic thumbnail when user choose different types of variation of current product then changed it's thumbnail according to variation.
 			$this->is_interactive ? 'data-wp-bind--srcset="context.thumbnailSrcset" ' : '', // This added to make dynamic thumbnail when user choose different types of variation of current product then changed it's thumbnail according to variation.
-			esc_url( get_the_post_thumbnail_url( $this->post_id ) ),
+			esc_url( $thumbnail_url ? $thumbnail_url : OMNIPRESS_URL . 'assets/images/placeholder.webp' ),
 			esc_attr( $classes ),
 			esc_attr( get_the_title( $this->post_id ) )
 		);

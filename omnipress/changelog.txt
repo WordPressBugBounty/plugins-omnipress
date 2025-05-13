@@ -1,5 +1,19 @@
+== Version 1.6.3 ==
+  **Release Date:** May 13, 2025
+  ##fixes:
+    - Make compatible with wordpress interactivity API
+    - Enhance block's styles
+    - Fix minor issues related blocks
+    - fix: Container overlay covered it's content
+    - fix: Spacing css not generated correctly
+
+
+  ## NEW
+    - Hover Effect added for image block
+    - Introduce Gallery block [PRO]
+
 == Version 1.6.2 ==
-  **Release Date:** April 30, 2025
+  **Release Date:** May 1, 2025
   ##fixes:
     - Fixed a minor bugs related various blocks and setting.
     - Enhanced demo import process.
@@ -32,9 +46,6 @@
   **Release Date:** March 12, 2025
   ### Fixes
    - fixes minor issues related blocks
-
-== Version 1.5.5 ==
-  **Release Date:** March 12, 2025
 
   ### Fixes
   - **Mega Menu Block:** Resolved an issue where the Mega Menu block was accessing protected posts on the frontend, ensuring proper content visibility and security.

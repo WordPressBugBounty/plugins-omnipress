@@ -134,7 +134,6 @@ if ( ! class_exists( 'BlockStylesHelper' ) ) {
 
 				foreach ( $blocks as $block ) {
 					$metadata = $all_blocks_metadata->{$block['blockName'] ?? ''} ?? null;
-
 					if ( empty( $metadata ) ) {
 						continue;
 					}
@@ -156,6 +155,7 @@ if ( ! class_exists( 'BlockStylesHelper' ) ) {
 				do_action( 'omnipress_blocks_style_generation', $generated_css, $synced_component_components );
 
 			}
+
 			return $generated_css;
 		}
 

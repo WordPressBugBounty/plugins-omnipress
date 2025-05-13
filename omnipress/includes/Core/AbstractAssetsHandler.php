@@ -15,6 +15,9 @@ namespace Omnipress\Core;
 if ( ! class_exists( 'AbstractAssetsHandler' ) ) {
 	abstract class AbstractAssetsHandler {
 
+		const EDITOR_JS_ID  = 'omnipress-block-editor-js';
+		const EDITOR_CSS_ID = 'omnipress-block-editor-css';
+
 		/**
 		 * @var string $build_assets_url The path to the asset's directory.
 		 */

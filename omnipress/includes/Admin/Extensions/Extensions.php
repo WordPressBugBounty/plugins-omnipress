@@ -176,7 +176,7 @@ if ( ! class_exists( Extensions::class ) ) {
 		public function enqueue_admin_assets() {
 			wp_enqueue_media();
 			wp_enqueue_style( 'omnipress-admin-css' );
-			wp_enqueue_script( 'omnipress-admin-extensions-js', OMNIPRESS_URL . 'build/js/admin/extensions.js', array( 'wp-api-fetch' ), OMNIPRESS_VERSION, true );
+			wp_enqueue_script( 'omnipress-admin-extensions-js', OMNIPRESS_URL . 'build/admin/extensions.js', array( 'wp-api-fetch' ), OMNIPRESS_VERSION, true );
 			wp_localize_script(
 				'omnipress-admin-extensions-js',
 				'_omnipress',

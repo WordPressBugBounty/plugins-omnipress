@@ -1,6 +1,8 @@
 <?php
 namespace Omnipress\Block;
 
+defined( 'ABSPATH' ) || exit;
+
 use Omnipress\Blocks\BlockStyles;
 use OMNIPRESS\Core\FileSystemUtil;
 use Omnipress\Helpers\GeneralHelpers;
@@ -15,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
  * @return void
  */
 function enqueue_editor_scripts() {
-	$block_assets   = include OMNIPRESS_PATH . 'build/js/blocks/block.asset.php';
+	$block_assets   = include OMNIPRESS_PATH . 'build/block.asset.php';
 	$environment    = wp_get_environment_type();
 	$block_settings = new BlocksSettingsModel();
 
@@ -45,14 +47,14 @@ function enqueue_editor_scripts() {
 		)
 	);
 
-	wp_enqueue_script( 'omnipress-blocks', OMNIPRESS_URL . 'build/js/blocks/block.js', $block_assets['dependencies'], $block_assets['version'], true );
+	wp_enqueue_script( 'omnipress-block-editor-js', OMNIPRESS_URL . 'build/block.js', $block_assets['dependencies'], $block_assets['version'], true );
 
-	wp_enqueue_script( 'omnipress-store', OMNIPRESS_URL . 'build/js/admin/store.js', array( 'regenerator-runtime', 'wp-api-fetch', 'wp-core-data', 'wp-data', 'wp-editor', 'wp-i18n', 'wp-notices' ), OMNIPRESS_VERSION, true );
+	wp_enqueue_script( 'omnipress-store', OMNIPRESS_URL . 'build/admin/store.js', array( 'regenerator-runtime', 'wp-api-fetch', 'wp-core-data', 'wp-data', 'wp-editor', 'wp-i18n', 'wp-notices' ), OMNIPRESS_VERSION, true );
 
-	$block_recovery_deps = include OMNIPRESS_PATH . 'build/js/blocks/block-recovery.asset.php';
-	wp_enqueue_script_module( 'omnipress-auto-block-recovery', OMNIPRESS_URL . 'build/js/blocks/block-recovery.js', $block_recovery_deps['dependencies'], $block_assets['version'], true );
+	$block_recovery_deps = include OMNIPRESS_PATH . 'build/block-recovery.asset.php';
+	wp_enqueue_script_module( 'omnipress-auto-block-recovery', OMNIPRESS_URL . 'build/block-recovery.js', $block_recovery_deps['dependencies'], $block_assets['version'], true );
 
-	wp_localize_script( 'omnipress-blocks', '_omnipress', apply_filters( 'omnipress_localize_admin_script', $localize ) );
+	wp_localize_script( 'omnipress-block-editor-js', '_omnipress', apply_filters( 'omnipress_localize_admin_script', $localize ) );
 }
 
 /**

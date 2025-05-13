@@ -64,7 +64,7 @@ class Woocategory extends AbstractBlock {
 		$wrapper_attributes = $this->get_block_wrapper_attributes( 'op-block ' );
 
 		$html = sprintf(
-			'<div %s><div class="is-layout-grid">%s</div></div>',
+			'<div %s><div class="omnipress-layout-grid">%s</div></div>',
 			$wrapper_attributes,
 			$this->get_all_categories_markup( $attributes ),
 		);

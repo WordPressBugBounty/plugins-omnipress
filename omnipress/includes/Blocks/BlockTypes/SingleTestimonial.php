@@ -4,7 +4,6 @@ declare( strict_types=1 );
 namespace Omnipress\Blocks\BlockTypes;
 
 use Omnipress\Abstracts\AbstractBlock;
-use WP_Query;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -55,9 +54,9 @@ final class SingleTestimonial extends AbstractBlock {
 			$selected_layout,
 			array(
 				'post_id'        => $post_id,
-				'author'         => in_array( 'authorName', $hidden_fields, true ) ? false : $author_role,
+				'author'         => in_array( 'authorName', $hidden_fields, true ) ? false : $author,
 				'author_role'    => in_array( 'authorRole', $hidden_fields, true ) ? false : $author_role,
-				'author_company' => in_array( 'authorRole', $hidden_fields, true ) ? false : $author_company,
+				'author_company' => in_array( 'authorCompany', $hidden_fields, true ) ? false : $author_company,
 				'image'          => in_array( 'featureImage', $hidden_fields, true ) ? false : $image,
 				'content'        => in_array( 'testimonial', $hidden_fields, true ) ? false : $content,
 				'title'          => $title,

@@ -117,14 +117,7 @@ class Popup extends AbstractBlock {
 			'modal' === $popup_type ? array( "modal-{$modal_position}" ) : array()
 		);
 
-		$class_string     = implode( ' ', $classes );
-		$transform_styles = 'scale:0;';
-
-		if ( 'floating_bar' === $popup_type ) {
-			$transform_styles = 'transform:translateY(-100%);';
-		}
-
-		$styles_string = 'max-height:0; max-width:0; opacity:0;z-index:-1;' . $transform_styles;
+		$class_string = implode( ' ', $classes );
 
 		$settings = array(
 			'popup_triggered'      => $popup_trigger,
@@ -137,7 +130,6 @@ class Popup extends AbstractBlock {
 			'display_after_visits' => $display_after_visits,
 			'slide_position'       => $slide_position,
 			'modal_position'       => $modal_position,
-			'style'                => $styles_string,
 		);
 
 		$close_button = '<button style="background:#fff" data-wp-html="context.button_text" data-wp-on--click="actions.closePopup" class="op-popup__close-btn">X</button>';
@@ -169,6 +161,10 @@ class Popup extends AbstractBlock {
 		}
 
 		$block_styles = ! empty( $block_styles ) ? '<style>' . $block_styles . '</style>' : '';
+
+		if( empty( $content ) ) {
+			return '';
+		}
 
 		return sprintf(
 			'<div data-wp-interactive="omnipress/popup" %s><div  data-wp-on-window--load="callbacks.openPopup" data-wp-init="callbacks.onTriggeredPopup" %s ><div class="op-popup-builder__wrapper"> %s %s %s </div></div></div>',

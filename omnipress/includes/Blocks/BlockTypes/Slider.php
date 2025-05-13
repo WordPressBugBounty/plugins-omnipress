@@ -107,22 +107,8 @@ class Slider extends AbstractBlock {
 			)
 		);
 
-		wp_register_script_module(
-			'omnipress-slider-script',
-			OMNIPRESS_URL . 'assets/block-interactivity/slider-module.js',
-			array(
-				array(
-					'id'     => '@wordpress/interactivity',
-					'import' => 'static',
-				),
-			),
-			OMNIPRESS_VERSION
-		);
-
 		$slider_wrapper_attributes = $this->get_slider_wrapper_attributes( $block );
-
-		wp_enqueue_script_module( 'omnipress-slider-script' );
-		$navigation = '<button class="swiper-button-prev swiper-button-prev-' . esc_attr( $attributes['blockId'] ) . '"><i class="' . $attributes['arrowIconPrev'] . '"></i></button><button class="swiper-button-next swiper-button-next-' . $attributes['blockId'] . '"><i class="' . $attributes['arrowIconNext'] . '"></i></button>';
+		$navigation                = '<button class="swiper-button-prev swiper-button-prev-' . esc_attr( $attributes['blockId'] ) . '"><i class="' . $attributes['arrowIconPrev'] . '"></i></button><button class="swiper-button-next swiper-button-next-' . $attributes['blockId'] . '"><i class="' . $attributes['arrowIconNext'] . '"></i></button>';
 
 		$pagination = '<div class="swiper-pagination swiper-pagination-' . esc_attr( $attributes['blockId'] ) . '"></div>';
 		$scrollbar  = '<div class="swiper-scrollbar swiper-scrollbar-' . esc_attr( $attributes['blockId'] ) . '"></div>';

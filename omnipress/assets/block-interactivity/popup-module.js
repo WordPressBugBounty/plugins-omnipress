@@ -1,23 +1,8 @@
 import { getContext, getElement, store } from '@wordpress/interactivity';
 
 const STYLES = {
-  active: `
-		max-height: 100vh;
-    max-width: 100vw;
-		opacity: 1;
-		pointer-events: auto;
-    scale:1;
-    transition: transform 500ms ease-in;
-		transition: transform 500ms ease-in;
-		z-index: 99999;
-	`,
-  close: `
-		transition: transform 500ms ease-in;
-		max-height: 0;
-    max-width: 0;
-    opacity: 0;
-    scale:0;
-	`,
+  active: 'display:block;',
+  close: 'display:none;',
 };
 
 const setCookie = (name, value, days) => {
@@ -229,6 +214,11 @@ const { state, actions, callbacks } = store('omnipress/popup', {
       } else {
         handlePopupTrigger.call(context);
       }
+    },
+    openPopup: (e) => {
+      const context = getContext();
+      context.popupEl = getElement().ref;
+      handlePopupTrigger.call(context);
     },
   },
 });

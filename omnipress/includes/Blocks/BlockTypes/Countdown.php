@@ -14,8 +14,10 @@ use Omnipress\Abstracts\AbstractBlock;
 
 class Countdown extends AbstractBlock {
 
-	public function get_layouts( string $layout_type, int $days, int $hours, int $minutes, int $seconds ) {
-		$layouts = array(
+	public function get_layouts( string $layout_type, int $days, int $hours, int $minutes, int $seconds, array $hidden_fields = array() ) {
+
+		$separator = ! in_array( 'separator', $hidden_fields, true ) ? '<span class="separator">|</span>' : '';
+		$layouts   = array(
 			'one' => array(
 				'html' => sprintf(
 					'</div><div class="countdown-card"><span class="number">%d</span></div><span class="label-top">ONLY</span><span class="label-bottom">%s LEFT</span></div>',
@@ -29,29 +31,29 @@ class Countdown extends AbstractBlock {
 						  <span id="days" class="number">%d</span>
 						  <div class="countdown-card-title label" aria-label="DAYS">%s</div>
 					   </div>
-					   <span class="separator">|</span>
+					   ' . $separator . '
 					   <div class="countdown-card">
 						  <span id="hours" class="number">%d</span>
 						  <div class="countdown-card-title label" aria-label="HOURS">%s</div>
 					   </div>
-					   <span class="separator">|</span>
+					   ' . $separator . '
 					   <div class="countdown-card">
 						  <span id="minutes" class="number">%d</span>
 						  <div class="countdown-card-title label" aria-label="MINUTES">%s</div>
 					   </div>
-					   <span class="separator">|</span>
+					   ' . $separator . '
 					   <div class="countdown-card">
 						  <span id="seconds" class="number">%d</span>
 						  <div class="countdown-card-title label" aria-label="SECONDS">%s</div>
 					   </div>',
 					$days,
-					__( 'Days', 'omnipress' ),
-					$hours,
-					__( 'Hours', 'omnipress' ),
-					$minutes,
-					__( 'Minutes', 'omnipress' ),
-					$seconds,
-					__( 'Seconds', 'omnipress' )
+					! in_array( 'label', $hidden_fields, true ) ? __( 'Days', 'omnipress' ) : '',
+					! in_array( 'number', $hidden_fields, true ) ? $hours : '',
+					! in_array( 'label', $hidden_fields, true ) ? __( 'Hours', 'omnipress' ) : '',
+					! in_array( 'number', $hidden_fields, true ) ? $minutes : '',
+					! in_array( 'label', $hidden_fields, true ) ? __( 'Minutes', 'omnipress' ) : '',
+					! in_array( 'number', $hidden_fields, true ) ? $seconds : '',
+					! in_array( 'label', $hidden_fields, true ) ? __( 'Seconds', 'omnipress' ) : '',
 				),
 			),
 		);
@@ -112,7 +114,7 @@ class Countdown extends AbstractBlock {
 		return sprintf(
 			'<div %s><div class="countdown-container">%s</div></div>',
 			$wrapper_attrs,
-			$this->get_layouts( $attributes['layoutType'] ?? 'two', $days, $hours, $minutes, $seconds )
+			$this->get_layouts( $attributes['layoutType'] ?? 'two', $days, $hours, $minutes, $seconds, $attributes['hiddenFields'] )
 		);
 	}
 }

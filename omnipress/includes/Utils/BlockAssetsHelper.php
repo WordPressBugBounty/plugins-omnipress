@@ -21,6 +21,7 @@ if ( ! class_exists( 'BlocksAssetsHelper' ) ) {
 		 * @return mixed|null
 		 */
 		public static function get_block_class_instance_by_name( $block_name ) {
+
 			if ( ! $block_name ) {
 				return null;
 			}
@@ -37,7 +38,6 @@ if ( ! class_exists( 'BlocksAssetsHelper' ) ) {
 			$class_name = "Omnipress\\Blocks\\BlockTypes\\$block_name";
 
 			if ( defined( 'OMNIPRESS_PRO_PATH' ) && file_exists( OMNIPRESS_PRO_PATH . "includes/Blocks/BlockTypes/$block_name.php" ) ) {
-				$block_type = 'premium';
 				$class_file = OMNIPRESS_PRO_PATH . "includes/Blocks/BlockTypes/$block_name.php";
 				$class_name = "OmnipressPro\\Blocks\\BlockTypes\\$block_name";
 			}

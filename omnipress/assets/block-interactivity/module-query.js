@@ -133,7 +133,9 @@ const { state } = store('omnipress/query', {
       }
 
       let timeout;
-      if (timeout) {clearTimeout(timeout);}
+      if (timeout) {
+        clearTimeout(timeout);
+      }
 
       timeout = setTimeout(async () => {
         await fetchFilteredProducts.call(ctx);
@@ -424,8 +426,7 @@ function recursivelyRemoveEmptyKey(obj = {}) {
       if (
         Number.isNaN(parseInt(obj.min_price)) ||
         Number.isNaN(parseInt(obj.max_price)) ||
-        Number.parseInt(obj.min_price, 10) >
-          Number.parseInt(obj.max_price, 10)
+        Number.parseInt(obj.min_price, 10) > Number.parseInt(obj.max_price, 10)
       ) {
         continue;
       } else {
@@ -481,7 +482,9 @@ async function fetchFilteredProducts() {
 
   attributes &&
     Object.keys(attributes).forEach((key, i) => {
-      if (!attributes[key].length) {return;}
+      if (!attributes[key].length) {
+        return;
+      }
 
       rest[key] = Array.isArray(attributes[key]) && attributes[key].join(',');
     });

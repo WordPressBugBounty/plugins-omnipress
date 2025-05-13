@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const context = JSON.parse(wrapper.getAttribute('data-wp-context'));
 
       const { postsPerPage, taxonomy, selectedLayout } = context;
-      const grid = wrapper.querySelector('.is-layout-grid');
+      const grid = wrapper.querySelector('.omnipress-layout-grid');
 
       button.disabled = true;
       button.textContent = 'Loading...';

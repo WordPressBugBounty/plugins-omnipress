@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Omnipress\Blocks;
 
-use Exception;
+defined( 'ABSPATH' ) || exit;
+
 use Omnipress\Core\AbstractAssetsHandler;
-use OMNIPRESS\Core\FileSystemUtil;
 use Omnipress\Helpers;
 use Omnipress\Helpers\GeneralHelpers;
 use Omnipress\Models\UsersModel;
@@ -20,6 +22,12 @@ use Omnipress\Utils\BlocksAssetsHelper;
  * @copyright (c) 2024
  */
 final class BlockRegistrar {
+	/**
+	 * There includes all the blocks manifests.
+	 *
+	 * @var array $blocks_manifests
+	 */
+	private array $blocks_manifests;
 
 	/**
 	 * @since 1.5.5
@@ -52,7 +60,8 @@ final class BlockRegistrar {
 	 * @return void
 	 */
 	private function __construct( ?AbstractAssetsHandler $assets_handler = null ) {
-		$this->assets_handler = $assets_handler;
+		$this->assets_handler   = $assets_handler;
+		$this->blocks_manifests = include_once OMNIPRESS_PATH . 'build/blocks/blocks-manifest.php';
 
 		add_action( 'init', array( $this, 'register_blocks' ) );
 		add_action( 'omnipress_after_blocks_register', array( $this, 'assign_block_edit_caps' ) );
@@ -100,58 +109,47 @@ final class BlockRegistrar {
 	 */
 	public function get_blocks_folders() {
 		$core_blocks = array(
-			'core'        => array(
-				'container',
-				'column',
-				'button',
-				'heading',
-				'google-maps',
-				'image',
-				'video',
-				'paragraph',
-			),
-			'creative'    => array(
-				'accordion',
-				'countdown',
-				'mega-menu',
-				'slide',
-				'slider',
-				'tab-labels',
-				'tabs',
-				'tabs-content',
-				'icon-box',
-				'post-grid',
-				'counter',
-				'popup',
-				'post-category',
-				'tax-query',
-			),
-			'simple'      => array(
-				'custom-css',
-				'dual-button',
-				'icons',
-				'team',
-				'contact-form',
-				'icon',
-			),
-			'advanced'    => array(
-				'back-to-top',
-				'breadcrumb',
-				'list',
-				'list-item',
-				'single-testimonial',
-				'tooltip',
-
-			),
-			'woocommerce' => array(
-				'product-carousel',
-				'product-category',
-				'product-category-list',
-				'product-grid',
-				'product-list',
-				'single-product',
-			),
-			'premium'     => array(
+			'container',
+			'column',
+			'button',
+			'heading',
+			'google-maps',
+			'image',
+			'video',
+			'paragraph',
+			'accordion',
+			'countdown',
+			'mega-menu',
+			'slide',
+			'slider',
+			'tab-labels',
+			'tabs',
+			'tabs-content',
+			'icon-box',
+			'post-grid',
+			'counter',
+			'popup',
+			'post-category',
+			'tax-query',
+			'custom-css',
+			'dual-button',
+			'icons',
+			'team',
+			'contact-form',
+			'icon',
+			'back-to-top',
+			'breadcrumb',
+			'list',
+			'list-item',
+			'single-testimonial',
+			'tooltip',
+			'product-carousel',
+			'product-category',
+			'product-category-list',
+			'product-grid',
+			'product-list',
+			'single-product',
+			'premium' => array(
 				'advanced-query-loop',
 				'query-template',
 				'query-pagination',
@@ -181,60 +179,6 @@ final class BlockRegistrar {
 
 		return array_merge( $core_blocks, $additional_blocks_folders );
 	}
-	/**
-	 * Validate provided blocks folder exists or not.
-	 *
-	 * @throws \Exception Throw error if block folder does not exist.
-	 */
-	public function validate_blocks() {
-		$blocks_folder_names = $this->get_blocks_folders();
-
-		foreach ( $blocks_folder_names as $category => $blocks ) {
-
-			if ( 'premium' === $category ) {
-
-				if ( defined( 'OMNIPRESS_PRO_BLOCKS_PATH' ) && is_dir( OMNIPRESS_PRO_BLOCKS_PATH ) && is_readable( OMNIPRESS_PRO_BLOCKS_PATH ) ) {
-					$blocks_folders = scandir( OMNIPRESS_PRO_BLOCKS_PATH );
-				}
-			} else {
-
-				$blocks_folders = scandir( OMNIPRESS_BLOCKS_PATH . "/{$category}" );
-			}
-
-			if ( GeneralHelpers::is_valid_array( $blocks_folders ) ) {
-				foreach ( $blocks_folders as $blocks_folder ) {
-
-					if ( '.' === $blocks_folder || '..' === $blocks_folder ) {
-						continue;
-					}
-
-					$folder_path = OMNIPRESS_BLOCKS_PATH . "/{$category}/{$blocks_folder}";
-
-					if ( 'premium' === $category ) {
-						if ( defined( 'OMNIPRESS_PRO_BLOCKS_PATH' ) ) {
-							$blocks_folders = scandir( OMNIPRESS_PRO_BLOCKS_PATH . "/{$blocks_folder}" );
-						}
-					}
-
-					if ( ! is_dir( $folder_path ) ) {
-						continue;
-					}
-
-					if ( ! file_exists( $folder_path . '/block.json' ) ) {
-						/**
-						 * Bail if current folder is not a block folder.
-						 */
-						continue;
-					}
-
-					if ( ! in_array( $blocks_folder, $blocks_folder_names[ $category ], true ) ) {
-						/* translators: %s is the folder name of the generated block. */
-						throw new Exception( sprintf( __( '"%s" block is missing in blocks args. Please check the block args and generated blocks.', 'omnipress' ), $blocks_folder ) );
-					}
-				}
-			}
-		}
-	}
 
 	/**
 	 * Register all omnipress blocks.
@@ -253,9 +197,11 @@ final class BlockRegistrar {
 		$blocks = $this->get_blocks_folders();
 
 		if ( ! empty( $blocks ) ) {
+
 			foreach ( $blocks as $category_name => $block ) {
 
 				if ( 'premium' === $category_name ) {
+
 					do_action( 'op_premium_blocks_assets', $block, $category_name );
 					continue;
 				}
@@ -263,20 +209,26 @@ final class BlockRegistrar {
 				/**
 				 * Check if block is disabled or not.
 				 */
-				if ( GeneralHelpers::is_valid_array( $block ) ) {
-					if ( 'woocommerce' === $category_name && ! GeneralHelpers::is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+				if ( 'woocommerce' === $category_name && ! GeneralHelpers::is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+
+					continue;
+				}
+
+				if ( is_string( $block ) ) {
+
+					$this->register_omnipress_block( OMNIPRESS_PATH . "build/blocks/$block", array(), $block );
+					continue;
+				}
+
+				foreach ( $block as $folder_name ) {
+
+					$args = array();
+
+					if ( $this->is_block_disabled( $folder_name ) ) {
 						continue;
 					}
 
-					foreach ( $block as $folder_name ) {
-						$args = array();
-
-						if ( $this->is_block_disabled( $folder_name ) ) {
-							continue;
-						}
-
-						$this->register_omnipress_block( OMNIPRESS_BLOCKS_PATH . $category_name . "/$folder_name", $args );
-					}
+					$this->register_omnipress_block( OMNIPRESS_PATH . "build/blocks/$folder_name", $args, $folder_name );
 				}
 			}
 		}
@@ -322,31 +274,28 @@ final class BlockRegistrar {
 	/**
 	 * Register blocks with custom attributes.
 	 *
-	 * @param $block_path
-	 * @param $args
+	 * @param string $block_path
+	 * @param array  $args
+	 * @param string $name
+	 * @param array  $metadata
+	 *
 	 * @return void
 	 */
-	public function register_omnipress_block( $block_path, $args = array() ) {
+	public function register_omnipress_block( string $block_path, array $args = array(), string $name = '', $metadata = null ) {
 
-		if ( file_exists( $block_path . '/block.json' ) ) {
+		$metadata = $metadata ?? $this->blocks_manifests[ $name ] ?? null;
 
-			$metadata = json_decode( FileSystemUtil::read_file( $block_path . '/block.json' ), true );
+		if ( is_null( $metadata ) || ( ! GeneralHelpers::is_plugin_active( 'woocommerce/woocommerce.php' ) && 'omnipress-woo' === $metadata['category'] ) ) {
 
+			return;
+		}
+
+		if ( isset( $metadata ) ) {
 			if ( isset( $metadata['opSettings'] ) ) {
 				$args['opSettings'] = $metadata['opSettings'];
 			}
 
-			$view_script = $this->get_frontend_script( $metadata['name'] );
-
-			if ( $view_script ) {
-				wp_register_script_module( $view_script['handle'], $view_script['src'], $view_script['deps'], $view_script['version'], true );
-				if ( ! is_admin() ) {
-					$args['viewScriptModule'] = $view_script['handle'];
-				}
-			}
-
-			$args['render_callback'] = array( $this, 'render_block' );
-
+			$args['render_callback']           = array( $this, 'render_block' );
 			$args['supports']['anchor']        = true;
 			$args['supports']['interactivity'] = true;
 
@@ -445,7 +394,6 @@ final class BlockRegistrar {
 		}
 
 		$current_block_class_instance = BlocksAssetsHelper::get_block_class_instance_by_name( $block->name );
-
 		// If the block class has a render callback, use that.
 		// this filter was useful when we need to modify any omnipress block's content before render in the frontend.
 		$content = apply_filters( 'omnipress_render_dynamic_content', $content, $attributes, $block );
@@ -473,7 +421,9 @@ final class BlockRegistrar {
 
 				$p->set_attribute( 'data-tooltip-direction', ( $attributes['tooltipPosition'] ?? 'top' ) );
 			}
+
 			$content = $p->get_updated_html();
+
 			return $content;
 		}
 

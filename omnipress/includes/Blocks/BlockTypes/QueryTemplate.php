@@ -13,8 +13,6 @@ use Omnipress\Helpers\GeneralHelpers;
  * @package Omnipress
  */
 class QueryTemplate extends AbstractBlock {
-
-
 	private $attributes = array(
 		'blockId'      => '',
 		'queryId'      => false,
@@ -37,11 +35,11 @@ class QueryTemplate extends AbstractBlock {
 	 * {@inheritDoc}
 	 */
 	public function render( array $attributes, string $content, \WP_Block $block ): string {
-
+		$content             = '';
 		$attributes          = array_merge( $this->attributes, $attributes );
 		$template            = $attributes['template'] ?? false;
 		$page_key            = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
-		$query_key           = "query_{$block->context['queryId']}";
+		$query_key           = "query_{$block->context['queryId'] }";
 		$query_params        = isset( $_GET[ $query_key ] ) ? json_decode( sanitize_text_field( wp_unslash( $_GET[ $query_key ] ) ), true ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$enhanced_pagination = isset( $block->context['enhancedPagination'] ) && $block->context['enhancedPagination'];
 
@@ -88,6 +86,16 @@ class QueryTemplate extends AbstractBlock {
 						$new_query = clone $wp_query;
 
 						$query_args = array_merge( $new_query->query_vars, $custom_args );
+						if ( is_search() && 'product' === $post_types ) {
+							$product_categories = isset( $_GET['category'] ) ? sanitize_text_field( wp_unslash( $_GET['category'] ) ) : '';
+							if ( ! empty( $product_categories ) ) {
+								$query_args['tax_query'][] = array(
+									'taxonomy' => 'product_cat',
+									'field'    => 'slug',
+									'terms'    => $product_categories,
+								);
+							}
+						}
 
 						$new_query->query( $query_args );
 
@@ -115,7 +123,6 @@ class QueryTemplate extends AbstractBlock {
 		}
 
 		if ( ! $query->have_posts() ) {
-
 			return '';
 		}
 
@@ -129,8 +136,6 @@ class QueryTemplate extends AbstractBlock {
 
 			)
 		);
-
-		$content = '';
 
 		$filters = $this->get_block_template( 'query/sorting', 'pro', array( 'query' => $query ) );
 
@@ -161,7 +166,7 @@ class QueryTemplate extends AbstractBlock {
 			remove_filter( 'render_block_context', $filter_block_context, 2 );
 
 			// Wrap the render inner blocks in a `li` element with the appropriate post classes.
-			$grid_layout_classes = 'is-layout-grid op-grid op-grid-cols-3 sm:op-grid-cols-2  op-list-none';
+			$grid_layout_classes = 'omnipress-layout-grid op-grid op-grid-cols-3 sm:op-grid-cols-2  op-list-none';
 
 			$inner_block_directives = ! $enhanced_pagination ? ' data-wp-key="query-template-item-' . $post_id . '"' : '';
 			$content               .= '<li data-post-title="' . get_the_title() . '"' . $inner_block_directives . ' class="' . esc_attr( implode( ' ', get_post_class() ) ) . '">' . $block_content . '</li>';
@@ -177,7 +182,7 @@ class QueryTemplate extends AbstractBlock {
 		return sprintf(
 			'<div %s> %s <ul data-wp-bind--data-is-processing="context.isProcessing" data-wp-init="omnipress/query::callbacks.initTemplate" class="%s">%s</ul></div>',
 			$wrapper_attributes,
-			$attributes['isHeaderEnabled'] ? $filters : '',
+			$attributes['isHeaderEnabled'] && 'product' === $post_type ? $filters : '',
 			$grid_layout_classes,
 			$content,
 		);

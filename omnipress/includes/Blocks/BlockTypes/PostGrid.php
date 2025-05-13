@@ -75,7 +75,7 @@ class PostGrid extends AbstractBlock {
 			)
 		);
 
-		$content = '<div ' . $wrapper_attributes . '><div class="is-layout-grid">';
+		$content = '<div ' . $wrapper_attributes . '><div class="omnipress-layout-grid">';
 
 		if ( $wp_query->have_posts() ) {
 			while ( $wp_query->have_posts() ) {

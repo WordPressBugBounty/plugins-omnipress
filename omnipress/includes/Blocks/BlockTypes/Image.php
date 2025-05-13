@@ -61,6 +61,7 @@ class Image extends AbstractBlock {
 						array(
 							'alt'         => $alt ?? '',
 							'src'         => empty( $src ) ? $attributes['src'] : $src,
+							'width'       => $image_width,
 							'imageHeight' => $image_height,
 							'imageWidth'  => $image_width,
 						)

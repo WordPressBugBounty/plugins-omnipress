@@ -260,20 +260,52 @@ class StyleGenerator {
 			return "{$property_name}:$values;";
 		}
 
-		if ( empty( $values ) || array_filter( $values, fn( $value ) => null !== $value ) === array() ) {
+		// Extract and normalize values.
+		$top    = isset( $values['top'] ) && '' !== $values['top'] ? $values['top'] : null;
+		$right  = isset( $values['right'] ) && '' !== $values['right'] ? $values['right'] : null;
+		$bottom = isset( $values['bottom'] ) && '' !== $values['bottom'] ? $values['bottom'] : null;
+		$left   = isset( $values['left'] ) && '' !== $values['left'] ? $values['left'] : null;
+
+		// Count how many values are not null.
+		$non_null_values = array_filter( array( $top, $right, $bottom, $left ), fn( $v ) => null !== $v );
+		if ( empty( $non_null_values ) ) {
 			return '';
 		}
 
-		$top    = ! empty( $values['top'] ) ? $values['top'] : 0;
-		$right  = ! empty( $values['right'] ) ? $values['right'] : 0;
-		$bottom = ! empty( $values['bottom'] ) ? $values['bottom'] : 0;
-		$left   = ! empty( $values['left'] ) ? $values['left'] : 0;
-
-		if ( 4 === count( $values ) && array_filter( $values, fn( $value ) => $value !== $top ) === array() ) {
-			return "{$property_name}:{$top};";
+		// Case 1: All 4 values set and equal.
+		if (
+		null !== $top && null !== $right && null !== $bottom && null !== $left &&
+		$top === $right && $top === $bottom && $top === $left
+		) {
+			return "{$property_name}: {$top};";
 		}
 
-		return "{$property_name}:{$top} {$right} {$bottom} {$left};";
+		// Case 2: Top/Bottom == x, Left/Right == y.
+		if (
+		null !== $top && null !== $bottom &&
+		null !== $left && null !== $right &&
+		$top === $bottom && $left === $right
+		) {
+			return "{$property_name}-block: {$top}; {$property_name}-inline: {$left};";
+		}
+
+		// Case 3: Individual sides..
+		$output = array();
+
+		if ( null !== $top ) {
+			$output[] = "{$property_name}-top: {$top};";
+		}
+		if ( null !== $right ) {
+			$output[] = "{$property_name}-right: {$right};";
+		}
+		if ( null !== $bottom ) {
+			$output[] = "{$property_name}-bottom: {$bottom};";
+		}
+		if ( null !== $left ) {
+			$output[] = "{$property_name}-left: {$left};";
+		}
+
+		return implode( ' ', $output );
 	}
 
 	public static function has_unit_only_without_numeric( $value ) {

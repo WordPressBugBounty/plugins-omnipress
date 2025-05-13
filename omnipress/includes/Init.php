@@ -16,6 +16,7 @@ require_once OMNIPRESS_PATH . 'includes/Controllers/ComingSoonController.php';
 require_once OMNIPRESS_PATH . 'includes/Controllers/PatternsController.php';
 require_once OMNIPRESS_PATH . 'includes/Admin/Extensions/coming-soon.php';
 require_once OMNIPRESS_PATH . 'includes/Models/TestimonialModel.php';
+require_once OMNIPRESS_PATH . 'includes/Core/OptionManager.php';
 
 use Omnipress\Admin\Init as AdminInit;
 use Omnipress\Abstracts\BlockTemplateBase;

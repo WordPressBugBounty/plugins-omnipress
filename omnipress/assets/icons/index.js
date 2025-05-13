@@ -1,3 +1,4 @@
+// Icon
 export const icons = (
   <svg
     className="op-block-icons"
@@ -22,6 +23,127 @@ export const icons = (
   </svg>
 );
 
+// Tooltip
+export const tooltip = (
+    <svg xmlns="http://www.w3.org/2000/svg" className="op-block-icons" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="12" r="7.25" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M12 11V16" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="12" cy="8" r="0.5" fill="none" stroke="#175FFF"/>
+    </svg>
+);
+
+// BackToTop
+export const backtoTop = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M18 7L6 7M4 17L12 10L20 17" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+);
+
+// List
+export const list = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="5" cy="6" r="0.5" fill="none" stroke="#175FFF"/>
+        <circle cx="5" cy="10" r="0.5" fill="none" stroke="#175FFF"/>
+        <circle cx="5" cy="14" r="0.5" fill="none" stroke="#175FFF"/>
+        <circle cx="5" cy="18" r="0.5" fill="none" stroke="#175FFF"/>
+        <path d="M8 6H19" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M8 10H19" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M8 14H19" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M8 18H19" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+);
+
+// ListItem
+export const listItem = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <circle cx="5" cy="12" r="0.5" stroke="#175FFF" fill="none"/>
+        <path d="M8 12H19" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+);
+
+// FlipBox
+export const flipBox = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15.4999 12L19 16M19 16L15.4999 20M19 16L4.99994 16" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M8 13L5 9M5 9L8 5M5 9L18.5 9" stroke="#175FFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+);
+
+// FlipBox Front
+export const flipBoxFront = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15.4999 8L19 12M19 12L15.4999 16M19 12L4.99994 12" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+);
+
+// FlipBox Back
+export const flipBoxBack = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M8 16L5 12M5 12L8 8M5 12L18.5 12" stroke="#175FFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+);
+
+// Breadcrumb
+export const Breadcrumb = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M5 9L8.73333 11.8C8.86667 11.9 8.86667 12.1 8.73333 12.2L5 15" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M10 9L13.7333 11.8C13.8667 11.9 13.8667 12.1 13.7333 12.2L10 15" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M15 9L18.7333 11.8C18.8667 11.9 18.8667 12.1 18.7333 12.2L15 15" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+);
+
+// LottieAimation
+export const lottieAnimation = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path d="M3.62402 2.75H20.376C20.8606 2.75012 21.25 3.14155 21.25 3.62012V20.3799C21.25 20.8585 20.8606 21.2499 20.376 21.25H3.62402C3.13945 21.2499 2.75 20.8585 2.75 20.3799V3.62012C2.75 3.14155 3.13944 2.75012 3.62402 2.75Z" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+    <path d="M16.9092 6.75781L17.0469 6.77441C17.1609 6.79129 17.2438 6.88553 17.25 6.99512L17.2471 7.04297C17.2304 7.1559 17.1362 7.239 17.0254 7.24512L16.9766 7.24316C16.5175 7.17546 16.0778 7.31379 15.6953 7.53125C15.3113 7.74961 14.9325 8.07624 14.5625 8.47754C13.9146 9.18023 13.225 10.1855 12.5156 11.4678L12.2109 12.0342C11.2028 13.9539 10.2596 15.3103 9.36328 16.1611C8.53167 16.9505 7.79346 17.2586 7.10742 17.25L6.9707 17.2441C6.85567 17.2356 6.76615 17.147 6.75195 17.0381L6.75098 16.9902C6.75938 16.8765 6.84704 16.7867 6.95703 16.7725L7.00586 16.7705C7.46223 16.8042 7.8958 16.6474 8.27637 16.416C8.65972 16.1829 9.03983 15.8446 9.41406 15.4307C10.0694 14.7058 10.7657 13.6823 11.4814 12.3867L11.7891 11.8145C12.8034 9.88297 13.7531 8.53892 14.6533 7.71973C15.4839 6.96405 16.2186 6.69899 16.9092 6.75781Z" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+    </svg>
+);
+
+// ProgressBar
+export const progressBar = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="2.75" y="8.75" width="18.5" height="6.5" rx="1.25" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M6 11V13" stroke="#175FFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M9 11V13" stroke="#175FFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M12 11V13" stroke="#175FFF" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+);
+
+// Gallery
+export const Gallery = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <rect x="6.75" y="6.75" width="14.5" height="14.5" rx="1.25" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M17 5V5C17 3.89543 16.1046 3 15 3H5C3.89543 3 3 3.89543 3 5V15C3 16.1046 3.89543 17 5 17V17" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M7 19.5C10.3333 14.8333 18.5 11.5 21 17.1741" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M11 10C11.5523 10 12 10.4477 12 11C12 11.5523 11.5523 12 11 12C10.4477 12 10 11.5523 10 11C10 10.4477 10.4477 10 11 10Z" stroke="#175FFF" fill="none" stroke-width="2"/>
+    </svg>
+);
+
+// ImageComparison
+export const ImageComparison = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M12 8L12 20" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <rect x="2.75" y="10.75" width="6.5" height="6.5" rx="1.25" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <rect x="14.75" y="10.75" width="6.5" height="6.5" rx="3.25" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M5 7C7.33333 4 13.4 -0.2 19 7" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M19.5308 2.87716L19.9013 7.52909C19.9145 7.69523 19.7645 7.82756 19.6013 7.79374L15.0317 6.84689" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+);
+
+// Testimonials
+export const SingleTestimonials = (
+    <svg className="op-block-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M4 2.75H20C20.6904 2.75 21.25 3.30964 21.25 4V16C21.25 16.6904 20.6904 17.25 20 17.25H12.9365C12.1205 17.2501 11.3467 17.6124 10.8242 18.2393L10.46 18.6758C9.99133 19.2381 9.15246 19.2736 8.6377 18.7812L8.54004 18.6758L8.17578 18.2393C7.65335 17.6124 6.87946 17.2501 6.06348 17.25H4C3.30964 17.25 2.75 16.6904 2.75 16V4C2.75 3.30964 3.30964 2.75 4 2.75Z" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M7 6.76074C7.10324 6.88368 7.23538 6.98071 7.38867 7.04004C7.2867 7.1909 7.23263 7.36694 7.22461 7.5459C7.07635 7.50998 6.92265 7.50983 6.77441 7.5459C6.76637 7.36677 6.7125 7.19099 6.61035 7.04004C6.764 6.98074 6.89657 6.88391 7 6.76074Z" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M12 6.76074C12.1032 6.88368 12.2354 6.98071 12.3887 7.04004C12.2867 7.1909 12.2326 7.36694 12.2246 7.5459C12.0763 7.50998 11.9226 7.50983 11.7744 7.5459C11.7664 7.36677 11.7125 7.19099 11.6104 7.04004C11.764 6.98074 11.8966 6.88391 12 6.76074Z" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M17 6.76074C17.1032 6.88368 17.2354 6.98071 17.3887 7.04004C17.2867 7.1909 17.2326 7.36694 17.2246 7.5459C17.0763 7.50998 16.9226 7.50983 16.7744 7.5459C16.7664 7.36677 16.7125 7.19099 16.6104 7.04004C16.764 6.98074 16.8966 6.88391 17 6.76074Z" stroke="#175FFF" fill="none" stroke-width="1.5"/>
+        <path d="M6 12H18" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M6 14H13" stroke="#175FFF" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+);
+
+// Megamenu
 export const megamenu = (
   <svg
     className="op-block-icons"
@@ -66,6 +188,7 @@ export const megamenu = (
   </svg>
 );
 
+// Button
 export const button = (
   <svg
     className="op-block-icons"
@@ -91,6 +214,7 @@ export const button = (
   </svg>
 );
 
+// MenuItem
 export const menuitem = (
   <svg
     className="op-block-icons"
@@ -111,6 +235,7 @@ export const menuitem = (
   </svg>
 );
 
+// Slider
 export const slider = (
   <svg
     className="op-block-icons"
@@ -158,6 +283,7 @@ export const slider = (
   </svg>
 );
 
+// Heading
 export const heading = (
   <svg
     className="op-block-icons"
@@ -175,6 +301,7 @@ export const heading = (
   </svg>
 );
 
+// Custom CSS
 export const css = (
   <svg
     className="op-block-icons"
@@ -205,6 +332,7 @@ export const css = (
   </svg>
 );
 
+// DualButton
 export const dualbutton = (
   <svg
     className="op-block-icons"
@@ -243,6 +371,7 @@ export const dualbutton = (
   </svg>
 );
 
+// InfoBox
 export const infoBox = (
   <svg
     style={{
@@ -259,6 +388,7 @@ export const infoBox = (
   </svg>
 );
 
+// Teams Block
 export const teamsBlock = (
   <svg
     className="op-block-icons"
@@ -284,6 +414,7 @@ export const teamsBlock = (
   </svg>
 );
 
+// CountDown
 export const countdown = (
   <svg
     className="op-block-icons"
@@ -346,6 +477,7 @@ export const image = (
   </svg>
 );
 
+// Video
 export const video = (
   <svg
     className="op-block-icons"
@@ -370,6 +502,7 @@ export const video = (
   </svg>
 );
 
+// Paragraph
 export const paragraph = (
   <svg
     className="op-block-icons"
@@ -390,6 +523,7 @@ export const paragraph = (
   </svg>
 );
 
+// Maps
 export const maps = (
   <svg
     className="op-block-icons"
@@ -422,6 +556,7 @@ export const maps = (
   </svg>
 );
 
+// ContactForm
 export const contactForm = (
   <svg
     className="op-block-icons"
@@ -459,6 +594,7 @@ export const contactForm = (
   </svg>
 );
 
+// Tabs
 export const tabs = (
   <svg
     className="op-block-icons"
@@ -478,6 +614,7 @@ export const tabs = (
   </svg>
 );
 
+// TabLabels
 export const tabLabels = (
   <svg
     className="op-block-icons"
@@ -497,6 +634,7 @@ export const tabLabels = (
   </svg>
 );
 
+// TabContent
 export const tabsContent = (
   <svg
     className="op-block-icons"
@@ -549,6 +687,7 @@ export const tabsContent = (
 
 // Layout Blocks =====================================
 
+// Container
 export const container = (
   <svg
     className="op-block-icons"
@@ -567,6 +706,7 @@ export const container = (
   </svg>
 );
 
+// InnerColumn
 export const innercolumn = (
   <svg
     className="op-block-icons"
@@ -714,6 +854,8 @@ export const postGrid = (
 // Post Blocks =====================================
 
 // Woo Blocks =====================================
+
+// ProductCatalog
 export const productCatalog = (
   <svg
     className="op-block-icons"
@@ -732,6 +874,7 @@ export const productCatalog = (
   </svg>
 );
 
+// SingleProduct
 export const singleProduct = (
   <svg
     className="op-block-icons"
@@ -757,6 +900,7 @@ export const singleProduct = (
   </svg>
 );
 
+// ProductFilter
 export const productFilter = (
   <svg
     className="op-block-icons"
@@ -776,6 +920,7 @@ export const productFilter = (
   </svg>
 );
 
+// AdvancedProductSearch
 export const advancedProductSearch = (
   <svg
     className="op-block-icons"
@@ -809,6 +954,7 @@ export const advancedProductSearch = (
   </svg>
 );
 
+// WooCategoryList
 export const woocategoryList = (
   <svg
     className="op-block-icons"
@@ -862,6 +1008,8 @@ export const woocategoryList = (
   </svg>
 );
 
+
+// WooGrid
 export const woogrid = (
   <svg
     className="op-block-icons"
@@ -932,6 +1080,7 @@ export const woogrid = (
   </svg>
 );
 
+// ProductList
 export const productList = (
   <svg
     className="op-block-icons"
@@ -1007,6 +1156,7 @@ export const productList = (
   </svg>
 );
 
+// ProductCarousel
 export const productCarousel = (
   <svg
     className="op-block-icons"
@@ -1025,6 +1175,7 @@ export const productCarousel = (
   </svg>
 );
 
+// Carousel
 export const carousel = (
   <svg
     className="op-block-icons"
@@ -1118,6 +1269,7 @@ export const carousel = (
   </svg>
 );
 
+// WooCategory
 export const woocategory = (
   <svg
     className="op-block-icons"
@@ -1154,6 +1306,7 @@ export const woocategory = (
   </svg>
 );
 
+// ProductImage
 export const productImage = (
   <svg
     className="op-block-icons"
@@ -1192,6 +1345,7 @@ export const productImage = (
   </svg>
 );
 
+// ProductRating
 export const productRating = (
   <svg
     className="op-block-icons"
@@ -1222,6 +1376,7 @@ export const productRating = (
   </svg>
 );
 
+// Accordion
 export const accordion = (
   <svg
     className="op-block-icons"
@@ -1240,6 +1395,7 @@ export const accordion = (
   </svg>
 );
 
+// QueryLoop
 export const queryLoop = (
   <svg
     className="op-block-icons"
@@ -1258,6 +1414,7 @@ export const queryLoop = (
   </svg>
 );
 
+// Taxonomy
 export const taxonomy = (
   <svg
     className="op-block-icons"
@@ -1282,6 +1439,7 @@ export const taxonomy = (
   </svg>
 );
 
+// Popup
 export const popup = (
   <svg
     className="op-block-icons"
@@ -1300,6 +1458,7 @@ export const popup = (
   </svg>
 );
 
+// PopupModal
 export const popModal = (
   <svg
     className="op-block-icons"
@@ -1334,6 +1493,7 @@ export const popModal = (
   </svg>
 );
 
+// PopupFloating
 export const popFloating = (
   <svg
     className="op-block-icons"
@@ -1363,6 +1523,7 @@ export const popFloating = (
   </svg>
 );
 
+// PopupDrawer
 export const popDrawer = (
   <svg
     className="op-block-icons"
@@ -1392,6 +1553,7 @@ export const popDrawer = (
   </svg>
 );
 
+// QueryTemplate
 export const queryTemplate = (
   <svg
     className="op-block-icons"
@@ -1416,6 +1578,7 @@ export const queryTemplate = (
   </svg>
 );
 
+// Pagination
 export const pagination = (
   <svg
     className="op-block-icons"
@@ -1433,6 +1596,7 @@ export const pagination = (
   </svg>
 );
 
+// PaginationPrev
 export const paginationPrev = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -1455,6 +1619,7 @@ export const paginationPrev = (
   </svg>
 );
 
+// PaginationNext
 export const paginationNext = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -1477,6 +1642,8 @@ export const paginationNext = (
   </svg>
 );
 
+
+// NoResults
 export const noResults = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -1508,6 +1675,7 @@ export const noResults = (
   </svg>
 );
 
+// DynamicFieldQuery
 export const dynamicFieldQuery = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -1549,6 +1717,7 @@ export const dynamicFieldQuery = (
   </svg>
 );
 
+// LeftBox
 export const leftBox = (
   <svg
     width="22"
@@ -1590,6 +1759,8 @@ export const leftBox = (
     />
   </svg>
 );
+
+// RightBox
 export const rightBox = (
   <svg
     width="24"
@@ -1631,6 +1802,8 @@ export const rightBox = (
     />
   </svg>
 );
+
+// BottomBox
 export const bottomBox = (
   <svg
     width="22"
@@ -1669,6 +1842,8 @@ export const bottomBox = (
     />
   </svg>
 );
+
+// TopBox
 export const topBox = (
   <svg
     width="22"
@@ -1711,6 +1886,7 @@ export const topBox = (
   </svg>
 );
 
+// AllSlides
 export const allSides = (
   <svg
     width="25"
@@ -1747,6 +1923,7 @@ export const allSides = (
   </svg>
 );
 
+// ContentSwitcher
 export const contentSwitcher = (
   <svg
     className="op-block-icons"
@@ -1771,6 +1948,7 @@ export const contentSwitcher = (
   </svg>
 );
 
+// BlockAddition
 export const blockAddition = (
   <svg
     className="op-block-icons"

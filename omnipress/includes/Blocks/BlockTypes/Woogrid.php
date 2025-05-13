@@ -163,7 +163,7 @@ class Woogrid extends AbstractBlock {
 			);
 
 			$html .= '<div id="' . $block_id . '" class="op-block-product-grid">';
-			$html .= "<div class='op-woo__grid-wrapper is-layout-grid'>";
+			$html .= "<div class='op-woo__grid-wrapper omnipress-layout-grid'>";
 
 			$class_name = '';
 		}
